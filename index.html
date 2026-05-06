@@ -1134,6 +1134,2384 @@ function doPost(e) {
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<script>
+// ════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════
+const PASS = 'AFA2026!';
+const DEFAULT = {
+  coaches:[
+    {id:'c1', name:'Mei Ting',   contact:'98358937',  email:'meiting@elitez.asia',    password:'MeiTing2026!',  role:'senior'},
+    {id:'c2', name:'Vernon Du',  contact:'94303934',  email:'vernon.du@elitez.asia',  password:'Vernon2026!',   role:'senior'},
+    {id:'c3', name:'Anil Pammi', contact:'93494709',  email:'anil.pammi@elitez.asia', password:'Anil2026!',     role:'coach'},
+    {id:'c4', name:'Jolene Tan', contact:'90230602',  email:'jolene.tan@elitez.asia', password:'Jolene2026!',   role:'coach'},
+    {id:'c5', name:'Elaine Boo', contact:'82686136',  email:'elaine.boo@elitez.asia', password:'Elaine2026!',   role:'coach'},
+    {id:'c6', name:'Aiydon Li',  contact:'87749851',  email:'aiydon@elitez.asia',     password:'Aiydon2026!',   role:'coach'},
+    {id:'c7', name:'Kelly',      contact:'94383818',  email:'kelly.koh@elitez.asia',  password:'Kelly2026!',    role:'coach'},
+    {id:'c8', name:'Yeoh',       contact:'83894240',  email:'serhow.yeoh@elitez.asia',password:'Yeoh2026!',     role:'coach'},
+    {id:'admin', name:'Admin',   contact:'',          email:'admin@elitez.asia',      password:'AFA2026!',      role:'admin'},
+  ],
+  coachees:[
+    {id:'w1_1',coachId:'c3',name:'Siti Nurhaida Binte Abdul Jalil',nric:'',dob:'1999-08-15',mobile:'90232589',email:'sitinurhaida99@icloud.com',sso:'Hougang',fc:'Syaheeda',fcContact:'63540127',fcEmail:'syaheeda_begum@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'DD-MMM-YYYY',svcDone:'',svcDate:'',svcHrs:'DD-MMM-YYYY',notes:'Withdrawn : Found a job | Svc Excellence: Y/N',nextAction:'',nextActionDate:'',contactAttempts:0,archived:true,intake:{}},
+    {id:'w1_2',coachId:'c4',name:'Gavin Liew Di En',nric:'',dob:'2001-02-03',mobile:'89529527',email:'gavinliew24@gmail.com',sso:'Hougang',fc:'Soh Teng',fcContact:'65139195',fcEmail:'loo_soh_teng@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Withdrawn : Unable to commit to the training hours',nextAction:'',nextActionDate:'',contactAttempts:0,archived:true,intake:{}},
+    {id:'w1_3',coachId:'c6',name:'Surianti Binte Jaffar',nric:'',dob:'1986-07-04',mobile:'89200019',email:'YANTISURIANTI8@GMAIL.COM',sso:'Sengkang',fc:'Andre',fcContact:'63153658',fcEmail:'andre_lim@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Contacted: Pend client selection of date',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_4',coachId:'c5',name:'Nur Izzah Binte Eddie Mand',nric:'',dob:'1998-06-19',mobile:'88827044',email:'izzaheddie98@gmail.com',sso:'Sengkang',fc:'Yuen Yee',fcContact:'67671368',fcEmail:'kang_yuen_yee@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_5',coachId:'c2',name:'Nurquraisha Binte Lamri',nric:'',dob:'2001-09-08',mobile:'87728545',email:'AICHAHAIKAL10@GMAIL.COM',sso:'Punggol',fc:'Benedict Cheong',fcContact:'63547692',fcEmail:'Benedict_YS_CHEONG@msf.gov.sg',welcomeSent:'2026-04-09',cgDone:'',cgDate:'2026-04-20',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_6',coachId:'c3',name:'Siti Maisarah Binte Azmi',nric:'',dob:'1998-07-07',mobile:'87725634',email:'Siti.mai@hotmail.com',sso:'Punggol',fc:'Angel Choy',fcContact:'62319392',fcEmail:'angel_sh_choy@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Contacted: Pend client selection of date',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_7',coachId:'c4',name:'Chew Xue Yan Joelyn',nric:'',dob:'2001-06-05',mobile:'91839549',email:'joelyncxyz@gmail.com',sso:'Punggol',fc:'Benedict Cheong',fcContact:'63547692',fcEmail:'Benedict_YS_CHEONG@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_8',coachId:'c6',name:'Muhammad Syazwan Bin Ismail',nric:'',dob:'1984-12-04',mobile:'88106486',email:'Syazwanismail0512@gmail.com',sso:'Bedok',fc:'Neresa Wong',fcContact:'6513 1473',fcEmail:'neresa_wong@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Contacted: Pend client selection of date',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_9',coachId:'c5',name:'Syarifah Noor Syaikhah Binte Sheik Farouk',nric:'',dob:'2001-05-12',mobile:'88102289',email:'ifahpaige05@gmail.com',sso:'Bedok',fc:'Neresa Wong',fcContact:'6513 1473',fcEmail:'neresa_wong@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Contacted: Pend client selection of date',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_10',coachId:'c2',name:'Nor Ahima Binte Nor Adzme',nric:'',dob:'1992-07-14',mobile:'87923964',email:'norashimaadzme@gmail.com',sso:'Sembawang',fc:'Gia Hui',fcContact:'65927967',fcEmail:'Lee_Gia_Hui@msf.gov.sg',welcomeSent:'2026-04-10',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_11',coachId:'c3',name:'Low Eng Huat Alvin',nric:'',dob:'1964-01-09',mobile:'96228822',email:'irinterioralvin@yahoo.com.sg',sso:'Woodlands',fc:'Joshua Aw',fcContact:'82013022',fcEmail:'Joshua_aw@msf.gov.sg',welcomeSent:'2026-04-09',cgDone:'Yes',cgDate:'2026-04-13',cgHrs:'8',coachDone:'Yes',coachDate:'2026-04-15',coachHrs:'3 hours',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_12',coachId:'c4',name:'Bella Syafira Binte Mohd Yuswi',nric:'',dob:'2000-10-14',mobile:'84944390',email:'BELLASYAFIRA200221@GMAIL.COM',sso:'Woodlands',fc:'Yi Ling',fcContact:'67660341',fcEmail:'chua_yi_ling@msf.gov.sg',welcomeSent:'2026-04-09',cgDone:'Yes',cgDate:'2026-04-13',cgHrs:'8',coachDone:'Yes',coachDate:'2026-04-14',coachHrs:'3 hours',wpDone:'',wpDate:'',wpHrs:'2026-05-07 00:00:00',svcDone:'',svcDate:'',svcHrs:'2026-05-14 00:00:00',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_13',coachId:'c6',name:'Mohamed Shafiq Bin Ghulam Hussein',nric:'',dob:'1984-04-13',mobile:'98513341',email:'mohamed.shafiq@gmail.com',sso:'Sembawang',fc:'Terene',fcContact:'65851047',fcEmail:'terene_tan@msf.gov.sg',welcomeSent:'2026-04-09',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'requested to postponed',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_14',coachId:'c5',name:'Syarifah Nur Nabilah Bte Syed Omar',nric:'',dob:'1997-09-16',mobile:'89583745',email:'SYRFHNRNBLH@GMAIL.COM',sso:'Sembawang',fc:'Zhi Rong',fcContact:'63547306',fcEmail:'ooi_zhi_yong@msf.gov.sg',welcomeSent:'2026-04-09',cgDone:'Yes',cgDate:'2026-04-20',cgHrs:'8',coachDone:'Yes',coachDate:'2026-04-23',coachHrs:'3 hours',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_15',coachId:'c2',name:'Nursiah Binte Razali',nric:'',dob:'1995-05-16',mobile:'87517581',email:'nursiahbr@gmail.com',sso:'Sembawang',fc:'Mark Lim',fcContact:'88666052',fcEmail:'Mark_lim@msf.gov.sg',welcomeSent:'2026-04-13',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_16',coachId:'c3',name:'Nurul Ain Binte Mohammad Taufik',nric:'',dob:'1993-12-01',mobile:'87499519',email:'NUNU.TAUFIK@ICLOUD.COM',sso:'Sembawang',fc:'Joe Lim',fcContact:'6354 9058',fcEmail:'lim_joe_te@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_17',coachId:'c4',name:'Nur Atieqa Binte Noor Azlan Nur Atiqah Binte Amir Hamzah',nric:'',dob:'1993-06-04',mobile:'81680655',email:'evafelisya@gmail.com',sso:'Woodlands',fc:'Eugene Wang',fcContact:'62319518',fcEmail:'eugene_wang@msf.gov.sg',welcomeSent:'2026-04-09',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_18',coachId:'c4',name:'Yuvaraja S/O Tamilchelvam',nric:'',dob:'2003-06-14',mobile:'80164497',email:'yuvariana04@gmail.com',sso:'Clementi',fc:'Ong Yun Jing',fcContact:'6265 2458',fcEmail:'ong_yun_jing@msf.gov.sg',welcomeSent:'2026-04-09',cgDone:'Yes',cgDate:'2026-04-13',cgHrs:'8',coachDone:'Yes',coachDate:'2026-04-15',coachHrs:'3 hours',wpDone:'',wpDate:'',wpHrs:'2026-04-29 00:00:00',svcDone:'',svcDate:'',svcHrs:'2026-05-07 00:00:00',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_19',coachId:'c6',name:'Khairudin Bin A Rahman',nric:'',dob:'1973-11-21',mobile:'80192114',email:'khairudin7341118@gmail.com',sso:'Clementi',fc:'Erin Chong',fcContact:'60138540',fcEmail:'erin_chong@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_20',coachId:'c5',name:'Lee Li Yi Cynthia',nric:'',dob:'1996-11-02',mobile:'90050839',email:'icllyi00@gmail.com',sso:'Sengkang',fc:'Charmaine Pang',fcContact:'65929978',fcEmail:'charmaine_pang@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'Yes',cgDate:'2026-04-20',cgHrs:'8',coachDone:'Yes',coachDate:'2026-04-23',coachHrs:'3 hours',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_21',coachId:'c2',name:'Nurul Nazrah Binte Kamil',nric:'',dob:'1992-10-29',mobile:'80121475',email:'babynaraa32@gmail.com',sso:'Sengkang',fc:'Belle Teo',fcContact:'63548976',fcEmail:'belle_teo@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 Contact attempts - Responded, but MIA',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_22',coachId:'c3',name:'Nurul Fazzirah Binte Abdullah',nric:'',dob:'1996-07-20',mobile:'88157059',email:'nrlxfzrh@gmail.com',sso:'Sengkang',fc:'Belle Teo',fcContact:'63548976',fcEmail:'belle_teo@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_23',coachId:'c4',name:'Nor Shahirah Binte Kamarudin',nric:'',dob:'2000-05-12',mobile:'87838994',email:'shahirahariqin20@gmail.com',sso:'Sengkang',fc:'Lam Jie Ying',fcContact:'62287150',fcEmail:'lam_jie_ying@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_24',coachId:'c6',name:'Siti Noor Ellissah Binte Abdul Hallim',nric:'',dob:'1990-05-14',mobile:'84932770',email:'sitinoorellissaha@gmail.com',sso:'Sengkang',fc:'Belle Teo',fcContact:'63548976',fcEmail:'belle_teo@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response, she managed to contact me back through Whatsapp, called on 23 Apr',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_25',coachId:'c5',name:'Siti Aishah Binte Zainol Abidin',nric:'',dob:'1984-03-11',mobile:'86089423',email:'adek_noi84@hotmail.com',sso:'Yishun',fc:'Clarence Gui',fcContact:'63549680',fcEmail:'Clarence_GUI@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_26',coachId:'c2',name:'Nur Insyirah Binte Sharuldin',nric:'',dob:'2004-01-28',mobile:'88501705',email:'delisyaaa02@gmail.com',sso:'Yishun',fc:'Jezabel Teo',fcContact:'63540017',fcEmail:'jezabel_teo@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-04-20',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_27',coachId:'c3',name:'Ong Seow Kwee',nric:'',dob:'1963-09-09',mobile:'80316353',email:'ongseowkwee9@gmail.com',sso:'Yishun',fc:'Clarence Gui',fcContact:'63549680',fcEmail:'Clarence_GUI@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Withdrawn',nextAction:'',nextActionDate:'',contactAttempts:0,archived:true,intake:{}},
+    {id:'w1_28',coachId:'c4',name:'Tan Kim Soon',nric:'',dob:'1974-01-22',mobile:'9797 5859',email:'alvintan74@hotmail.com',sso:'Yishun',fc:'Fabian Chiow',fcContact:'69709565',fcEmail:'fabian_chiow@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-04-20',cgHrs:'8',coachDone:'Yes',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_29',coachId:'c6',name:'Yue Jing Rong',nric:'',dob:'1980-11-03',mobile:'80967966',email:'adalynyue@hotmail.com',sso:'Bedok',fc:'Amirah Binte Abd Malek',fcContact:'63548770',fcEmail:'amirah_abd_malek@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'',cgDate:'2026-04-20',cgHrs:'8',coachDone:'Yes',coachDate:'',coachHrs:'3',wpDone:'',wpDate:'',wpHrs:'29 & 30 April 2026',svcDone:'',svcDate:'',svcHrs:'7 & 8 May 2026',notes:'22 Apr 2026 - 10am',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_30',coachId:'c5',name:'Nur Azliana Binte Ahmad Bahrom',nric:'',dob:'1991-09-12',mobile:'88863644',email:'azliana.ahmad@hotmail.com',sso:'Geylang Serai',fc:'Carrie Ho',fcContact:'67367529',fcEmail:'carrie_ho@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_31',coachId:'c2',name:'Juleana Binte Mohd Azis',nric:'',dob:'1985-07-03',mobile:'87518416',email:'juleana0703@gmail.com',sso:'Geylang Serai',fc:'Nathan Teo',fcContact:'63540217',fcEmail:'nathan_teo@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'',cgDate:'2026-04-20',cgHrs:'8',coachDone:'Yes',coachDate:'2026-04-24',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_32',coachId:'c3',name:'Nur Ain Amirah Binte Abidin',nric:'',dob:'1988-06-15',mobile:'81027361',email:'aynyassar@gmail.com',sso:'Bedok',fc:'Siti Mohaini',fcContact:'62319441',fcEmail:'siti_mohaini_mohamad@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'',cgDate:'2026-04-20',cgHrs:'8',coachDone:'Yes',coachDate:'2026-04-22',coachHrs:'3',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_33',coachId:'c4',name:'Nurinsyirah Qistina Binte Mohamed Sharil',nric:'',dob:'2003-04-01',mobile:'88902005',email:'nsyirahqistina01@gmail.com',sso:'Punggol',fc:'Angel Choy',fcContact:'62319392',fcEmail:'angel_sh_choy@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Withdrawn : Found a job',nextAction:'',nextActionDate:'',contactAttempts:0,archived:true,intake:{}},
+    {id:'w1_34',coachId:'c6',name:'Nurfaezah Binte Sanusi',nric:'',dob:'1994-02-15',mobile:'89097619',email:'jajasanusi94@gmail.com',sso:'Punggol',fc:'Law Wai Leong',fcContact:'67367470',fcEmail:'law_wai_leong@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Number not in used',nextAction:'',nextActionDate:'',contactAttempts:0,archived:true,intake:{}},
+    {id:'w1_35',coachId:'c5',name:'Sandy Chong',nric:'',dob:'1992-01-12',mobile:'89230579',email:'sandychongg@hotmail.com',sso:'Tampines',fc:'Roushan',fcContact:'68590837',fcEmail:'roushan_helmy@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_36',coachId:'c2',name:'Muhammad Zuhaili Bin Zaini',nric:'',dob:'1990-06-03',mobile:'97580439',email:'muhammadzuhailizaini@outlook.com',sso:'Tampines',fc:'Roushan',fcContact:'68590837',fcEmail:'roushan_helmy@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Contacted: Pend client selection of date',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_37',coachId:'c3',name:'Nur Hafizah Binte Ramli',nric:'',dob:'1988-07-24',mobile:'84959465',email:'skimpy_marshmellow@live.com.sg',sso:'Punggol',fc:'Sean Tan',fcContact:'80451328',fcEmail:'sean_cw_tan@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Client to call back',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_38',coachId:'c4',name:'Alyssia Catherine Fobrogo',nric:'',dob:'2000-02-09',mobile:'80918722',email:'alyssiafobrogo@gmail.com',sso:'Jalan Besar',fc:'Zach',fcContact:'62319424',fcEmail:'zachary_yw_teo@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_39',coachId:'c6',name:'Dyana Isnita Binte Aziman',nric:'',dob:'1996-06-14',mobile:'82185141',email:'dyana.isnita98@gmail.com',sso:'Jalan Besar',fc:'Zach',fcContact:'62319424',fcEmail:'zachary_yw_teo@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'',cgDate:'2026-04-20',cgHrs:'8',coachDone:'Yes',coachDate:'',coachHrs:'3',wpDone:'',wpDate:'',wpHrs:'29 & 30 April 2026',svcDone:'',svcDate:'',svcHrs:'14 & 15 May 2026',notes:'22 Apr 2026 - 1pm',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_40',coachId:'c5',name:'Fahimah Abdul Latiff',nric:'',dob:'2003-06-07',mobile:'83539151',email:'fhaalafay@gmail.com',sso:'Toa Payoh',fc:'Heriyati Kasmani',fcContact:'63550089',fcEmail:'Heriyati_Kasmani@msf.gov.sg',welcomeSent:'2026-04-16',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_41',coachId:'c2',name:'Yussirah Binte Yusoff',nric:'',dob:'2005-09-14',mobile:'98062904',email:'Yussirahyusoff@gmail.com',sso:'Toa Payoh',fc:'Heriyati Kasmani',fcContact:'63550089',fcEmail:'Heriyati_Kasmani@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_42',coachId:'c3',name:'Balqiis Dzaakirah Binte Rosli',nric:'',dob:'2000-01-15',mobile:'88157453',email:'balqiis.dzaakirah@gmail.com',sso:'Toa Payoh',fc:'Heriyati Kasmani',fcContact:'63550089',fcEmail:'Heriyati_Kasmani@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_43',coachId:'c4',name:'Nur Diana Binte Abdul Razak',nric:'',dob:'1986-03-27',mobile:'97754456',email:'dally2703@gmail.com',sso:'Toa Payoh',fc:'Heriyati Kasmani',fcContact:'63550089',fcEmail:'Heriyati_Kasmani@msf.gov.sg',welcomeSent:'2026-04-17',cgDone:'',cgDate:'2026-04-20',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_44',coachId:'c6',name:'Noor Sufianah Binte Saipoh',nric:'',dob:'1972-04-11',mobile:'90712006',email:'noorsufianah72@gmail.com',sso:'Jalan Besar',fc:'Riya',fcContact:'6354 9148',fcEmail:'Swndariya_GURUSAMY@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Number not active',nextAction:'',nextActionDate:'',contactAttempts:0,archived:true,intake:{}},
+    {id:'w1_45',coachId:'c5',name:'Nur Nabila Binte Selamat',nric:'',dob:'2001-03-24',mobile:'88535779',email:'NABILAH0735@GMAIL.COM',sso:'Tampines',fc:'Sun Pei Li',fcContact:'67511934',fcEmail:'sun_pei_li@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_46',coachId:'c2',name:'Rachel Diva Rehnuka D/O Govintharaj',nric:'',dob:'1990-12-24',mobile:'84392117',email:'rehnukarachel90@gmail.com',sso:'Punggol',fc:'Benedict Cheong',fcContact:'63547692',fcEmail:'Benedict_YS_CHEONG@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_47',coachId:'c3',name:'Nurshahida Binte Mansor',nric:'',dob:'1986-05-29',mobile:'88320201',email:'nurshahidamansor86@gmail.com',sso:'Sembawang',fc:'Gia Hui',fcContact:'65927967',fcEmail:'Lee_Gia_Hui@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Client to decide in May',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_48',coachId:'c4',name:'Intan Farhana Binte Mustafa',nric:'',dob:'2000-09-12',mobile:'89508628',email:'annaayann08@gmail.com',sso:'Woodlands',fc:'Gia Hui',fcContact:'65927967',fcEmail:'Lee_Gia_Hui@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_49',coachId:'c6',name:'Lee Xiao Loong Terrence (li Zhaolin Terrence)',nric:'',dob:'1976-07-01',mobile:'85139401',email:'terrenceluvdriving@gmail.com',sso:'Woodlands',fc:'Joshua',fcContact:'82013022',fcEmail:'Joshua_aw@msf .gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Contacted: Pend client selection of date',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_50',coachId:'c5',name:'Sabariah Binte Mohamed Latif',nric:'',dob:'1982-11-26',mobile:'87793943',email:'sabariahmohamedlatif@gmail.com',sso:'Woodlands',fc:'Yi Ling',fcContact:'67660341',fcEmail:'chua_yi_ling@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_51',coachId:'c7',name:'Nur Athira Binte Asahri',nric:'',dob:'2002-05-31',mobile:'97303105',email:'IRATIGVR@GMAIL.COM',sso:'Sembawang',fc:'Joe',fcContact:'63549058',fcEmail:'lim_joe_te@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_52',coachId:'c1',name:'Nurul Aisyah Binte Ayob',nric:'',dob:'1995-08-04',mobile:'93977521',email:'ichaayob@gmail.com',sso:'Woodlands',fc:'Terene',fcContact:'65851047',fcEmail:'terene_tan@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_53',coachId:'c7',name:'Shahrin Azhar Bin Mohamed',nric:'',dob:'1972-09-17',mobile:'87166339',email:'shahrinazharmohd@gmail.com',sso:'Sembawang',fc:'Zhi Rong',fcContact:'63547306',fcEmail:'ooi_zhi_yong@msf.gov.sg',welcomeSent:'2026-04-15',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_54',coachId:'c1',name:'Nurul Binte Ismail',nric:'',dob:'1999-11-09',mobile:'83343727',email:'nurul99.work@gmail.com',sso:'Woodlands',fc:'Halizah',fcContact:'6354 7415',fcEmail:'nur_halizah_hamid@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_55',coachId:'c7',name:'Sri Diana Hyka Dania Binte Yusoff',nric:'',dob:'2004-05-18',mobile:'88971595',email:'sridianahykadania2004@gmail.com',sso:'Woodlands',fc:'Zac',fcContact:'62319549',fcEmail:'zac_ching@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_56',coachId:'c3',name:'Siti Raudah Binte Salim',nric:'',dob:'1989-09-03',mobile:'84841351',email:'RARALATOYEAL@GMAIL.COM',sso:'Sengkang',fc:'Andre',fcContact:'63153658',fcEmail:'andre_lim@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_57',coachId:'c3',name:'Thabassum Fathima Syed Jaffar Saddiq',nric:'',dob:'1983-08-10',mobile:'84272743',email:'FATHIMATHABASSUM83@GMAIL.COM',sso:'Sengkang',fc:'Andre',fcContact:'63153658',fcEmail:'andre_lim@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-19',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_58',coachId:'c3',name:'Nur Sofiyanthie Binte Abdullah',nric:'',dob:'1997-08-26',mobile:'89507754',email:'nursofiyanthie@gmail.com',sso:'Hougang',fc:'Soh Teng',fcContact:'65139195',fcEmail:'Loo_Soh_Teng@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_59',coachId:'c3',name:'Noorfarhana Begum Binte Mohd Freed',nric:'',dob:'1987-06-07',mobile:'83652722',email:'beiq12280127@gmail.com',sso:'Sengkang',fc:'Belle',fcContact:'63548976',fcEmail:'belle_teo@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_60',coachId:'c3',name:'Aw He Lin',nric:'',dob:'2004-02-02',mobile:'97902713',email:'shvhlin@gmail.com',sso:'Clementi',fc:'Ong Yun Jing',fcContact:'6265 2458',fcEmail:'ong_yun_jing@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_61',coachId:'c3',name:'Nor Diana Binte Abdul Rahman',nric:'',dob:'1987-04-08',mobile:'91089139',email:'ayunanan24@gmail.com',sso:'Geylang Serai',fc:'Clarice Cheong',fcContact:'68420967',fcEmail:'Clarice_YT_CHEONG@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_62',coachId:'c3',name:'Muhammad Hazwan Bin Hazmi',nric:'',dob:'1994-03-06',mobile:'87855473',email:'boywan94@gmail.com',sso:'Bedok',fc:'Goh Jing Yi',fcContact:'62319097',fcEmail:'Goh_jing_yi@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_63',coachId:'c6',name:'Adellia Tasha Binte Sazali',nric:'',dob:'1997-03-14',mobile:'84598594',email:'adeltas673@gmail.com',sso:'Geylang Serai',fc:'Carrie Ho',fcContact:'67367529',fcEmail:'carrie_ho@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_64',coachId:'c6',name:'Nuriffa Umayrah Binte Hamid Khan',nric:'',dob:'2004-10-13',mobile:'81464742',email:'carpethamster@gmail.com',sso:'Geylang Serai',fc:'Glenn Tan',fcContact:'68590817',fcEmail:'Glenn_TAN@gmail.com',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_65',coachId:'c6',name:'Jessie Hafizah Binte Rasul',nric:'',dob:'1974-02-05',mobile:'87775446',email:'arshinurangel@gmail.com',sso:'Bedok',fc:'Nurizzati Isnin',fcContact:'62437319',fcEmail:'Nurizzati_Isnin@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_66',coachId:'c5',name:'Nurul Amira Binte Mohamed Nazar',nric:'',dob:'1996-08-26',mobile:'94513419',email:'nurulamirabmn@gmail.com',sso:'Woodlands',fc:'Yi Ling',fcContact:'67660341',fcEmail:'chua_yi_ling@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_67',coachId:'c5',name:'Muhammad Abas Bin Sairi',nric:'',dob:'1989-01-26',mobile:'89307433',email:'muhdabas89@gmail.com',sso:'Woodlands',fc:'Terene',fcContact:'65851047',fcEmail:'terene_tan@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'No whatsapp. Texted via normal message, no reply. Call can\'t go through',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_68',coachId:'c1',name:'Ng Hui Ling Juvenia',nric:'',dob:'1995-03-10',mobile:'88588025',email:'juveniaa@live.com',sso:'Sembawang',fc:'Gia Hui',fcContact:'65927967',fcEmail:'Lee_Gia_Hui@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Contacted: Pend client selection of date',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_69',coachId:'c1',name:'Nur Asida Binte Razali',nric:'',dob:'1989-09-02',mobile:'90360184 / 80823980',email:'NURASIDARAZALI1989@GMAIL.COM',sso:'Sembawang',fc:'Joe',fcContact:'63549058',fcEmail:'lim_joe_te@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'On-hold. Pending coachee to revert',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_70',coachId:'c1',name:'Ng Kwok Siang',nric:'',dob:'1986-08-05',mobile:'88232505',email:'ngkwoksiangken@gmail.com',sso:'Woodlands',fc:'Eugene Wang',fcContact:'62319518',fcEmail:'eugene_wang@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'3 contact attempts. No response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_71',coachId:'c1',name:'Vicneswari D/O Silvaraj',nric:'',dob:'1988-03-16',mobile:'89160725',email:'vicnesvicram1@gmail.com',sso:'Woodlands',fc:'Aryani',fcContact:'63548362',fcEmail:'aryani_ramlan@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_72',coachId:'c1',name:'Nur Rashidah Binte Mohamed Said',nric:'',dob:'1985-09-01',mobile:'91475141',email:'rashidah.mdsaid12@gmail.com',sso:'Woodlands',fc:'Rayson',fcContact:'69709383',fcEmail:'rayson_sim@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_73',coachId:'c1',name:'Sarah Basirah Binte Chamis',nric:'',dob:'1998-09-22',mobile:'89770065',email:'Nashachms@gmail.com',sso:'Woodlands',fc:'Joanna',fcContact:'63547659',fcEmail:'joanna_khor@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Client selected. Pending Vernon update',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_74',coachId:'c1',name:'Nur Rashidah Binte Rashid',nric:'',dob:'1995-09-19',mobile:'87422701',email:'RASHIDAH102@GMAIL.COM',sso:'Woodlands',fc:'Amanda',fcContact:'62436899',fcEmail:'amanda_cy_goh@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_75',coachId:'c1',name:'Vijaya A/P Maryappan',nric:'',dob:'1980-11-04',mobile:'98147621',email:'Vijayamaryapan@gmail.com',sso:'Boon Lay',fc:'Nursalihah',fcContact:'67367439',fcEmail:'nursalihah_abdullah@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_76',coachId:'c7',name:'Roshini Deanna Peters',nric:'',dob:'2003-11-06',mobile:'8113 8042',email:'Roshinideannapeters@gmail.com',sso:'Jalan Besar',fc:'Riya',fcContact:'6354 9148',fcEmail:'Swndariya_GURUSAMY@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_77',coachId:'c7',name:'Nuridayah Binte Yasin',nric:'',dob:'1998-04-18',mobile:'87744901',email:'nuridayah.18@gmail.com',sso:'Toa Payoh',fc:'Heriyati Kasmani',fcContact:'63550089',fcEmail:'Heriyati_Kasmani@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_78',coachId:'c7',name:'Muhammad Hafiz Bin Roslan',nric:'',dob:'1990-07-28',mobile:'80829817',email:'hafizatiqah6869@gmail.com',sso:'Toa Payoh',fc:'Ken',fcContact:'62319390',fcEmail:'ken_yap@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_79',coachId:'c7',name:'Putri Nur ‘aqiilah Binte Ismadi',nric:'',dob:'2002-11-25',mobile:'86204292',email:'putriaqiilah@icloud.com',sso:'Toa Payoh',fc:'Chris',fcContact:'65855438',fcEmail:'christopher_yi_toh@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'2 texts 1 call no response',nextAction:'',nextActionDate:'',contactAttempts:2,archived:false,intake:{}},
+    {id:'w1_80',coachId:'c7',name:'Jamsairi Bin Kamaruddin',nric:'',dob:'1982-12-12',mobile:'83694303',email:'Bobida1212@gmail.com',sso:'Toa Payoh',fc:'Ken',fcContact:'62319390',fcEmail:'ken_yap@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_81',coachId:'c7',name:'Mohamed Fareez Bin Iskandar',nric:'',dob:'2004-01-06',mobile:'82597399',email:'fareezayie11@gmail.com',sso:'Toa Payoh',fc:'Reuben',fcContact:'68590816',fcEmail:'reuben_wong@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_82',coachId:'c7',name:'Mohd Fuad Bin Salleh',nric:'',dob:'1963-11-10',mobile:'80705207',email:'mohdfuad1583@gmail.com',sso:'Jalan Besar',fc:'Jamie',fcContact:'68590871',fcEmail:'jamie_ng@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_83',coachId:'c7',name:'Kumanayake Dona Dulanjali Siromi',nric:'',dob:'1988-05-31',mobile:'87808079',email:'arundulanjali0311@gmail.com',sso:'Toa Payoh',fc:'Reuben',fcContact:'68590816',fcEmail:'reuben_wong@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_84',coachId:'c7',name:'Dwayne Chen Jianfeng',nric:'',dob:'1985-11-25',mobile:'89225307',email:'dwayneecjf@icloud.com',sso:'Jalan Besar',fc:'Alex Chia',fcContact:'69704249',fcEmail:'alex_chia@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_85',coachId:'c8',name:'Muhammad Sholihin Bin Mesbari',nric:'',dob:'1985-08-07',mobile:'93488108',email:'indah.sholihin4812@gmail.com',sso:'Jalan Besar',fc:'Hakim',fcContact:'62300902',fcEmail:'zulhakim_mustar@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Texted on 21st Apr. Call on 22nd Apr 2pm. Pending registration',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_86',coachId:'c8',name:'Bui Thi Thoi',nric:'',dob:'1987-08-04',mobile:'84118616',email:'janethoi1501@gmail.com',sso:'Jalan Besar',fc:'Alex Chia',fcContact:'69704249',fcEmail:'alex_chia@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_87',coachId:'c8',name:'Putri Fatimah Az-zahra Binte Abdullah',nric:'',dob:'2002-03-06',mobile:'88155372',email:'putrimeow10@gmail.com',sso:'Jalan Besar',fc:'Alex Chia',fcContact:'69704249',fcEmail:'alex_chia@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'SMS on 21st Apr. Have send email. Call on 24th Apr before 5pm',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_88',coachId:'c8',name:'Nur Faiqah Binte Mohd Yusof',nric:'',dob:'1990-10-27',mobile:'89039165',email:'nuraiqah.myusof@gmail.com',sso:'Jalan Besar',fc:'Alex Chia',fcContact:'69704249',fcEmail:'alex_chia@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_89',coachId:'c8',name:'Zahari Bin Roland Rosmadi',nric:'',dob:'1993-05-11',mobile:'85031423',email:'ahtieearanoyas@gmail.com',sso:'Jalan Besar',fc:'Alex Chia',fcContact:'69704249',fcEmail:'alex_chia@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Texted on 21st Apr. 2nd contact on 22nd apr, no response. 3rd contact, no response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_90',coachId:'c8',name:'Muhd Qua\'yum',nric:'',dob:'2003-10-24',mobile:'87540253',email:'quayum2410@gmail.com',sso:'Toa Payoh',fc:'Janice',fcContact:'67367492',fcEmail:'janice_ang@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_91',coachId:'c8',name:'Mars Hanisah Binte Sharifuddin',nric:'',dob:'2003-06-05',mobile:'87499134',email:'cristiano.nisa@gmail.com',sso:'Yishun',fc:'Toh Wee Sing',fcContact:'62287168',fcEmail:'toh_wee_sing@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-04-27',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_92',coachId:'c8',name:'Dhatin Binte Shaikh Yasin Bamadhj',nric:'',dob:'1988-12-27',mobile:'9618 4676',email:'dhiyatiara2303@gmail.com',sso:'Ang Mo Kio',fc:'Khng Wei Yun',fcContact:'62319415',fcEmail:'khng_wei_yun@msf.gov.sg',welcomeSent:'',cgDone:'',cgDate:'',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'Texted on 21st Apr. Call at 2pm today. 2nd contact, called but no response. 3rd contact, no response',nextAction:'',nextActionDate:'',contactAttempts:3,archived:true,intake:{}},
+    {id:'w1_93',coachId:'c8',name:'Lizawati Binte Rahman',nric:'',dob:'1985-12-05',mobile:'88391731',email:'lisadutt85@gmail.com',sso:'Punggol',fc:'Ivan Lee',fcContact:'63548440',fcEmail:'ivan_wb_lee@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-12',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}},
+    {id:'w1_94',coachId:'c8',name:'Ho Chin Kong',nric:'',dob:'1972-08-24',mobile:'84989573',email:'luzhniki2000@gmail.com',sso:'Punggol',fc:'Sean Tan',fcContact:'80451328',fcEmail:'sean_cw_tan@msf.gov.sg',welcomeSent:'2026-04-23',cgDone:'',cgDate:'2026-05-05',cgHrs:'',coachDone:'',coachDate:'',coachHrs:'',wpDone:'',wpDate:'',wpHrs:'',svcDone:'',svcDate:'',svcHrs:'',notes:'',nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,intake:{}}
+  ],
+  activeCoachId:'c1',
+  settings:{
+    workshopVenue:'2 Kallang Avenue #06-28 CT Hub Singapore 339407',
+    workshopMRT:'Bendemeer MRT (EW8)',
+    venues:{},
+    venueMRT:{}
+  }
+};
 
+// ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
+// Data version — bump this any time DEFAULT data changes to force a fresh load
+const DATA_VERSION = 'elitez_2026_v103';
+
+function loadDB(){
+  try {
+    const raw = localStorage.getItem('elitez_hub');
+    if(raw){
+      const stored = JSON.parse(raw);
+      // Only use stored data if it matches current version AND has coachees
+      if(stored && stored.coachees && stored.coachees.length > 0){
+        // Patch any missing fields on each coachee
+        stored.coachees = stored.coachees.map(p => Object.assign(
+          {nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,mobile2:'',intake:{}}, p
+        ));
+        // Normalise names to title case
+        stored.coachees.forEach(p=>{ if(p.name) p.name=formatName(p.name); });
+        if(!stored.settings) stored.settings = JSON.parse(JSON.stringify(DEFAULT.settings));
+        return stored;
+      }
+    }
+  } catch(e){}
+  // No valid stored data — return a fresh copy of DEFAULT
+  const fresh = JSON.parse(JSON.stringify(DEFAULT));
+  fresh._version = DATA_VERSION;
+  return fresh;
+}
+
+let DB = loadDB();
+
+// Clean up old keys
+try{localStorage.removeItem('elitez_v4');}catch(e){}
+try{localStorage.removeItem('elitez_v5');}catch(e){}
+
+const save = () => {
+  try{
+    DB._version = DATA_VERSION;
+    localStorage.setItem('elitez_hub', JSON.stringify(DB));
+  }catch(e){}
+};
+const isAdminSession = () => DB._loggedInAs === 'admin';
+const isSeniorSession = () => {
+  if(isAdminSession()) return true;
+  const coach = DB.coaches.find(c=>c.id===DB._loggedInAs);
+  return coach && (coach.role==='senior' || coach.role==='admin');
+};
+const myCoachees = () => isAdminSession()
+  ? DB.coachees.filter(p=>!p.archived)
+  : DB.coachees.filter(p=>p.coachId===DB.activeCoachId&&!p.archived);
+const archivedCoachees = () => isAdminSession()
+  ? DB.coachees.filter(p=>p.archived)
+  : DB.coachees.filter(p=>p.coachId===DB.activeCoachId&&p.archived);
+const getCoach = () => {
+  if(isAdminSession()) return {name:'Admin',contact:'',email:'admin@elitez.asia',id:'admin'};
+  return DB.coaches.find(c=>c.id===DB.activeCoachId)||DB.coaches[0];
+};
+const intakeFilled = p => !!(p.intake&&(p.intake.name||p.intake.presenting||p.intake.skills));
+
+// ════════════════════════════════════════
+// LOGIN
+// ════════════════════════════════════════
+function renderOverviewTab(){
+  const body = document.getElementById('overview-page-body');
+  if(!body) return;
+  const data = (DB.settings||{}).overviewData;
+  const lastSync = (DB.settings||{}).lastSyncAt;
+  if(!data || Object.keys(data).length===0){
+    body.innerHTML=`<div style="background:white;border:2px solid var(--border);border-radius:var(--r-lg);padding:60px;text-align:center;box-shadow:var(--shadow)">
+      <div style="font-size:40px;margin-bottom:14px">📊</div>
+      <div style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px">No overview data yet</div>
+      <div style="font-size:13px;color:var(--text3);margin-bottom:20px">Go to <strong>Manage → Google Sheets Sync</strong>, enter the Wave 1 CSV URL and run a sync to load the full programme overview.</div>
+      <button class="btn btn-primary" onclick="goTo('manage',document.getElementById('nt-manage'))">Go to Manage →</button>
+    </div>`;
+    return;
+  }
+  const allCoaches = Object.keys(data).sort();
+  const flat = Object.values(data).flat();
+  const totalCoachees = flat.length;
+  const cgDone = flat.filter(p=>p.cgDone).length;
+  const cgSet = flat.filter(p=>p.cgDate&&!p.cgDone).length;
+  const coachDone = flat.filter(p=>p.coachDone).length;
+  const noContact = flat.filter(p=>!p.cgDate&&!p.cgDone&&(!p.notes||!p.notes.includes('Withdrawn'))).length;
+  const withdrawn = flat.filter(p=>p.notes&&p.notes.toLowerCase().includes('withdrawn')).length;
+
+  let html = `<div style="margin-bottom:24px">
+    <div style="font-size:20px;font-weight:800;color:var(--navy);margin-bottom:4px">📊 Programme Overview — AfA-ACES Wave 1</div>
+    ${lastSync?`<div style="font-size:12px;color:var(--text3)">Last synced: ${new Date(lastSync).toLocaleString('en-SG')}&nbsp;&nbsp;<button class="btn btn-ghost btn-sm" onclick="goTo('manage',document.getElementById('nt-manage'))">Sync again</button></div>`:''}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:24px">
+    <div style="background:white;border:2px solid var(--teal-mid);border-radius:var(--r-lg);padding:14px;text-align:center;box-shadow:var(--shadow)">
+      <div style="font-size:26px;font-weight:800;color:var(--teal)">${totalCoachees}</div><div style="font-size:10px;color:var(--teal);font-weight:700;text-transform:uppercase">Total</div>
+    </div>
+    <div style="background:white;border:2px solid var(--orange-mid);border-radius:var(--r-lg);padding:14px;text-align:center;box-shadow:var(--shadow)">
+      <div style="font-size:26px;font-weight:800;color:var(--orange)">${allCoaches.length}</div><div style="font-size:10px;color:var(--orange);font-weight:700;text-transform:uppercase">Coaches</div>
+    </div>
+    <div style="background:white;border:2px solid var(--green-mid);border-radius:var(--r-lg);padding:14px;text-align:center;box-shadow:var(--shadow)">
+      <div style="font-size:26px;font-weight:800;color:var(--green)">${cgDone}</div><div style="font-size:10px;color:var(--green);font-weight:700;text-transform:uppercase">CG Done</div>
+    </div>
+    <div style="background:white;border:2px solid var(--blue-mid);border-radius:var(--r-lg);padding:14px;text-align:center;box-shadow:var(--shadow)">
+      <div style="font-size:26px;font-weight:800;color:var(--blue)">${cgSet}</div><div style="font-size:10px;color:var(--blue);font-weight:700;text-transform:uppercase">CG Scheduled</div>
+    </div>
+    <div style="background:white;border:2px solid var(--red-mid);border-radius:var(--r-lg);padding:14px;text-align:center;box-shadow:var(--shadow)">
+      <div style="font-size:26px;font-weight:800;color:var(--red)">${noContact}</div><div style="font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase">Pending</div>
+    </div>
+    <div style="background:white;border:2px solid var(--gray-mid);border-radius:var(--r-lg);padding:14px;text-align:center;box-shadow:var(--shadow)">
+      <div style="font-size:26px;font-weight:800;color:var(--gray)">${withdrawn}</div><div style="font-size:10px;color:var(--gray);font-weight:700;text-transform:uppercase">Withdrawn</div>
+    </div>
+  </div>`;
+
+  // Per-coach cards
+  allCoaches.forEach(coachName=>{
+    const coachees = data[coachName];
+    const cgD = coachees.filter(p=>p.cgDone).length;
+    const cgS = coachees.filter(p=>p.cgDate&&!p.cgDone).length;
+    const pct = Math.round((cgD/coachees.length)*100);
+    const isMe = coachName.toLowerCase()===(getCoach().name||'').toLowerCase();
+    html+=`<div style="background:white;border:2px solid ${isMe?'var(--orange)':'var(--border)'};border-radius:var(--r-lg);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow)">
+      <div style="background:${isMe?'var(--orange)':'var(--navy)'};padding:12px 18px;display:flex;align-items:center;gap:14px">
+        <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;flex-shrink:0">${coachName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}</div>
+        <div style="flex:1">
+          <div style="font-size:15px;font-weight:800;color:white">${coachName}${isMe?' (You)':''}</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.75)">${coachees.length} coachees &nbsp;·&nbsp; CG completed: ${cgD} &nbsp;·&nbsp; Scheduled: ${cgS}</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:20px;font-weight:800;color:white">${pct}%</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.7)">CG progress</div>
+        </div>
+      </div>
+      <div style="padding:4px 0;overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <tr style="background:var(--off)">
+            <th style="padding:7px 14px;text-align:left;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border);white-space:nowrap">Name</th>
+            <th style="padding:7px 14px;text-align:left;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border)">SSO</th>
+            <th style="padding:7px 14px;text-align:left;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border)">CG Date</th>
+            <th style="padding:7px 14px;text-align:left;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border)">Coaching</th>
+            <th style="padding:7px 14px;text-align:left;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border)">Status / Notes</th>
+          </tr>
+          ${coachees.map(p=>{
+            const cgStatus = p.cgDone?'<span style="color:var(--green);font-weight:700">✓ Done</span>':
+                             p.cgDate?`<span style="color:var(--orange)">${fmtD(p.cgDate)}</span>`:
+                             '<span style="color:var(--text4)">—</span>';
+            const coachStatus = p.coachDone?'<span style="color:var(--green);font-weight:700">✓ Done</span>':
+                                p.coachDate?`<span style="color:var(--blue)">${fmtD(p.coachDate)}</span>`:
+                                '<span style="color:var(--text4)">—</span>';
+            const noteColor = p.notes&&p.notes.toLowerCase().includes('withdrawn')?'color:var(--red)':
+                              p.notes&&p.notes.includes('contact attempts')?'color:var(--red)':
+                              p.notes&&p.notes.includes('Contacted')?'color:var(--orange)':'color:var(--text3)';
+            return `<tr style="border-bottom:1px solid var(--off2)">
+              <td style="padding:8px 14px;font-weight:600;white-space:nowrap">${p.name}</td>
+              <td style="padding:8px 14px;color:var(--text3)">${p.sso||'—'}</td>
+              <td style="padding:8px 14px">${cgStatus}</td>
+              <td style="padding:8px 14px">${coachStatus}</td>
+              <td style="padding:8px 14px;font-size:11px;${noteColor};max-width:220px">${p.notes?p.notes.slice(0,80)+(p.notes.length>80?'…':''):'—'}</td>
+            </tr>`;
+          }).join('')}
+        </table>
+      </div>
+    </div>`;
+  });
+
+  body.innerHTML = html;
+}
+
+function forceResetAndLogin(){
+  // Clear ALL stored data and reload DEFAULT
+  try{localStorage.clear();}catch(e){}
+  DB = JSON.parse(JSON.stringify(DEFAULT));
+  DB._version = DATA_VERSION;
+  save();
+  // Now do the login check
+  const pw = document.getElementById('pw-input').value;
+  if(pw === PASS){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    initApp();
+  } else {
+    // Just reset without logging in — show confirmation
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('login-error').textContent='Data reset done! Now enter your password to login.';
+    document.getElementById('login-error').style.color='var(--green)';
+    document.getElementById('login-error').style.background='var(--green-light)';
+  }
+}
+function populateCoachSel(){
+  const sel = document.getElementById('coach-sel');
+  if(!sel) return;
+  const coaches = DB.coaches.filter(c=>c.id!=='admin');
+  sel.innerHTML = '<option value="">— Select your name —</option>' +
+    coaches.map(c=>`<option value="${c.id}">${c.name}</option>`).join('') +
+    '<option value="admin">Admin / Manager</option>';
+}
+function onCoachSelChange(){
+  document.getElementById('pw-input').value='';
+  document.getElementById('login-error').style.display='none';
+  document.getElementById('pw-input').focus();
+}
+function doLogin(){
+  const sel = document.getElementById('coach-sel');
+  const coachId = sel ? sel.value : '';
+  const pw = document.getElementById('pw-input').value;
+  if(!coachId){ 
+    document.getElementById('login-error').textContent='Please select your name first.';
+    document.getElementById('login-error').style.display='block';
+    return;
+  }
+  // Find coach by ID
+  const coach = DB.coaches.find(c=>c.id===coachId);
+  if(!coach){
+    document.getElementById('login-error').textContent='Coach not found.';
+    document.getElementById('login-error').style.display='block';
+    return;
+  }
+  // Check password — admin can log in as any coach
+  const adminCoach = DB.coaches.find(c=>c.id==='admin');
+  const adminPass = adminCoach ? adminCoach.password : 'AFA2026!';
+  if(pw === coach.password || pw === adminPass){
+    DB.activeCoachId = coachId; // admin keeps 'admin' as activeCoachId
+    DB._loggedInAs = coachId;
+    save();
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='flex';
+    initApp();
+  } else {
+    document.getElementById('login-error').textContent='Incorrect password. Please try again.';
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+function logout(){
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('pw-input').value='';
+  document.getElementById('login-error').style.display='none';
+}
+
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+const AVCOLS=[['#015171','#e6f3f8'],['#ea6c08','#fff4eb'],['#c45a06','#ffe4cc'],['#013d56','#cce8f4'],['#166534','#dcfce7'],['#7c3aed','#f5f3ff'],['#0e7490','#cffafe'],['#b45309','#fef3c7'],['#9d174d','#fce7f3'],['#065f46','#d1fae5']];
+const getVenue=(sso)=>{const s=DB.settings||{};const venues=s.venues||{};const w=s.workshopVenue||'2 Kallang Avenue #06-28 CT Hub Singapore 339407';const wm=s.workshopMRT||'Bendemeer MRT';return{address:venues[sso]||w,mrt:venues[sso+'_mrt']||wm};};
+const initials=n=>{const p=n.trim().split(' ');return(p[0][0]+(p[p.length-1][0]||'')).toUpperCase();};
+
+function htmlEncode(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+function formatName(name){
+  if(!name) return '';
+  // All words Title Case — including Bin, Binte, S/O, D/O etc.
+  return name.trim().split(' ').filter(Boolean).map(function(word){
+    var w=word.toLowerCase();
+    // Handle slash words: s/o -> S/O, d/o -> D/O, a/p -> A/P
+    if(w.includes('/')) return w.split('/').map(function(p){return p?p.charAt(0).toUpperCase()+p.slice(1):p;}).join('/');
+    return w.charAt(0).toUpperCase()+w.slice(1);
+  }).join(' ');
+}
+
+function salutation(name){
+  if(!name) return '';
+  var cap=formatName(name);
+  var parts=cap.split(' ');
+  // Stop before Bin/Binte/S/O/D/O etc to get given name only
+  var stopWords=['Bin','Binte','Bte','Bt','S/O','D/O','A/P','A/L','bin','binte','bte','bt','s/o','d/o','a/p','a/l'];
+  var nameParts=[];
+  for(var i=0;i<parts.length;i++){
+    if(stopWords.indexOf(parts[i])>=0) break;
+    nameParts.push(parts[i]);
+  }
+  return nameParts.length>0?nameParts.join(' '):cap;
+}
+const uid=()=>'id_'+Math.random().toString(36).slice(2,9);
+const fmtD=d=>{if(!d)return'';try{return new Date(d).toLocaleDateString('en-SG',{day:'numeric',month:'short',year:'numeric'});}catch{return d;}};
+const fmtDS=d=>{if(!d)return'';try{return new Date(d).toLocaleDateString('en-SG',{day:'2-digit',month:'2-digit',year:'numeric'});}catch{return d;}};
+const daysTo=d=>{if(!d)return null;const n=new Date();n.setHours(0,0,0,0);const t=new Date(d);t.setHours(0,0,0,0);return Math.round((t-n)/86400000);};
+function toast(msg,type='ok'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(type==='err'?'err':'ok');setTimeout(()=>t.className='toast',2800);}
+function closeM(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+
+// ════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════
+function initApp(){
+  populateCoachSel();
+  const isAdmin = isAdminSession();
+  // Show/hide overview tab based on role
+  const ovTab = document.getElementById('nt-overview');
+  if(ovTab) ovTab.style.display = (isAdmin || isSeniorSession()) ? 'flex' : 'none';
+  const cgTab = document.getElementById('nt-cg-attendance');
+  if(cgTab) cgTab.style.display = (isAdmin || isSeniorSession()) ? 'flex' : 'none';
+  // Show push-updates button for senior and admin
+  const puBtn = document.getElementById('btn-push-updates');
+  if(puBtn) puBtn.style.display = isSeniorSession() ? 'block' : 'none';
+  // Always ensure DB has coachees
+  if(!DB.coachees || DB.coachees.length===0 || !DB.coaches || DB.coaches.length===0){
+    DB = JSON.parse(JSON.stringify(DEFAULT));
+    DB._version = DATA_VERSION;
+  }
+  // For non-admin: ensure activeCoachId is valid
+  if(!isAdmin && DB.activeCoachId !== 'c1' && DB.coaches.length > 0 && !DB.coaches.find(cc=>cc.id===DB.activeCoachId)){
+    DB.activeCoachId = DB.coaches[0].id;
+  }
+  save();
+  document.getElementById('topbar-date').textContent=new Date().toLocaleDateString('en-SG',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  buildCoachDrop();
+  renderDashboard();
+  buildIntakeSel();
+  renderFAQ();
+  renderGuide();
+  updateCounts();
+  if(isAdmin || isSeniorSession()) renderOverviewTab();
+  initAutoSync();
+}
+
+// ════════════════════════════════════════
+// NAV
+// ════════════════════════════════════════
+function goTo(page, el){
+  // Route old tab names to calendar
+  if(page==='upcoming'||page==='actions'){page='calendar';el=document.getElementById('nt-calendar');}
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  (el||document.getElementById('nt-'+page)).classList.add('active');
+  if(page==='calendar')renderCalendar();
+  if(page==='archive')renderArchive();
+  if(page==='manage')renderManage();
+  if(page==='intake')buildIntakeSel();
+  if(page==='overview')renderOverviewTab();
+  if(page==='cg-attendance')renderCGAttendance();
+  if(page==='archive')renderArchive();
+}
+
+// ════════════════════════════════════════
+// COACH DROPDOWN
+// ════════════════════════════════════════
+function buildCoachDrop(){
+  const coach = getCoach();
+  const av = document.getElementById('topbar-av');
+  const nm = document.getElementById('topbar-coach-name');
+  if(av) av.textContent = isAdminSession() ? 'A' : initials(coach.name);
+  if(nm) nm.textContent = isAdminSession() ? 'Admin (All coaches)' : coach.name;
+  const dd = document.getElementById('coach-dropdown');
+  if(!dd) return;
+  const regularCoaches = DB.coaches.filter(c=>c.role!=='admin');
+  if(isAdminSession()){
+    // Admin sees all coaches + ability to view as each coach
+    dd.innerHTML = `<div style="padding:8px 14px;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em">View as coach</div>` +
+      regularCoaches.map(co=>`
+        <div class="coach-dropdown-item" onclick="adminViewAs('${co.id}')">
+          <div style="width:28px;height:28px;border-radius:50%;background:${AVCOLS[regularCoaches.indexOf(co)%AVCOLS.length][0]};color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${initials(co.name)}</div>
+          ${co.name} <span style="font-size:11px;color:var(--text4);margin-left:auto">${DB.coachees.filter(p=>p.coachId===co.id&&!p.archived).length} active</span>
+        </div>`).join('') +
+      `<div class="coach-dropdown-div"></div>
+       <div class="coach-dropdown-item active" onclick="adminViewAll();toggleCoachDrop()">
+         <div style="width:28px;height:28px;border-radius:50%;background:var(--orange);color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">A</div>
+         All coachees (Admin view) <span style="font-size:11px;color:var(--text4);margin-left:auto">${DB.coachees.filter(p=>!p.archived).length} total</span>
+       </div>
+       <div class="coach-dropdown-div"></div>
+       <div class="coach-dropdown-add" onclick="goTo('manage',document.getElementById('nt-manage'));toggleCoachDrop()">⚙ Manage coaches</div>`;
+  } else {
+    dd.innerHTML = regularCoaches.map(co=>`
+      <div class="coach-dropdown-item ${co.id===DB.activeCoachId?'active':''}" onclick="switchCoach('${co.id}')">
+        <div style="width:28px;height:28px;border-radius:50%;background:${AVCOLS[regularCoaches.indexOf(co)%AVCOLS.length][0]};color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">${initials(co.name)}</div>
+        ${co.name} <span style="font-size:11px;color:var(--text4);margin-left:auto">${DB.coachees.filter(p=>p.coachId===co.id&&!p.archived).length} active</span>
+      </div>`).join('') +
+      `<div class="coach-dropdown-div"></div>
+       <div class="coach-dropdown-add" onclick="goTo('manage',document.getElementById('nt-manage'));toggleCoachDrop()">⚙ Manage coaches</div>`;
+  }
+  const nc = document.getElementById('nc-coach');
+  if(nc) nc.innerHTML = regularCoaches.map(co=>`<option value="${co.id}">${co.name}</option>`).join('');
+}
+
+function adminViewAs(coachId){
+  // Admin temporarily views one coach's list
+  DB.activeCoachId = coachId;
+  DB._adminViewingAs = coachId; // store so we know admin is "pretending"
+  toggleCoachDrop();
+  buildCoachDrop();
+  renderDashboard();
+  buildIntakeSel();
+  updateCounts();
+  const name = DB.coaches.find(c=>c.id===coachId)?.name||'';
+  toast('Viewing as: '+name+' (Admin)');
+}
+
+function adminViewAll(){
+  // Admin back to full view
+  DB.activeCoachId = 'admin';
+  DB._adminViewingAs = null;
+  buildCoachDrop();
+  renderDashboard();
+  buildIntakeSel();
+  updateCounts();
+  toast('Admin: viewing all coachees');
+}
+let ddOpen=false;
+function toggleCoachDrop(){ddOpen=!ddOpen;document.getElementById('coach-dropdown').classList.toggle('open',ddOpen);}
+document.addEventListener('click',e=>{if(ddOpen&&!e.target.closest('.coach-pill')&&!e.target.closest('.coach-dropdown')){ddOpen=false;document.getElementById('coach-dropdown').classList.remove('open');}});
+function switchCoach(id){DB.activeCoachId=id;save();buildCoachDrop();renderDashboard();buildIntakeSel();ddOpen=false;document.getElementById('coach-dropdown').classList.remove('open');}
+
+// ════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════
+function renderDashboard(){
+  const list=myCoachees();
+  const cgSet=list.filter(p=>p.cgDate||p.cgDone).length;
+  const coachSet=list.filter(p=>p.coachDate||p.coachDone).length;
+  const week=list.filter(p=>{const d=daysTo(p.cgDate)||daysTo(p.coachDate);return d!==null&&d>=0&&d<=7;}).length;
+  const ifill=list.filter(p=>intakeFilled(p)).length;
+  document.getElementById('stat-row').innerHTML=`
+    <div class="stat"><div class="stat-accent" style="background:#015171"></div><div class="stat-icon" style="background:#e6f3f8;font-size:22px">👥</div><div class="stat-val" style="color:#015171">${list.length}</div><div class="stat-lbl">My Coachees</div></div>
+    <div class="stat"><div class="stat-accent" style="background:#ea6c08"></div><div class="stat-icon" style="background:#fff4eb;font-size:22px">📋</div><div class="stat-val" style="color:#ea6c08">${cgSet}</div><div class="stat-lbl">CG Scheduled</div></div>
+    <div class="stat"><div class="stat-accent" style="background:#16a34a"></div><div class="stat-icon" style="background:#f0fdf4;font-size:22px">🎯</div><div class="stat-val" style="color:#16a34a">${coachSet}</div><div class="stat-lbl">Coaching Set</div></div>
+    <div class="stat"><div class="stat-accent" style="background:#015171"></div><div class="stat-icon" style="background:#e6f3f8;font-size:22px">📝</div><div class="stat-val" style="color:#015171">${ifill}</div><div class="stat-lbl">Intake Filled</div></div>`;
+  // tab counts
+  document.getElementById('tc-dashboard').textContent=list.length;
+  document.getElementById('tc-intake').textContent=`${ifill}/${list.length}`;
+  renderCards();
+}
+
+function renderCards(){
+  const q=(document.getElementById('s-search').value||'').toLowerCase();
+  const pf=document.getElementById('s-phase').value;
+  const sf=document.getElementById('s-sso').value;
+  const list=myCoachees().filter(p=>{
+    const mq=!q||p.name.toLowerCase().includes(q)||(p.mobile||'').includes(q)||(p.sso||'').toLowerCase().includes(q);
+    let mp=true;
+    if(pf==='cg')mp=!!p.cgDate;if(pf==='coach')mp=!!p.coachDate;
+    if(pf==='nodate')mp=!p.cgDate&&!p.coachDate;if(pf==='intake')mp=intakeFilled(p);
+    return mq&&mp&&(!sf||p.sso===sf);
+  });
+  const grid=document.getElementById('coachee-grid');
+  if(!list.length){grid.innerHTML='<div style="text-align:center;padding:40px;background:white;border-radius:var(--r-lg);border:2px solid var(--border)">' +
+      '<div style="font-size:32px;margin-bottom:12px">👥</div>' +
+      '<div style="font-size:15px;font-weight:700;color:var(--text2);margin-bottom:6px">No coachees found</div>' +
+      '<div style="font-size:13px;color:var(--text4);margin-bottom:16px">If you just opened this file for the first time, click the button below to load all coachees.</div>' +
+      '<button class="btn btn-primary" onclick="resetData()">Load default coachees</button>' +
+      '</div>';return;}
+  grid.innerHTML=list.map((p,i)=>buildCard(p,DB.coachees.indexOf(p))).join('');
+}
+
+
+function buildCard(p,idx){
+  var tbc=AVCOLS[idx%AVCOLS.length],tc=tbc[0],bg=tbc[1];
+  var today=new Date().toISOString().slice(0,10);
+  var cgD=daysTo(p.cgDate),coD=daysTo(p.coachDate);
+  var senior=isSeniorSession();
+  var pid=p.id;
+
+  var step=1;
+  if(p.cgDate||p.cgDone) step=2;
+  if(p.cgDone) step=3;
+  if(p.cgDone&&(p.coachDate||p.coachDone)) step=4;
+  if(p.coachDone) step=5;
+  if(p.wpDone&&p.svcDone) step=6;
+
+  var SL={1:'Contact coachee',2:'CG Workshop scheduled',3:'Schedule coaching',4:'Coaching session',5:'Skills training',6:'Completed'};
+  var SC={1:'#6b7280',2:'#f86a06',3:'#034b71',4:'#7c3aed',5:'#16a34a',6:'#16a34a'};
+
+  function oc(fn,args){return 'onclick="'+fn+'('+args.map(function(a){return"'"+a+"'"}).join(',')+')"';}
+  function btn(cls,label,fn,args,sty){return '<button class="'+cls+'" '+(sty?'style="'+sty+'" ':'')+oc(fn,args)+'>'+label+'</button>';}
+
+  function N(q){
+    return '<div style="border-top:1px solid var(--off2);padding-top:16px;margin-top:16px">'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">'
+    +'<div><label style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:5px">NRIC</label>'
+    +'<input type="text" placeholder="S1234567A" value="'+htmlEncode(q.nric||'')+'" style="width:100%;padding:9px 12px;border:2px solid var(--border);border-radius:var(--r-sm);font-size:13px;font-family:inherit;box-sizing:border-box" '+oc('setF',[q.id,'nric'])+'></div>'
+    +'<div><label style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:5px">Next Action</label>'
+    +'<input type="text" placeholder="e.g. Call to confirm" value="'+htmlEncode(q.nextAction||'')+'" style="width:100%;padding:9px 12px;border:2px solid var(--border);border-radius:var(--r-sm);font-size:13px;font-family:inherit;box-sizing:border-box" '+oc('setF',[q.id,'nextAction'])+'></div>'
+    +'</div>'
+    +'<div style="margin-bottom:12px"><label style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:5px">Notes</label>'
+    +'<textarea rows="3" style="width:100%;padding:9px 12px;border:2px solid var(--border);border-radius:var(--r-sm);font-size:13px;font-family:inherit;resize:vertical;box-sizing:border-box" '+oc('setF',[q.id,'notes'])+'>'+htmlEncode(q.notes||'')+'</textarea></div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">'
+    +btn('btn btn-ghost btn-sm','📦 Archive','archiveP',[q.id])
+    +btn('btn btn-ghost btn-sm','📋 Intake form','goToIntakeFor',[q.id,'pre'])
+    +(senior?'<button class="btn btn-sm" style="background:var(--green);border-color:var(--green);color:white;margin-left:auto" onclick="pushUpdatesToSheet()">📤 Push to sheet</button>':'')
+    +'</div></div>';
+  }
+
+  var cgBadge=p.cgDone?'<span class="pbadge done">CG Done</span>':p.cgDate?'<span class="pbadge sched">CG '+(cgD!==null&&cgD>=0?'in '+cgD+'d':fmtD(p.cgDate))+'</span>':'<span class="pbadge empty">CG —</span>';
+  var coBadge=p.coachDone?'<span class="pbadge done">Coach Done</span>':p.coachDate?'<span class="pbadge sched">Coach '+(coD!==null&&coD>=0?'in '+coD+'d':fmtD(p.coachDate))+'</span>':'<span class="pbadge empty">Coach —</span>';
+
+  var s1='<div style="padding:18px 20px">'
+  +'<div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:4px">👋 First contact</div>'
+  +'<div style="font-size:12px;color:var(--text3);margin-bottom:16px">Send introduction message and find out availability for the CG Workshop.</div>'
+  +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">'
+  +btn('btn btn-wa','📲 Send introduction message','openWA',[pid,'intro'],'font-size:13px')
+  +btn('btn btn-wa','📲 Send registration form','openWA',[pid,'regform'],'font-size:13px')
+  +'</div>'
+  +'<div style="background:var(--off);border-radius:var(--r);padding:14px;margin-bottom:14px">'
+  +'<div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Contact attempts</div>'
+  +'<div style="display:flex;align-items:center;gap:10px">'
+  +btn('','−','adjAttempts',[pid,'-1'],'width:30px;height:30px;border-radius:8px;border:2px solid var(--border2);background:white;font-size:16px;cursor:pointer;font-weight:700')
+  +'<span id="att-'+pid+'" style="font-size:22px;font-weight:800;color:'+((p.contactAttempts||0)>=3?'var(--red)':'var(--navy)')+';min-width:30px;text-align:center">'+(p.contactAttempts||0)+'</span>'
+  +btn('','+ ','adjAttempts',[pid,'1'],'width:30px;height:30px;border-radius:8px;border:2px solid var(--border2);background:white;font-size:16px;cursor:pointer;font-weight:700')
+  +'<span style="font-size:12px;color:var(--text3)">of 3 attempts</span>'
+  +((p.contactAttempts||0)>=3?btn('btn btn-danger btn-sm','Archive — no response','archiveP',[pid]):'')
+  +'</div>'
+  +((p.contactAttempts||0)>=3?'<div style="margin-top:8px;font-size:12px;color:var(--red);font-weight:600">⚠ 3 attempts reached</div>':'')
+  +'</div>'
+  +'<div style="border-top:1px solid var(--off2);padding-top:14px">'
+  +'<div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Once they respond — set CG Workshop date</div>'
+  +(senior?'<input type="date" value="'+(p.cgDate||'')+'" '+oc('setF',[pid,'cgDate'])+' style="padding:9px 12px;border:2px solid var(--teal-mid);border-radius:var(--r-sm);font-size:13px;font-family:inherit;color-scheme:light">'
+    :'<div style="font-size:12px;color:var(--text3)">CG date set by Mei Ting / Vernon / Admin</div>')
+  +(p.cgDate?'<span style="font-size:13px;font-weight:600;color:var(--teal);margin-left:10px">✓ CG set for '+fmtD(p.cgDate)+'</span>':'')
+  +'</div>'+N(p)+'</div>';
+
+  var s2='<div style="padding:18px 20px">'
+  +'<div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:4px">📋 CG Workshop scheduled for '+fmtD(p.cgDate)+'</div>'
+  +'<div style="font-size:12px;color:var(--text3);margin-bottom:16px">Send reminder and confirm attendance on the day.</div>'
+  +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">'
+  +btn('btn btn-wa','📲 Send CG reminder','openWA',[pid,'cg'],'font-size:13px')
+  +'</div>'
+  +'<div style="background:var(--off);border-radius:var(--r);padding:14px;margin-bottom:14px">'
+  +'<div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">CG Workshop details</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">'
+  +'<div class="field"><label>Workshop date</label><input type="date" value="'+(p.cgDate||'')+'"'+(senior?'':' disabled style="opacity:0.6"')+' '+oc('setF',[pid,'cgDate'])+'>'+(senior?'':'<div style="font-size:10px;color:var(--text4);margin-top:3px">Managed by Mei Ting / Vernon / Admin</div>')+'</div>'
+  +'<div class="field"><label>Hours attended</label><input type="text" placeholder="8" value="'+(p.cgHrs||'')+'"'+(senior?'':' disabled style="opacity:0.6"')+' '+oc('setF',[pid,'cgHrs'])+'></div>'
+  +'</div>'
+  +(senior?'<label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;cursor:pointer"><input type="checkbox" '+(p.cgDone?'checked':'')+' style="width:16px;height:16px;accent-color:var(--green)" onchange="setF(\''+pid+'\',\'cgDone\',this.checked?\'Yes\':\'\')">&nbsp;✓ Mark CG Workshop as attended</label>'
+    :'<div style="padding:8px 12px;background:white;border:1px solid var(--border);border-radius:var(--r-sm);font-size:12px;color:var(--text3)">'+(p.cgDone?'✅ CG marked as attended':'⏳ Attendance to be confirmed by Mei Ting or Vernon')+'</div>')
+  +'</div>'+N(p)+'</div>';
+
+  var s3='<div style="padding:18px 20px">'
+  +'<div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:4px">✅ CG Workshop completed!</div>'
+  +'<div style="font-size:12px;color:var(--text3);margin-bottom:16px">Now schedule the individual coaching session (3 hours).</div>'
+  +'<div style="background:var(--off);border-radius:var(--r);padding:14px;margin-bottom:14px">'
+  +'<div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">Schedule coaching session</div>'
+  +'<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px">'
+  +'<input type="date" value="'+(p.coachDate||'')+'" '+oc('setF',[pid,'coachDate'])+' style="padding:9px 12px;border:2px solid var(--teal-mid);border-radius:var(--r-sm);font-size:13px;font-family:inherit;color-scheme:light">'
+  +(p.coachDate?'<span style="font-size:13px;font-weight:600;color:var(--teal)">📅 '+fmtD(p.coachDate)+'</span>':'')
+  +'</div>'
+  +'<button class="btn btn-wa btn-sm" '+oc('openWA',[pid,'coach','schedule'])+'>📲 Schedule coaching & courses</button>'
+  +(p.coachDate?btn('btn btn-wa btn-sm','📲 Send advance reminder','openWA',[pid,'coach','adv']):'')
+  +'</div>'+N(p)+'</div>';
+
+  var s4='<div style="padding:18px 20px">'
+  +(p.coachDate===today?'<div style="background:var(--teal-light);border:2px solid var(--teal-mid);border-radius:var(--r);padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--teal)">🎯 Coaching session is TODAY</div></div>'+btn('btn btn-primary','Open coaching form →','goToIntakeFor',[pid,'day'])+'</div>':'')
+  +'<div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:4px">🎯 Coaching session'+(p.coachDate?' — '+fmtD(p.coachDate):'')+'</div>'
+  +'<div style="font-size:12px;color:var(--text3);margin-bottom:16px">Complete the intake form and collect attendance record.</div>'
+  +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">'
+  +btn('btn btn-primary','📋 Pre-session form','goToIntakeFor',[pid,'pre'],'font-size:13px')
+  +btn('btn btn-primary','🎯 Coaching day form','goToIntakeFor',[pid,'day'],'font-size:13px;background:var(--teal);border-color:var(--teal)')
+  +(p.coachDate?btn('btn btn-wa btn-sm','📲 Day-before reminder','openWA',[pid,'coach','day']):'')
+  +'</div>'
+  +'<div style="background:var(--orange-light);border:2px solid var(--orange-mid);border-radius:var(--r);padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px">'
+  +'<div style="flex:1"><div style="font-size:12px;font-weight:700;color:var(--orange)">📋 Attendance Record</div><div style="font-size:11px;color:var(--orange);opacity:0.85">Print and get coachee signature</div></div>'
+  +btn('btn btn-ghost btn-sm','👁 Preview','previewAtt',[pid])
+  +btn('btn','🖨 Print','downloadAttPDF',[pid],'background:var(--orange);border-color:var(--orange);color:white;font-size:13px;padding:8px 16px')
+  +'</div>'
+  +'<div style="background:var(--off);border-radius:var(--r);padding:14px;margin-bottom:14px">'
+  +'<div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px">Session details</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">'
+  +'<div class="field"><label>Session date</label><input type="date" value="'+(p.coachDate||'')+'" '+oc('setF',[pid,'coachDate'])+'></div>'
+  +'<div class="field"><label>Hours attended</label><input type="text" placeholder="3" value="'+(p.coachHrs||'')+'" '+oc('setF',[pid,'coachHrs'])+'></div>'
+  +'</div>'
+  +'<label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;cursor:pointer"><input type="checkbox" '+(p.coachDone?'checked':'')+' style="width:16px;height:16px;accent-color:var(--green)" onchange="setF(\''+pid+'\',\'coachDone\',this.checked?\'Yes\':\'\')">&nbsp;✓ Mark coaching session as completed</label>'
+  +'</div>'+N(p)+'</div>';
+
+  var s5='<div style="padding:18px 20px">'
+  +'<div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:4px">📚 Skills Training</div>'
+  +'<div style="font-size:12px;color:var(--text3);margin-bottom:16px">Schedule Workplace Communication and Service Excellence training.</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px">'
+  +'<div style="background:var(--off);border-radius:var(--r);padding:14px">'
+  +'<div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px">🗣 Workplace Comm.</div>'
+  +(p.wpDone?'<div style="color:var(--green);font-weight:700;margin-bottom:8px">✅ Completed</div>':p.wpDate?'<div style="color:var(--orange);font-size:12px;margin-bottom:8px">📅 '+fmtD(p.wpDate)+'</div>':'')
+  +'<div class="field" style="margin-bottom:8px"><label>Date</label><input type="date" value="'+(p.wpDate||'')+'"'+(p.coachDone?'':' disabled style="opacity:0.4"')+' '+oc('setF',[pid,'wpDate'])+'></div>'
+  +'<div class="field" style="margin-bottom:10px"><label>Hours</label><input type="text" placeholder="16" value="'+(p.wpHrs||'')+'" '+oc('setF',[pid,'wpHrs'])+'></div>'
+  +'<label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:10px"><input type="checkbox" '+(p.wpDone?'checked':'')+' style="width:16px;height:16px;accent-color:var(--green)" onchange="setF(\''+pid+'\',\'wpDone\',this.checked?\'Yes\':\'\')">&nbsp;Mark attended</label>'
+  +(p.wpDate?btn('btn btn-wa btn-sm','📲 Remind','openWA',[pid,'wp']):'')
+  +'</div>'
+  +'<div style="background:var(--off);border-radius:var(--r);padding:14px">'
+  +'<div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px">⭐ Service Excellence</div>'
+  +(p.svcDone?'<div style="color:var(--green);font-weight:700;margin-bottom:8px">✅ Completed</div>':p.svcDate?'<div style="color:var(--orange);font-size:12px;margin-bottom:8px">📅 '+fmtD(p.svcDate)+'</div>':'')
+  +'<div class="field" style="margin-bottom:8px"><label>Date</label><input type="date" value="'+(p.svcDate||'')+'"'+(p.coachDone?'':' disabled style="opacity:0.4"')+' '+oc('setF',[pid,'svcDate'])+'></div>'
+  +'<div class="field" style="margin-bottom:10px"><label>Hours</label><input type="text" placeholder="16" value="'+(p.svcHrs||'')+'" '+oc('setF',[pid,'svcHrs'])+'></div>'
+  +'<label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:10px"><input type="checkbox" '+(p.svcDone?'checked':'')+' style="width:16px;height:16px;accent-color:var(--green)" onchange="setF(\''+pid+'\',\'svcDone\',this.checked?\'Yes\':\'\')">&nbsp;Mark attended</label>'
+  +(p.svcDate?btn('btn btn-wa btn-sm','📲 Remind','openWA',[pid,'svc']):'')
+  +'</div></div>'+N(p)+'</div>';
+
+  var s6='<div style="padding:18px 20px;text-align:center">'
+  +'<div style="font-size:40px;margin-bottom:10px">🎉</div>'
+  +'<div style="font-size:16px;font-weight:800;color:var(--green);margin-bottom:6px">Programme completed!</div>'
+  +'<div style="font-size:13px;color:var(--text3)">All phases done for '+p.name+'.</div>'
+  +N(p)+'</div>';
+
+  var panels={1:s1,2:s2,3:s3,4:s4,5:s5,6:s6};
+
+  var urgent='';
+  if(p.coachDate===today) urgent='<div style="background:linear-gradient(90deg,#022d44,#034b71);padding:12px 20px;display:flex;align-items:center;gap:12px"><span style="font-size:18px">🎯</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:white">Coaching session TODAY</div></div>'+btn('btn','Open →','goToIntakeFor',[pid,'day'],'background:white;color:var(--orange);border-color:white;font-size:13px')+'</div>';
+  else if(p.cgDate===today) urgent='<div style="background:linear-gradient(90deg,#f86a06,#d55a05);padding:12px 20px;display:flex;align-items:center;gap:12px"><span style="font-size:18px">📋</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:white">CG Workshop TODAY</div></div></div>';
+  else if(cgD!==null&&cgD>=0&&cgD<=2) urgent='<div class="urgent-bar">🚨 CG Workshop in '+(cgD===0?'today':cgD+'d')+' — send reminder</div>';
+
+  var pb='<div style="padding:10px 20px;background:var(--off);border-bottom:1px solid var(--off2);display:flex;gap:3px;align-items:center">';
+  for(var si=1;si<=6;si++){pb+='<div style="flex:1;height:4px;border-radius:2px;background:'+(si<=step?SC[si]:'var(--border2)')+'"></div>';if(si<6)pb+='<div style="font-size:9px;color:'+(si===step?SC[si]:'var(--text4)')+';font-weight:'+(si===step?'700':'400')+';white-space:nowrap;flex-shrink:0">'+(si===step?SL[si]:'')+'</div>';}
+  pb+='</div>';
+
+  var coachLbl=isAdminSession()&&!DB._adminViewingAs?'&nbsp;·&nbsp;<span style="color:var(--orange);font-weight:600">'+(DB.coaches.find(function(cc){return cc.id===p.coachId;})||{name:'?'}).name+'</span>':'';
+
+  return '<div class="ccard" id="cc-'+pid+'">'
+    +'<div class="ccard-head" onclick="toggleCard(\''+pid+'\')">'
+    +'<div class="ccard-av" style="background:'+bg+';color:'+tc+'">'+initials(p.name)+'</div>'
+    +'<div class="ccard-info"><div class="ccard-name">'+p.name+'</div>'
+    +'<div class="ccard-meta">'+(p.sso||'')+'&nbsp;·&nbsp;FC: '+(p.fc||'')+'&nbsp;·&nbsp;📱 '+(p.mobile||'')+coachLbl+'</div></div>'
+    +'<div class="ccard-right"><div class="phase-badges">'
+    +'<span style="font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;background:'+SC[step]+'22;color:'+SC[step]+';border:1.5px solid '+SC[step]+'44">Step '+step+': '+SL[step]+'</span>'
+    +cgBadge+coBadge
+    +'</div><div class="toggle-arrow" id="arr-'+pid+'">▼</div></div></div>'
+    +urgent
+    +'<div class="ccard-body" id="body-'+pid+'">'+pb+(panels[step]||s1)+'</div>'
+  +'</div>';
+}
+
+
+// ── Helper utilities ─────────────────────────────────────────────
+function parseCSVLine(line){
+  var result=[],cur='',inQ=false;
+  for(var i=0;i<line.length;i++){
+    var ch=line[i];
+    if(ch==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+    else if(ch===','&&!inQ){result.push(cur.trim());cur='';}
+    else cur+=ch;
+  }
+  result.push(cur.trim());
+  return result;
+}
+
+// parseProgDate: like parseSheetDate but rejects dates before 2024
+// (programme dates should never be before 2024)
+function parseProgDate(raw){
+  var d=parseSheetDate(raw);
+  if(!d) return '';
+  // Reject dates before 2024 — those are likely DOB or other wrong data
+  if(d < '2024-01-01') return '';
+  return d;
+}
+
+function parseSheetDate(raw){
+  try{
+    if(raw===null||raw===undefined) return '';
+    var s=String(raw).trim().replace(/^"|"$/g,'').trim();
+    if(!s||s==='DD-MMM-YYYY'||s==='Y/N'||s==='NA'||s==='-'||s==='nan') return '';
+    var n=parseFloat(s);
+    if(!isNaN(n)&&n>40000&&n<70000){
+      var d=new Date(Math.round((n-25569)*86400*1000));
+      if(!isNaN(d.getTime())){
+        var tzOffset=d.getTimezoneOffset()*60000;
+        var local=new Date(d.getTime()-tzOffset);
+        return local.toISOString().slice(0,10);
+      }
+    }
+    s=s.replace(/\s*-\s*/g,'-').replace(/\s*\/\s*/g,'/');
+    var m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    if(m) return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
+    m=s.match(/^(\d{1,2})-([A-Za-z]{3,9})-(\d{2,4})$/);
+    if(m){
+      var mo={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+      var mn=mo[(m[2]||'').toLowerCase().slice(0,3)]||'01';
+      var yr=String(m[3]||'').length===2?'20'+m[3]:String(m[3]||'2026');
+      return yr+'-'+mn+'-'+(m[1]||'01').padStart(2,'0');
+    }
+    m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+    if(m){
+      var yr2=String(m[3]||'').length===2?'20'+m[3]:String(m[3]||'2026');
+      return yr2+'-'+(m[2]||'01').padStart(2,'0')+'-'+(m[1]||'01').padStart(2,'0');
+    }
+    return '';
+  }catch(e){return '';}
+}
+
+function archiveP(pid){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p) return;
+  if(!confirm('Archive '+p.name+'? They will be moved to the Archive tab.')) return;
+  p.archived=true;save();renderDashboard();updateCounts();
+  toast(p.name+' archived');
+}
+
+function restoreP(pid){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p) return;
+  p.archived=false;save();renderDashboard();updateCounts();
+  toast(p.name+' restored');
+}
+
+function adjAttempts(pid,d){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p) return;
+  p.contactAttempts=Math.max(0,(p.contactAttempts||0)+d);
+  save();
+  var el=document.getElementById('att-'+pid);
+  if(el){
+    el.textContent=p.contactAttempts;
+    el.style.color=p.contactAttempts>=3?'var(--red)':'var(--navy)';
+    el.style.background='var(--green-light)';el.style.borderRadius='6px';el.style.padding='2px 6px';
+    setTimeout(function(){el.style.background='';el.style.padding='';},800);
+  }
+  if(p.contactAttempts>=3){
+    toast('⚠ 3 attempts for '+salutation(p.name)+' — consider archiving','err');
+    renderCards();
+  } else {
+    toast('Contact attempts: '+p.contactAttempts+'/3 for '+salutation(p.name));
+  }
+}
+
+function addSingleToGCal(pid,type,date){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p||!date) return;
+  var titles={cg:'CG Workshop - '+p.name,coaching:'Coaching - '+p.name,wp:'WP Comm - '+p.name,svc:'Service Excellence - '+p.name};
+  var title=encodeURIComponent(titles[type]||type+' - '+p.name);
+  var d=date.replace(/-/g,'');
+  var url='https://calendar.google.com/calendar/r/eventedit?text='+title+'&dates='+d+'/'+d;
+  window.open(url,'_blank');
+}
+
+// ── processSyncCSV ────────────────────────────────────────────────
+function processSyncCSV(csv, statusEl, previewEl, setStatus){
+  if(!setStatus) setStatus=function(h){if(statusEl)statusEl.innerHTML=h;};
+  if(!csv||typeof csv!=='string') throw new Error('No data received from sheet');
+  if(csv.trim().startsWith('<')) throw new Error('Got HTML instead of CSV — check Apps Script deployment');
+
+  var allLines=csv.split('\n').filter(function(l){return l.trim();});
+  if(!allLines||allLines.length<3) throw new Error('Sheet has fewer than 3 rows — check tab is named "Wave 1"');
+
+  var dataLines=allLines.slice(2);
+  var coachNameFilter=(getCoach().name||'').trim().toLowerCase();
+  var added=0,updated=0,skipped=0,filtered=0;
+  var changes=[];
+  var allCoachData={};
+
+  var COL={rowNum:0,name:1,dob:2,mobile:3,email:4,sso:5,fc:6,fcContact:7,fcEmail:8,
+    coachName:9,coachContact:10,coachEmail:11,welcome:12,cgDone:13,cgDate:14,cgHrs:15,
+    coachDone:16,coachDate:17,coachHrs:18,nonAttend:19,phase2withdraw:20,
+    wpDone:21,wpDate:22,wpHrs:23,
+    svcDone:24,svcDate:25,svcHrs:26};
+
+  for(var li=0;li<dataLines.length;li++){
+    var row=parseCSVLine(dataLines[li]);
+    if(row.every(function(f){return !f.trim();})) continue;
+    var name=formatName((row[COL.name]||'').trim());
+    var coachName=(row[COL.coachName]||'').trim();
+    if(!name||!coachName) continue;
+
+    if(!allCoachData[coachName]) allCoachData[coachName]=[];
+    allCoachData[coachName].push({
+      name:name,sso:(row[COL.sso]||'').trim(),mobile:(row[COL.mobile]||'').trim(),
+      cgDate:parseProgDate(row[COL.cgDate]),
+      cgDone:(row[COL.cgDone]||'').trim().toUpperCase()==='Y'?'Yes':'',
+      coachDate:parseProgDate(row[COL.coachDate]),
+      coachDone:(row[COL.coachDone]||'').trim().toUpperCase()==='Y'?'Yes':'',
+      notes:[(row[COL.nonAttend]||'').trim(),(row[COL.phase2withdraw]||'').trim()].filter(Boolean).join(' | ')
+    });
+
+    if(!isAdminSession()&&coachName.toLowerCase()!==coachNameFilter){filtered++;continue;}
+
+    var mobile=(row[COL.mobile]||'').trim().replace(/\s/g,'');
+    var existing=DB.coachees.find(function(p){
+      return p.name.toLowerCase()===name.toLowerCase()||
+        (mobile&&p.mobile&&p.mobile.replace(/\D/g,'')===mobile.replace(/\D/g,''));
+    });
+    var matchedCoach=DB.coaches.find(function(co){return co.name.trim().toLowerCase()===coachName.toLowerCase();});
+    var assignedCoachId=matchedCoach?matchedCoach.id:(DB.activeCoachId||'c1');
+
+    var sr={name:name,dob:parseSheetDate(row[COL.dob]),mobile:mobile,
+      email:(row[COL.email]||'').trim(),sso:(row[COL.sso]||'').trim(),
+      fc:(row[COL.fc]||'').trim(),fcContact:(row[COL.fcContact]||'').trim(),
+      fcEmail:(row[COL.fcEmail]||'').trim(),welcomeSent:parseSheetDate(row[COL.welcome]),
+      cgDate:parseProgDate(row[COL.cgDate]),cgDone:(row[COL.cgDone]||'').trim().toUpperCase()==='Y'?'Yes':'',cgHrs:(row[COL.cgHrs]||'').trim(),
+      coachDate:parseProgDate(row[COL.coachDate]),coachDone:(row[COL.coachDone]||'').trim().toUpperCase()==='Y'?'Yes':'',coachHrs:(row[COL.coachHrs]||'').trim(),
+      wpDate:parseProgDate(row[COL.wpDate]),wpDone:(row[COL.wpDone]||'').trim().toUpperCase()==='Y'?'Yes':'',wpHrs:(row[COL.wpHrs]||'').trim(),
+      svcDate:parseProgDate(row[COL.svcDate]),svcDone:(row[COL.svcDone]||'').trim().toUpperCase()==='Y'?'Yes':'',svcHrs:(row[COL.svcHrs]||'').trim(),
+      notes:[(row[COL.nonAttend]||'').trim(),(row[COL.phase2withdraw]||'').trim()].filter(Boolean).join(' | ')};
+
+    if(existing){
+      var changed=[];
+      ['name','mobile','email','sso','fc','fcContact','fcEmail','dob'].forEach(function(f){
+        if(sr[f]&&existing[f]!==sr[f]){existing[f]=sr[f];changed.push(f);}
+      });
+      ['welcomeSent','cgDate','cgHrs','coachDate','coachHrs','wpDate','wpHrs','svcDate','svcHrs'].forEach(function(f){
+        if(sr[f]&&sr[f]!==existing[f]){existing[f]=sr[f];changed.push(f);}
+      });
+      ['cgDone','coachDone','wpDone','svcDone'].forEach(function(f){
+        if(sr[f]==='Yes'&&existing[f]!=='Yes'){existing[f]='Yes';changed.push(f);}
+      });
+      if(sr.notes&&!existing.notes.includes(sr.notes)){
+        existing.notes=(existing.notes?existing.notes+' | ':'')+sr.notes;changed.push('notes');
+      }
+      if(!existing.archived){
+        var an=(existing.notes||'').toLowerCase();
+        var shouldArchive=
+          an.includes('withdrawn')||
+          an.includes('number not in use')||an.includes('number not active')||an.includes('not in used')||
+          an.includes('found a job')||
+          an.includes('unable to commit')||an.includes('unable to make it')||
+          an.includes('unable to attend')||
+          an.includes('not interested')||
+          an.includes('opted out')||
+          an.includes('dropped out')||
+          (an.includes('3 contact')&&(an.includes('no response')||an.includes('mia')));
+        if(shouldArchive){existing.archived=true;changed.push('archived');}
+      }
+      if(changed.length){updated++;changes.push({name:name,action:'Updated',fields:changed});}
+      else skipped++;
+    } else {
+      var nn=(sr.notes||'').toLowerCase();
+      var na=nn.includes('withdrawn')||
+             nn.includes('number not in use')||nn.includes('number not active')||nn.includes('not in used')||
+             nn.includes('found a job')||
+             nn.includes('unable to commit')||nn.includes('unable to make it')||
+             nn.includes('unable to attend')||nn.includes('not interested')||
+             nn.includes('opted out')||nn.includes('dropped out')||
+             (nn.includes('3 contact')&&(nn.includes('no response')||nn.includes('mia')));
+      DB.coachees.push({
+        id:'sync_'+Date.now()+'_'+Math.random().toString(36).slice(2,6),
+        coachId:assignedCoachId,nric:'',nextAction:'',nextActionDate:'',
+        contactAttempts:nn.includes('3 contact')?3:0,archived:na,intake:{},
+        name:sr.name,dob:sr.dob,mobile:sr.mobile,email:sr.email,sso:sr.sso,
+        fc:sr.fc,fcContact:sr.fcContact,fcEmail:sr.fcEmail,welcomeSent:sr.welcomeSent,
+        cgDate:sr.cgDate,cgDone:sr.cgDone,cgHrs:sr.cgHrs,
+        coachDate:sr.coachDate,coachDone:sr.coachDone,coachHrs:sr.coachHrs,
+        wpDate:sr.wpDate,wpDone:sr.wpDone,wpHrs:sr.wpHrs,
+        svcDate:sr.svcDate,svcDone:sr.svcDone,svcHrs:sr.svcHrs,notes:sr.notes
+      });
+      added++;changes.push({name:name,action:na?'Added+archived':'Added',fields:['new from sheet']});
+    }
+  }
+
+  DB.settings.overviewData=allCoachData;
+  DB.settings.lastSyncAt=new Date().toISOString();
+  save();renderDashboard();buildIntakeSel();updateCounts();
+  if(isSeniorSession()) renderOverviewTab();
+
+  var summary='✓ Sync complete: '+added+' added, '+updated+' updated, '+skipped+' unchanged'+(filtered?' ('+filtered+' other coaches)':'');
+  setStatus('<span style="color:var(--green);font-weight:700">'+summary+'</span>');
+  setTimeout(function(){var ind=document.getElementById('topbar-sync-indicator');if(ind)ind.style.display='none';},5000);
+  toast(summary);
+
+  if(previewEl&&changes.length){
+    previewEl.style.display='block';
+    previewEl.innerHTML='<div style="background:white;border:2px solid var(--border);border-radius:var(--r);overflow:hidden;max-height:260px;overflow-y:auto">'+
+      '<div style="padding:8px 14px;background:var(--off);font-size:11px;font-weight:700;border-bottom:1px solid var(--border)">Changes ('+changes.length+')</div>'+
+      changes.map(function(ch){
+        var bg=ch.action.startsWith('Added')?'var(--green-light)':'var(--blue-light)';
+        var col=ch.action.startsWith('Added')?'var(--green)':'var(--blue)';
+        return '<div style="padding:8px 14px;border-bottom:1px solid var(--off2);font-size:12px;display:flex;gap:10px;align-items:center">'+
+          '<span style="padding:2px 8px;border-radius:12px;font-size:10px;font-weight:700;background:'+bg+';color:'+col+'">'+ch.action+'</span>'+
+          '<span style="font-weight:600">'+ch.name+'</span>'+
+          '<span style="color:var(--text3);font-size:11px">'+ch.fields.join(', ')+'</span></div>';
+      }).join('')+'</div>';
+  }
+}
+
+// ── CG Attendance ────────────────────────────────────────────────
+function renderCGAttendance(){
+  var body=document.getElementById('cg-attendance-body');
+  if(!body) return;
+  var allActive=DB.coachees.filter(function(p){return !p.archived;});
+  var today=new Date().toISOString().slice(0,10);
+  var html='<div style="margin-bottom:16px"><div style="font-size:20px;font-weight:800;color:var(--navy)">Training Attendance</div><div style="font-size:13px;color:var(--text3);margin-top:2px">Manage CG Workshop &middot; WP Comm &middot; Service Excellence attendance</div></div>';
+  html+='<div style="display:flex;gap:0;margin-bottom:20px;border:2px solid var(--border);border-radius:var(--r);overflow:hidden">';
+  html+='<button id="att-tab-cg" onclick="showAttTab(&apos;cg&apos;)" style="flex:1;padding:9px;font-size:12px;font-weight:700;background:var(--teal);color:white;border:none;cursor:pointer;font-family:inherit">CG Workshop</button>';
+  html+='<button id="att-tab-wp" onclick="showAttTab(&apos;wp&apos;)" style="flex:1;padding:9px;font-size:12px;font-weight:700;background:var(--off);color:var(--text3);border:none;border-left:2px solid var(--border);cursor:pointer;font-family:inherit">Workplace Communication</button>';
+  html+='<button id="att-tab-svc" onclick="showAttTab(&apos;svc&apos;)" style="flex:1;padding:9px;font-size:12px;font-weight:700;background:var(--off);color:var(--text3);border:none;border-left:2px solid var(--border);cursor:pointer;font-family:inherit">Service Excellence</button>';
+  html+='</div>';
+  html+='<div id="att-panel-cg">'+makeAttPanel('cgDate','cgDone','cgHrs','CG Workshop',allActive,today,'downloadCGAttendance')+'</div>';
+  html+='<div id="att-panel-wp" style="display:none">'+makeAttPanel('wpDate','wpDone','wpHrs','Workplace Communication',allActive,today,'downloadWPAttendance')+'</div>';
+  html+='<div id="att-panel-svc" style="display:none">'+makeAttPanel('svcDate','svcDone','svcHrs','Service Excellence',allActive,today,'downloadSvcAttendance')+'</div>';
+  body.innerHTML=html;
+}
+
+function makeAttPanel(dateField,doneField,hrsField,title,coachees,today,dlFn){
+  var byDate={};
+  coachees.forEach(function(p){var d=p[dateField];if(d){if(!byDate[d])byDate[d]=[];byDate[d].push(p);}});
+  var sortedDates=Object.keys(byDate).sort();
+  if(!sortedDates.length) return '<div style="padding:20px;text-align:center;font-size:13px;color:var(--text3)">No '+title+' sessions scheduled yet</div>';
+  var out='';
+  sortedDates.forEach(function(date){
+    var list=byDate[date];
+    var attended=list.filter(function(p){return !!p[doneField];}).length;
+    var total=list.length;
+    var pct=Math.round((attended/total)*100);
+    var isToday=(date===today);
+    var isPast=(date<today);
+    var dA=daysTo(date);
+    var lbl=isToday?'TODAY':isPast?'Past':'In '+(dA!==null&&dA>=0?dA+'d':'?');
+    out+='<div style="background:white;border:2px solid '+(isToday?'var(--orange)':'var(--border)')+';border-radius:var(--r-lg);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow)">';
+    out+='<div style="background:'+(isToday?'var(--orange)':'var(--navy)')+';padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+    out+='<div style="flex:1"><div style="font-size:14px;font-weight:800;color:white">'+title+' &mdash; '+fmtD(date)+'</div>';
+    out+='<div style="font-size:12px;color:rgba(255,255,255,0.75)">'+total+' participants &nbsp;&middot;&nbsp; '+attended+' attended &nbsp;&middot;&nbsp; '+pct+'%</div></div>';
+    out+='<span style="background:rgba(255,255,255,0.2);color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700">'+lbl+'</span></div>';
+    out+='<div style="height:4px;background:var(--off2)"><div style="height:4px;background:var(--green);width:'+pct+'%"></div></div>';
+    out+='<table style="width:100%;border-collapse:collapse;font-size:13px">';
+    out+='<tr style="background:var(--off)"><th style="padding:9px 14px;border-bottom:2px solid var(--border);text-align:left">Name</th><th style="padding:9px 14px;border-bottom:2px solid var(--border);text-align:left">SSO</th><th style="padding:9px 14px;border-bottom:2px solid var(--border);text-align:left">Coach</th><th style="padding:9px 14px;border-bottom:2px solid var(--border);text-align:left">Mobile</th><th style="padding:9px 14px;border-bottom:2px solid var(--border);text-align:center">Attended</th><th style="padding:9px 14px;border-bottom:2px solid var(--border)">Hours</th></tr>';
+    list.forEach(function(p){
+      var cn=(DB.coaches.find(function(cc){return cc.id===p.coachId;})||{name:'?'}).name;
+      out+='<tr style="border-bottom:1px solid var(--off2);'+(p[doneField]?'background:#f0fdf4;':'')+'">';
+      out+='<td style="padding:9px 14px;font-weight:600">'+p.name+'</td>';
+      out+='<td style="padding:9px 14px;color:var(--text3)">'+(p.sso||'&mdash;')+'</td>';
+      out+='<td style="padding:9px 14px;color:var(--text3)">'+cn+'</td>';
+      out+='<td style="padding:9px 14px;color:var(--text3)">'+(p.mobile||'&mdash;')+'</td>';
+      out+='<td style="padding:9px 14px;text-align:center">';
+      out+='<input type="checkbox"'+(p[doneField]?' checked':'')+' style="width:18px;height:18px;accent-color:var(--green)" onchange="markAttended(this.dataset.pid,this.dataset.field,this.checked)" data-pid="'+p.id+'" data-field="'+doneField+'">';
+      if(p[doneField]) out+='<span style="color:var(--green);font-size:11px;font-weight:700"> Y</span>';
+      out+='</td>';
+      out+='<td style="padding:9px 14px"><input type="text" value="'+(p[hrsField]||'')+'" placeholder="hrs" style="width:55px;padding:5px 8px;border:2px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit" onchange="setF(this.dataset.pid,this.dataset.field,this.value)" data-pid="'+p.id+'" data-field="'+hrsField+'"></td>';
+      out+='</tr>';
+    });
+    out+='</table>';
+    out+='<div style="padding:10px 16px;border-top:1px solid var(--off2);display:flex;gap:8px;flex-wrap:wrap;align-items:center">';
+    out+='<button class="btn btn-primary btn-sm" onclick="markAllTrainingAttended(this.dataset.date,this.dataset.done,this.dataset.hrs)" data-date="'+date+'" data-done="'+doneField+'" data-hrs="'+hrsField+'">Mark all attended</button>';
+    out+='<button class="btn btn-ghost btn-sm" onclick="'+dlFn+'(this.dataset.date)" data-date="'+date+'">Print sheet</button>';
+    out+='<button class="btn btn-sm" style="background:var(--teal);border-color:var(--teal);color:white" onclick="downloadTrainingPayrollCSV(this.dataset.date,this.dataset.done,this.dataset.hrs)" data-date="'+date+'" data-done="'+doneField+'" data-hrs="'+hrsField+'">Payroll CSV</button>';
+    out+='<span style="font-size:12px;color:var(--text3);margin-left:auto">'+attended+'/'+total+'</span>';
+    out+='</div></div>';
+  });
+  return out;
+}
+
+function showAttTab(tab){
+  ['cg','wp','svc'].forEach(function(t){
+    var btn=document.getElementById('att-tab-'+t);
+    var panel=document.getElementById('att-panel-'+t);
+    var active=(t===tab);
+    if(btn){btn.style.background=active?'var(--teal)':'var(--off)';btn.style.color=active?'white':'var(--text3)';}
+    if(panel)panel.style.display=active?'block':'none';
+  });
+}
+
+function markAttended(pid,field,attended){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p)return;
+  p[field]=attended?'Yes':'';save();
+  toast(attended?'✓ '+p.name+' marked attended':p.name+' attendance removed');
+  setTimeout(function(){renderCGAttendance();},200);
+}
+
+function markAllTrainingAttended(date,doneField,hrsField){
+  var dateField=doneField.replace('Done','Date');
+  var coachees=DB.coachees.filter(function(p){return p[dateField]===date&&!p.archived;});
+  var defHrs=hrsField==='cgHrs'?'8':'16';
+  coachees.forEach(function(p){p[doneField]='Yes';if(!p[hrsField])p[hrsField]=defHrs;});
+  save();toast('✓ All '+coachees.length+' marked as attended for '+fmtD(date));
+  setTimeout(function(){renderCGAttendance();},200);
+}
+
+
+
+
+
+
+function downloadTrainingPayrollCSV(date,doneField,hrsField){
+  var dateField=doneField.replace('Done','Date');
+  var coachees=DB.coachees.filter(function(p){return p[dateField]===date&&!p.archived&&p[doneField];});
+  if(!coachees.length){toast('No attended participants for this date','err');return;}
+  var headers=['"Employee ID"','"Basic Pay"','"Employee Name (Do delete the column after input employee ID)"','"Employee NRIC (Do delete the column after input employee ID)"'];
+  var rows=coachees.map(function(p){
+    var hrs=parseFloat(p[hrsField])||0;
+    var pay=(hrs*10).toFixed(2);
+    var esc=function(v){var s=String(v||'');return s.indexOf(',')>-1||s.indexOf('"')>-1?'"'+s.replace(/"/g,'""')+'"':s;};
+    return ['',esc(pay),esc(p.name),esc(p.nric||'')].join(',');
+  });
+  var csv=[headers.join(',')].concat(rows).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='Training_Payroll_'+date+'.csv';a.click();
+  URL.revokeObjectURL(url);
+  toast('✓ Payroll CSV downloaded ('+coachees.length+' participants)');
+}
+
+
+function markCGAttended(pid,attended){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p) return;
+  p.cgDone=attended?'Yes':'';save();
+  toast(attended?'✓ '+p.name+' marked as attended':p.name+' attendance removed');
+  setTimeout(function(){renderCGAttendance();},200);
+}
+
+function markAllCGAttended(date){
+  var coachees=DB.coachees.filter(function(p){return p.cgDate===date&&!p.archived;});
+  coachees.forEach(function(p){p.cgDone='Yes';if(!p.cgHrs)p.cgHrs='8';});
+  save();toast('✓ All '+coachees.length+' coachees marked as attended for '+fmtD(date));
+  setTimeout(function(){renderCGAttendance();},200);
+}
+
+
+
+function downloadCGPayrollCSV(date){
+  var coachees=DB.coachees.filter(function(p){return p.cgDate===date&&!p.archived&&p.cgDone;});
+  if(!coachees.length){toast('No attended coachees for this date — mark attendance first','err');return;}
+  var headers=['"Employee ID"','"Basic Pay"','"Employee Name (Do delete the column after input employee ID)"','"Employee NRIC (Do delete the column after input employee ID)"'];
+  var rows=coachees.map(function(p){
+    var hrs=parseFloat(p.cgHrs)||0;
+    var pay=(hrs*10).toFixed(2);
+    var esc=function(v){var s=String(v||'');return s.indexOf(',')>-1||s.indexOf('"')>-1?'"'+s.replace(/"/g,'""')+'"':s;};
+    return ['',esc(pay),esc(p.name),esc(p.nric||'')].join(',');
+  });
+  var csv=[headers.join(',')].concat(rows).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='CG_Payroll_'+date+'.csv';a.click();
+  URL.revokeObjectURL(url);
+  toast('✓ Payroll CSV downloaded ('+coachees.length+' coachees)');
+}
+
+// ── Sync functions ────────────────────────────────────────────────
+function showSyncTab(tab){
+  var s=document.getElementById('sync-panel-script'),cv=document.getElementById('sync-panel-csv');
+  var ts=document.getElementById('sync-tab-script'),tc=document.getElementById('sync-tab-csv');
+  if(tab==='script'){
+    if(s)s.style.display='block';if(cv)cv.style.display='none';
+    if(ts){ts.style.background='var(--teal)';ts.style.color='white';}
+    if(tc){tc.style.background='var(--off)';tc.style.color='var(--text3)';}
+  }else{
+    if(s)s.style.display='none';if(cv)cv.style.display='block';
+    if(ts){ts.style.background='var(--off)';ts.style.color='var(--text3)';}
+    if(tc){tc.style.background='var(--teal)';tc.style.color='white';}
+  }
+}
+
+function copyAppsScript(){
+  var code=document.getElementById('apps-script-code');
+  if(!code) return;
+  if(navigator.clipboard){navigator.clipboard.writeText(code.textContent).then(function(){toast('Script code copied!');});}
+  else{var ta=document.createElement('textarea');ta.value=code.textContent;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Script code copied!');}
+}
+
+function saveScriptUrl(){
+  if(!DB.settings)DB.settings={};
+  var el=document.getElementById('sheets-url');
+  DB.settings.sheetsUrl=(el?el.value||'':'').trim();save();toast('Apps Script URL saved');
+}
+
+function loadSheetSettings(){
+  var s=DB.settings||{};
+  var el=document.getElementById('sheets-url');
+  if(el&&s.sheetsUrl)el.value=s.sheetsUrl;
+  updateAutoSyncUI();
+}
+
+async function syncFromAppsScript(){
+  try{saveScriptUrl();}catch(e){}
+  var s=DB.settings||{};
+  var url=(s.sheetsUrl||'').trim();
+  var setStatus=function(h){var el=document.getElementById('sync-status');if(el)el.innerHTML=h;var ind=document.getElementById('topbar-sync-indicator');if(ind){ind.style.display='block';ind.innerHTML=h.replace(/<[^>]+>/g,'');}};
+  var previewEl=document.getElementById('sync-preview');
+
+  if(!url){toast('Please paste your Apps Script URL first','err');return;}
+  setStatus('<span style="color:var(--teal)">⏳ Connecting to Google Sheet...</span>');
+  if(previewEl)previewEl.style.display='none';
+
+  try{
+    var resp=await fetch(url,{method:'GET',redirect:'follow'});
+    if(!resp.ok) throw new Error('HTTP '+resp.status+' — check the script is deployed with "Anyone" access');
+    var raw=await resp.text();
+    if(!raw||raw.trim().length<10) throw new Error('No data returned from sheet');
+    if(raw.trim().startsWith('<')) throw new Error('Got HTML login page — re-deploy script with "Who has access: Anyone"');
+    var csv=raw;
+    if(raw.trim().startsWith('{')){var parsed=JSON.parse(raw);if(parsed.error)throw new Error(parsed.error);if(parsed.ok&&parsed.csv)csv=parsed.csv;}
+    processSyncCSV(csv,null,previewEl,setStatus);
+  }catch(err){
+    setStatus('<span style="color:var(--red)">❌ '+err.message+'</span>');
+    if(previewEl){
+      previewEl.style.display='block';
+      var isLocal=window.location.protocol==='file:';
+      previewEl.innerHTML='<div style="background:var(--red-light);border:2px solid var(--red-mid);border-radius:var(--r);padding:16px">'+
+        '<div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px">❌ '+err.message+'</div>'+
+        (isLocal?'<div style="font-size:12px;color:var(--text2)">Host on Netlify for sync to work (file:// blocks external requests)</div>':
+          '<div style="font-size:12px;color:var(--text2);line-height:1.9">Check: Apps Script deployed? "Who has access: Anyone"? URL correct?<br>Test: open URL in browser — should show JSON like {"ok":true,...}</div>')+
+        '</div>';
+    }
+    toast('Sync failed','err');
+  }
+}
+
+function syncFromCSVFile(){
+  if(!_csvFileData){toast('Please select a CSV file first','err');return;}
+  var statusEl=document.getElementById('sync-status-csv')||document.getElementById('sync-status');
+  var previewEl=document.getElementById('sync-preview');
+  if(statusEl)statusEl.innerHTML='<span style="color:var(--teal)">⏳ Processing file...</span>';
+  try{
+    processSyncCSV(_csvFileData,statusEl,previewEl,function(h){if(statusEl)statusEl.innerHTML=h;});
+    _csvFileData=null;
+    var fi=document.getElementById('csv-file-input');if(fi)fi.value='';
+    var fn=document.getElementById('csv-file-name');if(fn){fn.textContent='No file selected';fn.style.color='var(--text3)';}
+    var fp=document.getElementById('csv-file-preview');if(fp)fp.style.display='none';
+    var bs=document.getElementById('btn-sync-csv');if(bs)bs.disabled=true;
+  }catch(err){if(statusEl)statusEl.innerHTML='<span style="color:var(--red)">❌ '+err.message+'</span>';toast('Import failed','err');}
+}
+
+var _csvFileData=null;
+function handleCSVFileSelect(input){
+  var file=input.files[0];if(!file)return;
+  var nameEl=document.getElementById('csv-file-name');
+  var previewEl=document.getElementById('csv-file-preview');
+  var btnSync=document.getElementById('btn-sync-csv');
+  if(nameEl){nameEl.textContent=file.name;nameEl.style.color='var(--green)';nameEl.style.fontWeight='600';}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var csv=e.target.result;
+    var lines=csv.split('\n').filter(function(l){return l.trim();});
+    var dataLines=lines.slice(2);
+    var coaches={};
+    dataLines.forEach(function(line){var row=parseCSVLine(line);var cn=(row[9]||'').trim();if(cn)coaches[cn]=(coaches[cn]||0)+1;});
+    var summary=Object.keys(coaches).map(function(n){return n+': '+coaches[n];}).join(', ');
+    if(previewEl){previewEl.style.display='block';previewEl.innerHTML='<div style="background:white;border:1.5px solid var(--green-mid);border-radius:var(--r-sm);padding:10px 14px;font-size:12px"><div style="font-weight:700;color:var(--green);margin-bottom:4px">✓ File loaded — '+dataLines.length+' data rows</div><div style="color:var(--text3)">'+summary+'</div></div>';}
+    _csvFileData=csv;
+    if(btnSync){btnSync.disabled=false;}
+  };
+  reader.readAsText(file);
+}
+
+function showSyncBackModal(){
+  var modal=document.getElementById('sync-back-modal');
+  if(modal)modal.style.display='flex';
+}
+
+function exportUpdatesCSV(){
+  var coach=getCoach();
+  var coachees=isAdminSession()?DB.coachees.filter(function(p){return !p.archived;}):DB.coachees.filter(function(p){return p.coachId===DB.activeCoachId&&!p.archived;});
+  var headers=['Row#','Name','DOB','Mobile','Email','SSO','FC Name','FC Contact','FC Email','Career Coach','Welcome Sent','CG Attended','CG Date','CG Hrs','Coaching Attended','Coaching Date','Coaching Hrs','WP Attended','WP Date','WP Hrs','SvcExc Attended','SvcExc Date','SvcExc Hrs','Notes','Next Action','Next Action Date'];
+  var rows=coachees.map(function(p){
+    var rowId=p.id.replace('w1_','');
+    var esc=function(v){var s=String(v||'');return s.indexOf(',')>-1||s.indexOf('"')>-1||s.indexOf('\n')>-1?'"'+s.replace(/"/g,'""')+'"':s;};
+    return [rowId,p.name,p.dob,p.mobile,p.email,p.sso,p.fc,p.fcContact,p.fcEmail,
+      (DB.coaches.find(function(c){return c.id===p.coachId;})||{name:''}).name,p.welcomeSent,
+      p.cgDone?'Y':'',p.cgDate,p.cgHrs,p.coachDone?'Y':'',p.coachDate,p.coachHrs,
+      p.wpDone?'Y':'',p.wpDate,p.wpHrs,p.svcDone?'Y':'',p.svcDate,p.svcHrs,
+      p.notes,p.nextAction,p.nextActionDate].map(esc);
+  });
+  var csv=[headers.join(',')].concat(rows.map(function(r){return r.join(',');})).join('\n');
+  var blob=new Blob([csv],{type:'text/csv'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;
+  a.download='CoachingHub_Updates_'+(isAdminSession()?'AllCoaches':coach.name.replace(/\s/g,'_'))+'_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();URL.revokeObjectURL(url);
+  toast('✓ CSV exported');
+}
+
+async function pushUpdatesToSheet(){
+  var s=DB.settings||{};var url=s.sheetsUrl||'';
+  if(!url){toast('No Apps Script URL — go to Manage to set it','err');return;}
+  var coachees=isAdminSession()?DB.coachees.filter(function(p){return !p.archived;}):DB.coachees.filter(function(p){return p.coachId===DB.activeCoachId&&!p.archived;});
+  var updates=[];
+  coachees.forEach(function(p){
+    var rn=parseInt(p.id.replace('w1_','').replace(/[^\d]/g,''));
+    if(!rn||isNaN(rn))return;
+    var push=function(col,val){if(val)updates.push({rowNum:rn,col:col,value:val});};
+    push(13,p.welcomeSent);push(14,p.cgDone==='Yes'?'Y':'');push(15,p.cgDate);
+    push(17,p.coachDone==='Yes'?'Y':'');push(18,p.coachDate);
+    push(21,p.wpDone==='Yes'?'Y':'');push(22,p.wpDate);
+    push(24,p.svcDone==='Yes'?'Y':'');push(25,p.svcDate);
+  });
+  if(!updates.length){toast('No updates to push','err');return;}
+  toast('⏳ Pushing '+updates.length+' updates...');
+  try{
+    var resp=await fetch(url,{method:'POST',body:JSON.stringify({updates:updates})});
+    var result=await resp.json();
+    if(result.ok){toast('✓ '+result.updated+' cells updated in Google Sheet!');}
+    else{toast('Error: '+(result.error||'Unknown'),'err');exportUpdatesCSV();}
+  }catch(e){toast('Direct push failed — downloading CSV instead','err');exportUpdatesCSV();}
+}
+
+// ── Auto-sync ─────────────────────────────────────────────────────
+var _autoSyncTimer=null,_autoSyncEnabled=false,_autoSyncInterval=15;
+
+function toggleAutoSync(){
+  var s=DB.settings||{};
+  if(!s.sheetsUrl||!s.sheetsUrl.includes('script.google.com')){toast('Please enter and save your Apps Script URL first','err');return;}
+  _autoSyncEnabled=!_autoSyncEnabled;
+  DB.settings.autoSync=_autoSyncEnabled;DB.settings.autoSyncInterval=_autoSyncInterval;save();
+  updateAutoSyncUI();
+  if(_autoSyncEnabled){startAutoSync();toast('Auto-sync on — every '+_autoSyncInterval+' min');}
+  else{stopAutoSync();toast('Auto-sync off');}
+}
+
+function updateAutoSyncInterval(){
+  var sel=document.getElementById('autosync-interval');
+  if(sel)_autoSyncInterval=parseInt(sel.value)||15;
+  DB.settings.autoSyncInterval=_autoSyncInterval;save();
+  if(_autoSyncEnabled){stopAutoSync();startAutoSync();updateAutoSyncUI();}
+}
+
+function startAutoSync(){
+  stopAutoSync();
+  var ms=_autoSyncInterval*60*1000;
+  _autoSyncTimer=setInterval(async function(){
+    var s=DB.settings||{};if(!s.sheetsUrl)return;
+    try{
+      var resp=await fetch(s.sheetsUrl,{method:'GET',redirect:'follow'});
+      if(!resp.ok)return;
+      var raw=await resp.text();
+      if(!raw||raw.trim().length<10||raw.trim().startsWith('<'))return;
+      var csv=raw;
+      if(raw.trim().startsWith('{')){try{var p=JSON.parse(raw);if(p.ok&&p.csv)csv=p.csv;else return;}catch(e){return;}}
+      processSyncCSV(csv,null,null,function(){});
+      var ts=new Date().toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'});
+      var statusEl=document.getElementById('sync-status');
+      if(statusEl)statusEl.innerHTML='<span style="color:var(--green)">✓ Last synced '+ts+'</span>';
+      updateAutoSyncUI();
+    }catch(e){console.warn('Auto-sync failed:',e.message);}
+  },ms);
+  updateAutoSyncUI();
+}
+
+function stopAutoSync(){if(_autoSyncTimer){clearInterval(_autoSyncTimer);_autoSyncTimer=null;}}
+
+function updateAutoSyncUI(){
+  var toggle=document.getElementById('autosync-toggle');
+  var thumb=document.getElementById('autosync-thumb');
+  var status=document.getElementById('autosync-status');
+  var sel=document.getElementById('autosync-interval');
+  if(toggle)toggle.style.background=_autoSyncEnabled?'var(--green)':'var(--border2)';
+  if(thumb)thumb.style.left=_autoSyncEnabled?'22px':'2px';
+  if(status){
+    if(_autoSyncEnabled){
+      var ts=(DB.settings||{}).lastSyncAt?new Date((DB.settings||{}).lastSyncAt).toLocaleTimeString('en-SG',{hour:'2-digit',minute:'2-digit'}):'never';
+      status.innerHTML='<span style="color:var(--green);font-weight:600">● On — every '+_autoSyncInterval+' min</span> <span style="color:var(--text4)">· last: '+ts+'</span>';
+    }else{status.textContent='Auto-sync is off';status.style.color='var(--text3)';}
+  }
+  if(sel)sel.value=String(_autoSyncInterval);
+}
+
+function initAutoSync(){
+  var s=DB.settings||{};
+  _autoSyncInterval=s.autoSyncInterval||15;
+  _autoSyncEnabled=s.autoSync||false;
+  updateAutoSyncUI();
+  if(_autoSyncEnabled&&s.sheetsUrl&&s.sheetsUrl.includes('script.google.com'))startAutoSync();
+}
+
+// ── Change password ───────────────────────────────────────────────
+function showChangePw(){
+  var coach=getCoach();
+  var sub=document.getElementById('pw-change-sub');if(sub)sub.textContent='Changing password for: '+coach.name;
+  ['pw-current','pw-new','pw-confirm'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  ['pw-change-error','pw-change-success'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  var modal=document.getElementById('pw-change-modal');if(modal)modal.classList.add('open');
+  setTimeout(function(){var el=document.getElementById('pw-current');if(el)el.focus();},100);
+}
+
+function doChangePw(){
+  var errEl=document.getElementById('pw-change-error');
+  var okEl=document.getElementById('pw-change-success');
+  if(errEl)errEl.style.display='none';if(okEl)okEl.style.display='none';
+  var cur=document.getElementById('pw-current');var nw=document.getElementById('pw-new');var cf=document.getElementById('pw-confirm');
+  if(!cur||!nw||!cf)return;
+  var curVal=cur.value,newVal=nw.value,cfVal=cf.value;
+  var coach=DB.coaches.find(function(c){return c.id===DB.activeCoachId;});
+  if(!coach){if(errEl){errEl.textContent='Error: coach not found.';errEl.style.display='block';}return;}
+  var adminCoach=DB.coaches.find(function(c){return c.id==='admin';});
+  var adminPass=adminCoach?adminCoach.password:'AFA2026!';
+  if(curVal!==coach.password&&curVal!==adminPass){
+    if(errEl){errEl.textContent='❌ Current password is incorrect.';errEl.style.display='block';}
+    cur.value='';cur.focus();return;
+  }
+  if(!newVal||newVal.length<6){if(errEl){errEl.textContent='❌ New password must be at least 6 characters.';errEl.style.display='block';}nw.focus();return;}
+  if(newVal!==cfVal){if(errEl){errEl.textContent='❌ Passwords do not match.';errEl.style.display='block';}cf.value='';cf.focus();return;}
+  if(newVal===curVal){if(errEl){errEl.textContent='❌ New password must be different.';errEl.style.display='block';}return;}
+  coach.password=newVal;save();
+  if(okEl){okEl.textContent='✅ Password updated! Use your new password next time.';okEl.style.display='block';}
+  cur.value='';nw.value='';cf.value='';
+  toast('Password updated for '+coach.name);
+  setTimeout(function(){closeM('pw-change-modal');},2500);
+}
+
+// ── Force re-sync ─────────────────────────────────────────────────
+function forceFullResync(){
+  if(!confirm('This will clear all phase dates and re-pull from Google Sheet. Your intake notes are kept safe. Continue?'))return;
+  DB.coachees.forEach(function(p){
+    p.cgDate='';p.cgDone='';p.cgHrs='';p.coachDate='';p.coachDone='';p.coachHrs='';
+    p.wpDate='';p.wpDone='';p.wpHrs='';p.svcDate='';p.svcDone='';p.svcHrs='';p.welcomeSent='';
+  });
+  save();toast('Phase dates cleared — syncing now...');
+  setTimeout(function(){syncFromAppsScript();},500);
+}
+
+// ── DOMContentLoaded ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){populateCoachSel();});
+
+
+function buildIntakeSel(){
+  const sel=document.getElementById('intake-sel');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Choose coachee —</option>'+myCoachees().map(p=>`<option value="${p.id}">${p.name}${intakeFilled(p)?' ✓':''}</option>`).join('');
+  if(cur)sel.value=cur;
+}
+
+
+function switchMode(mode){
+  curMode=mode;
+  const pre=document.getElementById('panel-pre');
+  const day=document.getElementById('panel-day');
+  const mPre=document.getElementById('mode-pre');
+  const mDay=document.getElementById('mode-day');
+  if(mode==='pre'){
+    pre.style.display='block';day.style.display='none';
+    mPre.style.borderBottom='3px solid var(--blue)';mPre.style.color='var(--blue)';mPre.style.background='white';
+    mDay.style.borderBottom='3px solid transparent';mDay.style.color='var(--text3)';mDay.style.background='var(--off)';
+  } else {
+    pre.style.display='none';day.style.display='block';
+    mDay.style.borderBottom='3px solid var(--blue)';mDay.style.color='var(--blue)';mDay.style.background='white';
+    mPre.style.borderBottom='3px solid transparent';mPre.style.color='var(--text3)';mPre.style.background='var(--off)';
+    if(curPid){
+      const p=DB.coachees.find(x=>x.id===curPid);
+      const i=p.intake||{};
+      const today=new Date().toISOString().slice(0,10);
+      const isToday=p.coachDate===today;
+      const banner=document.getElementById('session-banner');
+      if(banner){
+        if(isToday){banner.innerHTML=`<div style="background:linear-gradient(90deg,#1e40af,#1d4ed8);padding:12px 22px;border-radius:var(--r-lg) var(--r-lg) 0 0;display:flex;align-items:center;gap:10px"><span style="font-size:22px">🎯</span><div><div style="font-size:14px;font-weight:800;color:white">Coaching session is TODAY</div><div style="font-size:12px;color:#bfdbfe">Fill this form live during the session with ${p.name}</div></div></div>`;}
+        else if(p.coachDate){const d=daysTo(p.coachDate);banner.innerHTML=`<div style="background:var(--off);border:2px solid var(--border);border-bottom:none;border-radius:var(--r-lg) var(--r-lg) 0 0;padding:10px 22px;font-size:13px;color:var(--text3);font-weight:600">Session scheduled: ${fmtD(p.coachDate)}${d!==null&&d>0?' — in '+d+' days':''}</div>`;}
+        else{banner.innerHTML=`<div style="background:var(--amber-light);border:2px solid var(--amber-mid);border-bottom:none;border-radius:var(--r-lg) var(--r-lg) 0 0;padding:10px 22px;font-size:13px;color:var(--amber);font-weight:600">⚠ No coaching date set — you can still fill this form</div>`;}
+      }
+      const strip=document.getElementById('client-summary-strip');
+      if(strip)strip.innerHTML=`
+        <div><div style="font-size:10px;color:#93c5fd;font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Coachee</div><div style="font-size:15px;font-weight:800;color:white">${p.name}</div></div>
+        <div style="width:1px;height:30px;background:rgba(255,255,255,0.2)"></div>
+        <div><div style="font-size:10px;color:#93c5fd;font-weight:600">Mobile</div><div style="font-size:13px;font-weight:700;color:white">${p.mobile}</div></div>
+        <div><div style="font-size:10px;color:#93c5fd;font-weight:600">SSO</div><div style="font-size:13px;font-weight:700;color:white">${p.sso}</div></div>
+        <div><div style="font-size:10px;color:#93c5fd;font-weight:600">Family Coach</div><div style="font-size:13px;font-weight:700;color:white">${p.fc}</div></div>
+        ${i.nric?`<div><div style="font-size:10px;color:#93c5fd;font-weight:600">NRIC</div><div style="font-size:13px;font-weight:700;color:white">${i.nric}</div></div>`:''}`;
+    }
+  }
+}
+
+
+function loadIntake(pid){
+  curPid=pid;
+  document.getElementById('intake-form-area').style.display=pid?'block':'none';
+  document.getElementById('intake-empty-state').style.display=pid?'none':'block';
+  if(!pid)return;
+  const p=DB.coachees.find(x=>x.id===pid);
+  const coach=DB.coaches.find(c=>c.id===p.coachId)||getCoach();
+  const i=p.intake||{};
+  const sv=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v||'';};
+  sv('if-name',i.name||p.name); sv('if-nric',i.nric||p.nric);
+  sv('if-dob',i.dob||p.dob); sv('if-mobile',i.mobile||p.mobile);
+  sv('if-home',i.home||''); sv('if-email',i.email||p.email);
+  sv('if-address',i.address||''); sv('if-postal',i.postal||'');
+  sv('if-coach',i.coach||coach.name); sv('if-session-dt',i.sessionDt||p.coachDate||'');
+  sv('if-coach2',i.coach||coach.name); sv('if-session-dt2',i.sessionDt||p.coachDate||'');
+  sv('if-presenting',i.presenting||''); sv('if-real-problem',i.realProblem||'');
+  sv('if-sit-family',i.sitFamily||''); sv('if-sit-financial',i.sitFinancial||'');
+  sv('if-sit-health',i.sitHealth||''); sv('if-sit-time',i.sitTime||''); sv('if-sit-others',i.sitOthers||'');
+  sv('if-sup-family',i.supFamily||''); sv('if-sup-others',i.supOthers||'');
+  sv('if-education',i.education||''); sv('if-skills',i.skills||''); sv('if-interests',i.interests||'');
+  sv('if-attitude',i.attitude||''); sv('if-strengths',i.strengths||''); sv('if-barriers',i.barriers||'');
+  sv('if-career-needs',i.careerNeeds||''); sv('if-career-pref',i.careerPref||'');
+  sv('if-job-identified',i.jobIdentified||'');
+  sv('if-jrt1',i.jrt1||p.wpDate||''); sv('if-jrt2',i.jrt2||p.svcDate||'');
+  sv('if-next-review',i.nextReview||''); sv('if-referral',i.referral||'');
+  sv('if-sign-date',i.signDate||new Date().toISOString().slice(0,10));
+  sv('if-coach-sig',i.coachSig||coach.name);
+  riasec=i.riasec||[]; stage=i.stage||'';
+  document.querySelectorAll('#riasec-group .tgl').forEach(b=>b.classList.toggle('active',riasec.includes(b.textContent.trim().charAt(0))));
+  document.querySelectorAll('#stage-group .tgl').forEach(b=>b.classList.toggle('active',b.textContent.trim()===stage));
+  const filled=intakeFilled(p);
+  document.getElementById('intake-chip').innerHTML=filled?`<span class="chip chip-green">✓ Form saved</span>`:`<span class="chip chip-gray">Not yet filled</span>`;
+  switchMode(curMode);
+}
+
+
+function syncCoach(){const v=document.getElementById('if-coach2').value;const e=document.getElementById('if-coach');if(e)e.value=v;triggerAutoSave();}
+
+function syncSessionDt(){const v=document.getElementById('if-session-dt2').value;const e=document.getElementById('if-session-dt');if(e)e.value=v;triggerAutoSave();}
+
+
+function toggleRiasec(el,code){
+  if(riasec.includes(code))riasec=riasec.filter(x=>x!==code);
+  else riasec.push(code);
+  el.classList.toggle('active',riasec.includes(code));
+  triggerAutoSave();
+  updateCoachPrompts();
+}
+
+function setStage(el,s){
+  stage=s;
+  document.querySelectorAll('#stage-group .tgl').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  triggerAutoSave();
+  updateCoachPrompts();
+}
+
+
+function collectIntake(){
+  const gv=id=>{const e=document.getElementById(id);return e?e.value.trim():'';};
+  return{name:gv('if-name'),nric:gv('if-nric'),dob:gv('if-dob'),mobile:gv('if-mobile'),home:gv('if-home'),email:gv('if-email'),address:gv('if-address'),postal:gv('if-postal'),coach:gv('if-coach')||gv('if-coach2'),sessionDt:gv('if-session-dt')||gv('if-session-dt2'),presenting:gv('if-presenting'),realProblem:gv('if-real-problem'),sitFamily:gv('if-sit-family'),sitFinancial:gv('if-sit-financial'),sitHealth:gv('if-sit-health'),sitTime:gv('if-sit-time'),sitOthers:gv('if-sit-others'),supFamily:gv('if-sup-family'),supOthers:gv('if-sup-others'),stage,riasec:riasec.slice(),education:gv('if-education'),skills:gv('if-skills'),interests:gv('if-interests'),attitude:gv('if-attitude'),strengths:gv('if-strengths'),barriers:gv('if-barriers'),careerNeeds:gv('if-career-needs'),careerPref:gv('if-career-pref'),jobIdentified:gv('if-job-identified'),jrt1:gv('if-jrt1'),jrt2:gv('if-jrt2'),nextReview:gv('if-next-review'),referral:gv('if-referral'),signDate:gv('if-sign-date'),coachSig:gv('if-coach-sig'),savedAt:new Date().toISOString()};
+}
+
+
+function triggerAutoSave(){
+  clearTimeout(asTimer);
+  asTimer=setTimeout(()=>{
+    if(!curPid)return;
+    const p=DB.coachees.find(x=>x.id===curPid);
+    if(p){p.intake=collectIntake();save();
+      ['autosave-ind','autosave-ind2'].forEach(id=>{
+        const ind=document.getElementById(id);
+        if(ind&&ind.style.display!=='none'){return;}
+        if(ind){ind.style.display='flex';clearTimeout(ind._t);ind._t=setTimeout(()=>ind.style.display='none',2500);}
+      });
+    }
+  },700);
+}
+
+
+function saveIntake(){
+  if(!curPid)return;
+  const p=DB.coachees.find(x=>x.id===curPid);
+  if(p){
+    p.intake=collectIntake();save();
+    document.getElementById('intake-chip').innerHTML=`<span class="chip chip-green">✓ Form saved</span>`;
+    buildIntakeSel();renderDashboard();
+    toast('Intake form saved!');
+  }
+}
+
+// ════════════════════════════════════════
+// PDF GENERATION
+// ════════════════════════════════════════
+async function generatePDF(){
+  if(!curPid){toast('Please select a coachee first','err');return;}
+  const p=DB.coachees.find(x=>x.id===curPid);
+  saveIntake();
+  const i=p.intake||{};
+  const btn=document.getElementById('pdf-btn');
+  btn.disabled=true;btn.textContent='⏳ Generating...';
+  try{
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const ml=16,mr=16,pw=210,ph=297;
+    const cw=pw-ml-mr;
+    let y=0;
+    const chk=(n)=>{if(y+n>ph-18){doc.addPage();y=18;}};
+    const sH=(t,col)=>{chk(10);doc.setFillColor(...col);doc.roundedRect(ml,y,cw,8,2,2,'F');doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(255);doc.text(t,ml+4,y+5.5);y+=11;};
+    const row2=(l1,v1,l2,v2)=>{chk(14);const hw=cw/2-3;doc.setFontSize(7.5);doc.setFont('helvetica','bold');doc.setTextColor(120);doc.text(l1.toUpperCase(),ml,y);doc.text(l2.toUpperCase(),ml+cw/2+2,y);y+=4;doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(20);doc.splitTextToSize(v1||'—',hw).forEach((t,ii)=>doc.text(t,ml,y+ii*4.5));doc.splitTextToSize(v2||'—',hw).forEach((t,ii)=>doc.text(t,ml+cw/2+2,y+ii*4.5));y+=Math.max(doc.splitTextToSize(v1||'—',hw).length,doc.splitTextToSize(v2||'—',hw).length)*4.5+5;};
+    const field=(l,v,w)=>{chk(14);doc.setFontSize(7.5);doc.setFont('helvetica','bold');doc.setTextColor(120);doc.text(l.toUpperCase(),ml,y);y+=4;doc.setFontSize(10);doc.setFont('helvetica','normal');doc.setTextColor(20);const ls=doc.splitTextToSize(v||'—',w||cw);doc.text(ls,ml,y);y+=ls.length*4.5+5;};
+    const boxField=(l,v)=>{chk(20);doc.setFontSize(7.5);doc.setFont('helvetica','bold');doc.setTextColor(120);doc.text(l.toUpperCase(),ml,y);y+=5;const ls=doc.splitTextToSize(v||'—',cw-6);const bh=Math.max(12,ls.length*4.8+6);chk(bh+3);doc.setFillColor(248,249,252);doc.setDrawColor(220);doc.setLineWidth(0.3);doc.roundedRect(ml,y,cw,bh,2,2,'FD');doc.setFontSize(9.5);doc.setFont('helvetica','normal');doc.setTextColor(30);doc.text(ls,ml+3,y+5);y+=bh+5;};
+    const divider=()=>{chk(5);doc.setDrawColor(230);doc.setLineWidth(0.4);doc.line(ml,y,pw-mr,y);y+=5;};
+
+    // HEADER
+    doc.setFillColor(15,31,75);doc.rect(0,0,pw,24,'F');
+    doc.setFontSize(16);doc.setFont('helvetica','bold');doc.setTextColor(255);doc.text('CLIENT INTAKE FORM',pw/2,11,{align:'center'});
+    doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(147,197,253);doc.text('Individual Coaching (3 hrs)  ·  Career Guidance Programme  ·  Elitez Pte Ltd',pw/2,18,{align:'center'});
+    y=30;
+
+    sH('SECTION 1 — PERSONAL PARTICULARS',[37,99,235]);
+    row2('Full Name (as per NRIC)',i.name,'NRIC / Passport No.',i.nric);
+    row2('Date of Birth',i.dob?fmtDS(i.dob):'','Mobile Number',i.mobile);
+    row2('Home Number',i.home,'Email Address',i.email);
+    field('Residential Address / Postal Code',(i.address?i.address+' ':'')+( i.postal||''));
+    doc.setFontSize(8);doc.setTextColor(160);doc.text('* Per EALCs (1 Oct 2020): EAs must collect NRIC/Passport for applicants referred to perm/contract roles ≥6 months at ≥$3,300/month.',ml,y,{maxWidth:cw});y+=9;
+    divider();
+
+    sH('SECTION 2 — COACHING SESSION DETAILS',[217,119,6]);
+    row2('Career Coach',i.coach,'Session Date / Time',i.sessionDt?i.sessionDt.replace('T',' '):'');
+    boxField('Presenting Problem (Client\'s Issues)',i.presenting);
+    boxField('Real Problem (Career Coach\'s Assessment)',i.realProblem);
+    chk(10);doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(60);doc.text('SITUATION',ml,y);y+=5;
+    [['Family',i.sitFamily],['Financial',i.sitFinancial],['Health',i.sitHealth],['Time commitment',i.sitTime],['Others',i.sitOthers]].forEach(([l,v])=>{chk(7);doc.setFontSize(8);doc.setTextColor(120);doc.text(l+':',ml+3,y);doc.setFontSize(9.5);doc.setTextColor(30);doc.text(v||'—',ml+34,y);y+=5.5;});
+    y+=2;doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(60);doc.text('SUPPORT',ml,y);y+=5;
+    [['Family',i.supFamily],['Others',i.supOthers]].forEach(([l,v])=>{chk(7);doc.setFontSize(8);doc.setTextColor(120);doc.text(l+':',ml+3,y);doc.setFontSize(9.5);doc.setTextColor(30);doc.text(v||'—',ml+22,y);y+=5.5;});
+    y+=2;divider();
+
+    sH('SECTION 3 — WORK EXPERIENCE & ASSESSMENT',[124,58,237]);
+    row2('Life Stage',i.stage||'—','RIASEC Code',riasec.length?riasec.join(', '):(i.riasec&&i.riasec.length?i.riasec.join(', '):'—'));
+    boxField('Education / Training Background',i.education);
+    boxField('Skills / Competencies',i.skills);
+    boxField('Interests',i.interests);
+    chk(10);doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(60);doc.text('OVERALL IMPRESSION OF CLIENT',ml,y);y+=5;
+    [['Attitude',i.attitude],['Strengths',i.strengths],['Barriers',i.barriers]].forEach(([l,v])=>{chk(7);doc.setFontSize(8);doc.setTextColor(120);doc.text(l+':',ml+3,y);doc.setFontSize(9.5);doc.setTextColor(30);const ls=doc.splitTextToSize(v||'—',cw-30);doc.text(ls,ml+26,y);y+=Math.max(5.5,ls.length*4.5);});
+    y+=2;divider();
+
+    sH('SECTION 4 — CAREER PLANNING & FOLLOW-UP',[22,163,74]);
+    boxField('Career / Training Needs of Client',i.careerNeeds);
+    boxField('Career Preference of Client',i.careerPref);
+    boxField('ComLink+ — Job Identified (before skills training)',i.jobIdentified);
+    row2('Job Readiness Training 1',i.jrt1?fmtDS(i.jrt1):'','Job Readiness Training 2',i.jrt2?fmtDS(i.jrt2):'');
+    row2('Next Review Date / Time',i.nextReview?i.nextReview.replace('T',' '):'','Referral Out',i.referral);
+    divider();
+
+    // SIGNATURE
+    chk(32);
+    doc.setFontSize(8.5);doc.setFont('helvetica','bold');doc.setTextColor(60);doc.text('SIGNATURE',ml,y);y+=7;
+    doc.setDrawColor(80);doc.setLineWidth(0.5);doc.line(ml,y+8,ml+75,y+8);
+    doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(100);doc.text('Career Coach Signature',ml,y+13);
+    doc.setFontSize(10);doc.setTextColor(20);doc.text('Career Coach: '+(i.coachSig||i.coach||''),ml+90,y+5);
+    doc.text('Date: '+(i.signDate?fmtDS(i.signDate):''),ml+90,y+13);
+    y+=25;
+
+    // FOOTER
+    const tp=doc.getNumberOfPages();
+    for(let pg=1;pg<=tp;pg++){
+      doc.setPage(pg);doc.setFontSize(7);doc.setTextColor(180);
+      doc.text('CONFIDENTIAL — Authorised personnel only. Password: AFA2026!',ml,ph-8);
+      doc.text(`Page ${pg} / ${tp}  ·  Elitez Pte Ltd`,pw-mr,ph-8,{align:'right'});
+    }
+
+    const pdfBytes=doc.output('arraybuffer');
+    const pdfDoc=await PDFLib.PDFDocument.load(pdfBytes);
+    const enc=await pdfDoc.save({userPassword:'AFA2026!',ownerPassword:'ELITEZowner!',permissions:{printing:'highResolution',modifying:false,copying:false}});
+    const blob=new Blob([enc],{type:'application/pdf'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const fn=(i.name||p.name).replace(/[^a-zA-Z0-9 ]/g,'').trim().replace(/\s+/g,'_');
+    a.href=url;a.download=`Intake_${fn}_${new Date().toISOString().slice(0,10)}.pdf`;a.click();
+    URL.revokeObjectURL(url);
+    toast('🔒 Encrypted PDF downloaded! Password: AFA2026!');
+  }catch(err){console.error(err);toast('PDF generation failed: '+err.message,'err');}
+  finally{btn.disabled=false;btn.innerHTML='🔒 Download encrypted PDF';}
+}
+
+// ════════════════════════════════════════
+// ATTENDANCE FORM
+// ════════════════════════════════════════
+
+function previewAtt(pid){
+  const p=DB.coachees.find(x=>x.id===pid);
+  const coach=DB.coaches.find(c=>c.id===p.coachId)||getCoach();
+  document.getElementById('att-sub').textContent=`${p.name} — Print via Ctrl+P / Cmd+P to save as PDF`;
+  document.getElementById('att-area').innerHTML=`<div class="att-preview" id="att-print">
+    <div class="att-title">INDIVIDUAL COACHING ATTENDANCE RECORD</div>
+    <table class="att-table">
+      <tr><td>Course Title</td><td>Career Guidance Programme</td></tr>
+      <tr><td>Coach's Name</td><td>${coach.name}</td></tr>
+      <tr><td>Coachee's Name / NRIC</td><td>${p.name}${p.nric?' / '+p.nric:''}</td></tr>
+      <tr><td>Course Run ID / Coaching Date</td><td>${p.coachDate?fmtDS(p.coachDate):'_______________'}</td></tr>
+      <tr><td>Total Training Duration</td><td>3 HOURS (Individual Coaching)</td></tr>
+    </table>
+    <p style="font-size:10pt;margin-bottom:6px"><strong>Notes:</strong></p>
+    <ol style="font-size:9.5pt;margin:0 0 14px 18px"><li>Participants are to ensure all particulars in this Attendance Record are based on their identity documents.</li><li>Participants are to ensure they sign before completing the session.</li></ol>
+    <table class="att-sig-table">
+      <tr><th style="width:45%">Description</th><th style="width:20%">Date</th><th>Signature</th></tr>
+      <tr><td><strong>Individual Coaching (3 hours)</strong></td><td>${p.coachDate?fmtDS(p.coachDate):''}</td><td></td></tr>
+    </table>
+    <div style="margin-top:24px"><div style="border-bottom:1px solid #333;width:220px;margin-bottom:4px"></div>
+    <div>Coach Name: <strong>${coach.name}</strong></div>
+    <div style="margin-top:8px">Date: ${fmtDS(new Date().toISOString().slice(0,10))}</div>
+    <div style="margin-top:40px;text-align:center;font-size:8.5pt;color:#999">Training Attendance Record &nbsp;·&nbsp; © Jan 2024 v1.0 &nbsp;·&nbsp; Copyright © 2024 Elitez Pte Ltd. All rights reserved.</div></div>
+  </div>`;
+  document.getElementById('att-modal').classList.add('open');
+}
+
+function printAtt(){
+  const c=document.getElementById('att-print').outerHTML;
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><title>Attendance Record</title><style>body{margin:40px;font-family:Calibri,serif;font-size:11pt;color:#111}</style></head><body>${c}</body></html>`);
+  w.document.close();w.focus();setTimeout(()=>w.print(),300);
+}
+
+// ════════════════════════════════════════
+// WHATSAPP
+// ════════════════════════════════════════
+
+function copyWA(){
+  navigator.clipboard.writeText(document.getElementById('wa-msg').textContent).then(()=>{
+    const b=document.querySelector('#wa-modal .btn-ghost');b.textContent='✓ Copied!';setTimeout(()=>b.textContent='📋 Copy message',1500);
+  });
+}
+
+// ════════════════════════════════════════
+// UPCOMING
+// ════════════════════════════════════════
+
+function renderUpcoming(){
+  const evts=[];
+  myCoachees().forEach(p=>{
+    const add=(d,label,type,color)=>{if(d&&!p[type.replace('Date','Done')])evts.push({date:d,label,type,color,p});};
+    add(p.cgDate,'Career Guidance Workshop','cgDate','blue');
+    add(p.coachDate,'Coaching Session','coachDate','amber');
+    add(p.wpDate,'Workplace Communication','wpDate','purple');
+    add(p.svcDate,'Service Excellence','svcDate','green');
+  });
+  evts.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const future=evts.filter(e=>{const d=daysTo(e.date);return d!==null&&d>=0;});
+  const body=document.getElementById('upcoming-body');
+  if(!future.length){body.innerHTML=`<div class="upcoming-empty"><div class="icon">📅</div><div style="font-size:16px;font-weight:700;color:var(--text2);margin-bottom:8px">All clear!</div><div>No upcoming sessions scheduled in the next period.</div></div>`;return;}
+  const colorMap={blue:{bg:'#eff6ff',text:'#2563eb'},amber:{bg:'#fffbeb',text:'#d97706'},purple:{bg:'#f5f3ff',text:'#7c3aed'},green:{bg:'#f0fdf4',text:'#16a34a'}};
+  body.innerHTML=`<div class="event-list">`+future.map(e=>{
+    const d=daysTo(e.date);
+    const c=colorMap[e.color];
+    const urgent=d<=2;
+    const typeKey=e.type.replace('Date','');
+    return`<div class="event-item ${urgent?'event-urgent':''}">
+      <div class="event-countdown" style="background:${c.bg};color:${c.text}">
+        <div style="font-size:${d>99?14:20}px;line-height:1">${d===0?'🔔':d}</div>
+        <div style="font-size:9px;text-transform:uppercase;font-weight:700">${d===0?'today':d===1?'day':'days'}</div>
+      </div>
+      <div class="event-info">
+        <div class="event-name">${e.p.name}</div>
+        <div class="event-detail" style="color:${c.text}">${e.label}</div>
+        <div class="event-detail">📅 ${fmtD(e.date)} &nbsp;·&nbsp; ${e.p.sso}</div>
+      </div>
+      <button class="btn btn-wa btn-sm" onclick="openWA('${e.p.id}','${typeKey}')">📲 Remind</button>
+    </div>`;
+  }).join('')+'</div>';
+}
+
+// ════════════════════════════════════════
+// GUIDE
+// ════════════════════════════════════════
+
+function renderGuide(){
+  renderFAQ();
+  // Populate guide stats if elements exist
+  var statEls = document.querySelectorAll('.guide-stat-val');
+}
+const FAQS=[
+  {q:"What is the training allowance?",a:"$10 per hour throughout the programme, covering workshop and coaching hours."},
+  {q:"Does the client need a job interview?",a:"No. Elitez trains clients to employer standards first — they're already job-ready by placement."},
+  {q:"What jobs are available?",a:"Primarily healthcare and retail, spread across Singapore including heartland areas."},
+  {q:"What happens after the 3-month trial?",a:"Successful participants convert to direct hire: $2,500/month (FT) or $15/hour (PT). Elitez supports for 3 more months."},
+  {q:"What if the client gets injured at work?",a:"Covered up to $500/incident under the group insurance policy."},
+  {q:"Are uniform and job expenses covered?",a:"Yes — Elitez covers uniform and job-related expenses during the trial."},
+  {q:"What does the Career Guidance Workshop cover?",a:"RIASEC assessment, guided reflection on strengths and preferences, job search resources, workplace expectations. 1-day workshop."},
+  {q:"What is the 1-to-1 coaching about?",a:"3 hours personalised: employment readiness, work constraints (caregiving, transport), past experience, transferable skills."},
+  {q:"How long is the programme?",a:"Pilot: April–December 2026."},
+  {q:"Client has caregiving or transport issues?",a:"Discussed in coaching. Job matching also considers location and availability."},
+];
+
+function renderFAQ(){
+  document.getElementById('faq-wrap').innerHTML=FAQS.map((f,i)=>`
+    <div class="faq-card" id="faq-${i}">
+      <div class="faq-q" onclick="toggleFAQ(${i})">
+        <span>${f.q}</span><div class="faq-q-arr">▼</div>
+      </div>
+      <div class="faq-a" id="fa-${i}">${f.a}</div>
+    </div>`).join('');
+}
+
+function toggleFAQ(i){
+  const card=document.getElementById('faq-'+i);
+  const ans=document.getElementById('fa-'+i);
+  const isOpen=ans.classList.toggle('open');
+  card.classList.toggle('open',isOpen);
+}
+
+// ════════════════════════════════════════
+// MANAGE
+// ════════════════════════════════════════
+
+function renderManage(){
+  buildCoachDrop();
+  document.getElementById('coach-table-area').innerHTML=`<table class="coach-table">
+    <tr><th>Name</th><th>Contact</th><th>Email</th><th>Coachees</th><th>Actions</th></tr>
+    ${DB.coaches.map(c=>`<tr>
+      <td><strong>${c.name}</strong>${c.id===DB.activeCoachId?' <span style="font-size:11px;background:var(--blue-light);color:var(--blue);padding:1px 7px;border-radius:20px;font-weight:700">Active</span>':''}</td>
+      <td>${c.contact}</td><td style="color:var(--text3)">${c.email}</td>
+      <td><span style="font-size:12px;font-weight:700;color:var(--blue)">${DB.coachees.filter(p=>p.coachId===c.id).length}</span></td>
+      <td style="display:flex;gap:6px">
+        <button class="btn btn-ghost btn-sm" onclick="switchCoach('${c.id}')">Switch to</button>
+        ${DB.coaches.length>1?`<button class="btn btn-danger btn-sm" onclick="delCoach('${c.id}')">Remove</button>`:''}
+      </td></tr>`).join('')}
+  </table>`;
+}
+
+function addCoach(){
+  const name=document.getElementById('nc-cname').value.trim();
+  if(!name){alert('Coach name required');return;}
+  DB.coaches.push({id:uid(),name,contact:document.getElementById('nc-ccontact').value.trim(),email:document.getElementById('nc-cemail').value.trim()});
+  save();renderManage();buildCoachDrop();
+  ['nc-cname','nc-ccontact','nc-cemail'].forEach(id=>document.getElementById(id).value='');
+  toast('Coach added: '+name);
+}
+
+function delCoach(cid){
+  if(DB.coachees.some(p=>p.coachId===cid)){alert('Cannot remove — reassign coachees first.');return;}
+  if(!confirm('Remove coach?'))return;
+  DB.coaches=DB.coaches.filter(c=>c.id!==cid);
+  if(DB.activeCoachId===cid)DB.activeCoachId=DB.coaches[0]?.id||'';
+  save();renderManage();buildCoachDrop();
+}
+
+function addCoachee(){
+  const name=document.getElementById('nc-name').value.trim();
+  const mobile=document.getElementById('nc-mobile').value.trim();
+  if(!name||!mobile){alert('Name and mobile required');return;}
+  DB.coachees.push({id:uid(),coachId:document.getElementById('nc-coach').value,name,nric:document.getElementById('nc-nric').value.trim(),dob:document.getElementById('nc-dob').value,mobile,email:document.getElementById('nc-email').value.trim(),sso:document.getElementById('nc-sso').value,fc:document.getElementById('nc-fc').value.trim(),fcContact:document.getElementById('nc-fccontact').value.trim(),fcEmail:document.getElementById('nc-fcemail').value.trim(),welcomeSent:'',cgDate:'',cgHrs:'',cgDone:'',coachDate:'',coachHrs:'',coachDone:'',wpDate:'',wpHrs:'',wpDone:'',svcDate:'',svcHrs:'',svcDone:'',notes:'',intake:{}});
+  save();
+  ['nc-name','nc-nric','nc-mobile','nc-email','nc-fc','nc-fccontact','nc-fcemail'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('nc-dob').value='';
+  renderManage();buildCoachDrop();renderDashboard();
+  toast(name+' added!');
+}
+
+function exportData(){const b=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='elitez_backup_'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('Backup exported');}
+
+function importData(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{try{DB=JSON.parse(e.target.result);save();buildCoachDrop();renderDashboard();renderManage();buildIntakeSel();toast('Data imported!');}catch{toast('Invalid file','err');}};r.readAsText(f);}
+
+function resetData(){DB=JSON.parse(JSON.stringify(DEFAULT));save();buildCoachDrop();renderDashboard();renderManage();buildIntakeSel();toast('Data reset to defaults');}
+
+
+function updateCounts(){
+  var active=myCoachees();
+  var archived=archivedCoachees();
+  var total=active.length;
+  var cgDone=active.filter(function(p){return p.cgDone;}).length;
+  var coachDone=active.filter(function(p){return p.coachDone;}).length;
+  var step1=active.filter(function(p){return !p.cgDate&&!p.cgDone;}).length;
+  var el=document.getElementById('dash-counts');
+  if(el) el.innerHTML=
+    '<span>'+total+' active</span>'
+    +(archived.length?'<span>'+archived.length+' archived</span>':'')
+    +'<span>'+cgDone+' CG done</span>'
+    +'<span>'+coachDone+' coaching done</span>';
+  // Update tab badges
+  var dashTab=document.getElementById('nt-dash');
+  if(dashTab&&dashTab.querySelector){var badge=dashTab.querySelector('.tab-badge');if(!badge){badge=document.createElement('span');badge.className='tab-badge';dashTab.appendChild(badge);}badge.textContent=total;}
+  var archTab=document.getElementById('nt-archive');
+  if(archTab&&archTab.querySelector){var badge2=archTab.querySelector('.tab-badge');if(!badge2){badge2=document.createElement('span');badge2.className='tab-badge';archTab.appendChild(badge2);}badge2.textContent=archived.length||'';}
+  // Update archive count display
+  var archCount=document.getElementById('tc-archive');
+  if(archCount) archCount.textContent=archived.length||'';
+}
+
+function markCGAttended(pid,attended){markAttended(pid,'cgDone',attended);}
+function markAllCGAttended(date){markAllTrainingAttended(date,'cgDone','cgHrs');}
+
+
+function toggleCard(id){
+  const cc=document.getElementById('cc-'+id);
+  const arr=document.getElementById('arr-'+id);
+  cc.classList.toggle('open');
+  arr.textContent=cc.classList.contains('open')?'▲':'▼';
+}
+
+function goToIntakeFor(pid,action){
+  curMode=action==='day'?'day':'pre';
+  goTo('intake',document.getElementById('nt-intake'));
+  buildIntakeSel();
+  document.getElementById('intake-sel').value=pid;
+  loadIntake(pid);
+  if(action==='pdf')setTimeout(generatePDF,400);
+}
+
+// ════════════════════════════════════════
+// INTAKE FORM
+// ════════════════════════════════════════
+let curPid=null, riasec=[], stage='', asTimer=null, curMode='pre';
+
+
+function openWA(pid,type,sub){
+  const p=DB.coachees.find(x=>x.id===pid);if(!p)return;
+  const coach=DB.coaches.find(c=>c.id===p.coachId)||getCoach();
+  const first=salutation(p.name);
+  var venueObj=getVenue(p.sso);var venue=venueObj.address||p.sso+' SSO';var venueMRT=venueObj.mrt||'';
+  let msg='',title='';
+  if(type==='cg'){title='Career Guidance Workshop Reminder';msg=`Hi ${first},\n\nThis is ${coach.name} from Elitez. Just a reminder about your *Career Guidance Workshop on ${fmtD(p.cgDate)}*.\n\n📍 *Venue:* ${venue}\n⏰ Please arrive 10 mins early for registration.\n\nFor directions, search "${venue}" on Google Maps, or alight at ${p.sso} MRT station.\n\nPlease confirm your attendance by replying. See you there!\n\nWarm regards,\n${coach.name} | Career Coach | Elitez\n📞 ${coach.contact}`;}
+  else if(type==='coach'){
+    if(sub==='schedule'){
+      // After CG — asking coachee for their availability for coaching + courses
+      title='Schedule coaching & courses';
+      var wpDates=getUpcomingCourseDates('wp',3);
+      var svcDates=getUpcomingCourseDates('svc',3);
+      var wpList=wpDates.length?wpDates.map(function(d){return fmtD(d);}).join(', '):'TBC — check with us';
+      var svcList=svcDates.length?svcDates.map(function(d){return fmtD(d);}).join(', '):'TBC — check with us';
+      msg='Hi '+first+',\n\nThank you for attending the Career Guidance Workshop! We are glad to have you on board.\n\nAs the next step, we would like to schedule your *Individual Coaching Session* (3 hours, conducted 1-to-1 with me). May I know your availability in the coming weeks?\n\nWe also have the following upcoming training sessions for your information:\n\n🗣 *Workplace Communication (2 Days)*\nUpcoming dates: '+wpList+'\n\n⭐ *Service Excellence (2 Days)*\nUpcoming dates: '+svcList+'\n\nPlease let us know your preferred dates and we will lock them in for you.\n\nThank you!\n\n'+coach.name+' | Career Coach | Elitez\n📞 '+coach.contact;
+    } else {
+      var when=sub==='day'?'tomorrow':'on '+fmtD(p.coachDate);
+      title='Coaching Session Reminder';
+      msg='Hi '+first+',\n\nJust a reminder that your *Individual Coaching Session is '+when+'*.\n\nPlease be in a quiet space and available for the full 3 hours. If you need to reschedule, please let me know as soon as possible.\n\nThank you!\n\n'+coach.name+' | Career Coach | Elitez\n📞 '+coach.contact;
+    }
+  }
+  else if(type==='wp'){
+    title='Workplace Comm Reminder';
+    var wpUpcoming=getUpcomingCourseDates('wp',3);
+    var wpDateStr=p.wpDate?fmtD(p.wpDate):(wpUpcoming.length?wpUpcoming.map(function(d){return fmtD(d);}).join(', '):'TBC');
+    var wpExtra=(!p.wpDate&&wpUpcoming.length>1)?'\n\nOther available dates: '+wpUpcoming.slice(1).map(function(d){return fmtD(d);}).join(', '):'';
+    msg='Hi '+first+',\n\nThis is '+coach.name+' from Elitez.'+(p.wpDate?' Just a reminder about your *Workplace Communication (2 Days)* training on *'+fmtD(p.wpDate)+'*.':(wpUpcoming.length?' We have the following upcoming *Workplace Communication (2 Days)* training dates available:\n\n'+wpUpcoming.map(function(d){return '📅 '+fmtD(d);}).join('\n')+'\n\nPlease let us know which date works best for you.':' We will share the upcoming *Workplace Communication (2 Days)* training dates with you soon.'))+'\n\n📍 Venue: '+((DB.settings||{}).workshopVenue||'2 Kallang Avenue #06-28 CT Hub Singapore 339407')+'\n\nPlease plan to attend both days and arrive 10 minutes early for registration.\n\nThank you!\n\n'+coach.name+' | Career Coach | Elitez\n📞 '+coach.contact;
+  }
+  else if(type==='svc'){
+    title='Service Excellence Reminder';
+    var svcUpcoming=getUpcomingCourseDates('svc',3);
+    msg='Hi '+first+',\n\nThis is '+coach.name+' from Elitez.'+(p.svcDate?' Just a reminder about your *Service Excellence (2 Days)* training on *'+fmtD(p.svcDate)+'*.':(svcUpcoming.length?' We have the following upcoming *Service Excellence (2 Days)* training dates available:\n\n'+svcUpcoming.map(function(d){return '📅 '+fmtD(d);}).join('\n')+'\n\nPlease let us know which date works best for you.':' We will share the upcoming *Service Excellence (2 Days)* training dates with you soon.'))+'\n\n📍 Venue: '+((DB.settings||{}).workshopVenue||'2 Kallang Avenue #06-28 CT Hub Singapore 339407')+'\n\nPlease plan to attend both days and arrive 10 minutes early for registration.\n\nThank you!\n\n'+coach.name+' | Career Coach | Elitez\n📞 '+coach.contact;
+  }
+  else if(type==='intro'){
+    title='Introduction message';
+    var fc2=p.fc||'your Family Coach';
+    msg='Hi '+first+'.\n\nI am '+coach.name+', a career coach from Elitez Pte Ltd, which is a company working with the Ministry of Social and Family Development as a career coaching partner.\n\nYou were referred to us by '+fc2+' as a suitable candidate for the Integrated Coaching-to-Placement Programme. This programme is a pilot initiative under the Alliance for Action \u2013 Advancing Career and Employment Services, delivered by Elitez Pte Ltd, that aims to address employment challenges for Lower-Wage Workers and improve employment retention post-placement. The programme will offer integrated career coaching, skills training, and job placement with employers.\n\nWe would like to reach out to you via phone to further discuss this programme with you and to answer any queries you may have, may I know when would be a good time to give you a call?\n\nThank you.';
+  }
+  else if(type==='regform'){
+    title='Registration form';
+    msg='Hello '+first+', thank you for the call, as shared please kindly assist to complete the programme interest form as attached. Feel free to let me know if you have any questions. \ud83d\ude0a\nhttps://docs.google.com/forms/d/1jndWzZ9Sm0zo0VCTSdAp3NIuyRHOE3iNBc8VX1iAS30/viewform?edit_requested=true';
+  }
+  document.getElementById('wa-title').textContent=title;
+  document.getElementById('wa-sub').textContent='For: '+p.name+' · '+p.mobile;
+  document.getElementById('wa-msg').textContent=msg;
+  document.getElementById('wa-link').href='https://wa.me/65'+p.mobile.replace(/\s/g,'')+'?text='+encodeURIComponent(msg);
+  document.getElementById('wa-modal').classList.add('open');
+}
+
+function setF(pid,field,val){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p) return;
+  if(field==='name'&&val) val=formatName(val);
+  p[field]=val;
+  // Auto-archive if notes contain withdrawal keywords
+  if((field==='notes'||field==='nextAction')&&val&&!p.archived){
+    var vl=val.toLowerCase();
+    var shouldArchive=vl.includes('withdrawn')||vl.includes('unable to make it')||
+      vl.includes('unable to attend')||vl.includes('unable to commit')||
+      vl.includes('not interested')||vl.includes('opted out')||vl.includes('dropped out')||
+      vl.includes('found a job')||vl.includes('number not in use')||
+      vl.includes('number not active')||vl.includes('cannot make it')||
+      vl.includes('cannot attend')||vl.includes('no longer interested');
+    if(shouldArchive){
+      p.archived=true;
+      setTimeout(function(){toast('⚠ '+p.name+' auto-archived (withdrawal detected)','err');},100);
+    }
+  }
+  save();
+  renderDashboard();
+  updateCounts();
+}
+
+
+
+function renderCalendar(){
+  var body=document.getElementById('calendar-root');
+  if(!body) return;
+  var coachees=myCoachees();
+  var events=[];
+  coachees.forEach(function(p){
+    if(p.cgDate) events.push({date:p.cgDate,label:'CG: '+p.name,color:'var(--orange)'});
+    if(p.coachDate) events.push({date:p.coachDate,label:'Coach: '+p.name,color:'var(--teal)'});
+    if(p.wpDate) events.push({date:p.wpDate,label:'WP: '+p.name,color:'#3b82f6'});
+    if(p.svcDate) events.push({date:p.svcDate,label:'SVC: '+p.name,color:'var(--green)'});
+  });
+  events.sort(function(a,b){return a.date.localeCompare(b.date);});
+  if(!events.length){body.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No sessions scheduled yet.</div>';return;}
+  var byMonth={};
+  events.forEach(function(ev){var m=ev.date.slice(0,7);if(!byMonth[m])byMonth[m]=[];byMonth[m].push(ev);});
+  var html='';
+  Object.keys(byMonth).sort().forEach(function(month){
+    var d=new Date(month+'-01T00:00');
+    var mLabel=d.toLocaleDateString('en-SG',{month:'long',year:'numeric'});
+    html+='<div style="margin-bottom:20px"><div style="font-size:14px;font-weight:800;color:var(--navy);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--off2)">'+mLabel+'</div>';
+    byMonth[month].forEach(function(ev){
+      var dl=new Date(ev.date+'T00:00').toLocaleDateString('en-SG',{weekday:'short',day:'numeric',month:'short'});
+      html+='<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:white;border-radius:8px;margin-bottom:6px;box-shadow:0 1px 3px rgba(0,0,0,0.08);border-left:4px solid '+ev.color+'">'+'<span style="font-size:12px;font-weight:700;color:var(--text3);min-width:90px">'+dl+'</span>'+'<span style="font-size:13px;font-weight:600">'+ev.label+'</span></div>';
+    });
+    html+='</div>';
+  });
+  body.innerHTML=html;
+}
+
+function renderArchive(){
+  var body=document.getElementById('page-archive');
+  if(!body) return;
+  var archived=DB.coachees.filter(function(p){return p.archived;});
+  if(!isAdminSession()&&!isSeniorSession()){
+    archived=archived.filter(function(p){return p.coachId===DB.activeCoachId;});
+  }
+  if(!archived.length){
+    body.innerHTML='<div style="padding:60px;text-align:center"><div style="font-size:36px;margin-bottom:12px">📦</div><div style="font-size:16px;font-weight:700;color:var(--text2)">No archived coachees</div><div style="font-size:13px;color:var(--text3);margin-top:6px">Coachees marked as withdrawn or unable to attend will appear here.</div></div>';
+    return;
+  }
+  var html='<div style="margin-bottom:20px">';
+  html+='<div style="font-size:20px;font-weight:800;color:var(--navy)">📦 Archived Coachees</div>';
+  html+='<div style="font-size:13px;color:var(--text3);margin-top:2px">'+archived.length+' coachee'+(archived.length!==1?'s':'')+' archived — withdrawn, unable to attend, or no response after 3 attempts.</div>';
+  html+='</div>';
+  archived.forEach(function(p){
+    var coachName=(DB.coaches.find(function(cc){return cc.id===p.coachId;})||{name:'?'}).name;
+    html+='<div style="background:white;border:2px solid var(--border);border-radius:var(--r-lg);padding:16px 20px;margin-bottom:10px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)">';
+    html+='<div style="width:40px;height:40px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#64748b;flex-shrink:0">'+p.name.charAt(0)+'</div>';
+    html+='<div style="flex:1">';
+    html+='<div style="font-size:14px;font-weight:700;color:var(--text1)">'+p.name+'</div>';
+    html+='<div style="font-size:12px;color:var(--text3);margin-top:2px">'+(p.sso||'')+(p.sso?' &middot; ':'')+'FC: '+(p.fc||'—')+' &middot; Coach: '+coachName+' &middot; 📱 '+(p.mobile||'—')+'</div>';
+    if(p.notes) html+='<div style="font-size:12px;color:var(--text3);margin-top:4px;font-style:italic">'+htmlEncode(p.notes.slice(0,120))+(p.notes.length>120?'...':'')+'</div>';
+    html+='</div>';
+    html+='<div style="display:flex;gap:8px;flex-shrink:0">';
+    html+='<button class="btn btn-ghost btn-sm" onclick="restoreP(&apos;'+p.id+'&apos;)">↩ Restore</button>';
+    html+='</div>';
+    html+='</div>';
+  });
+  body.innerHTML=html;
+}
+
+
+// ════════════════════════════════════════
+// TRAINING SCHEDULE
+// ════════════════════════════════════════
+function getSchedule(){
+  if(!DB.settings.trainingSchedule) DB.settings.trainingSchedule={wp:[],svc:[],tech1:[],tech2:[]};
+  return DB.settings.trainingSchedule;
+}
+
+function getUpcomingCourseDates(key,limit){
+  var sch=getSchedule();
+  var today=new Date().toISOString().slice(0,10);
+  var upcoming=(sch[key]||[]).filter(function(d){return d>=today;}).sort();
+  return limit?upcoming.slice(0,limit):upcoming;
+}
+
+function addCourseDate(key){
+  var input=document.getElementById('new-date-'+key);
+  if(!input||!input.value){toast('Please select a date first','err');return;}
+  var sch=getSchedule();
+  if(!sch[key]) sch[key]=[];
+  if(sch[key].indexOf(input.value)>=0){toast('Date already added','err');return;}
+  sch[key].push(input.value);
+  sch[key].sort();
+  save();
+  toast('Added: '+fmtD(input.value));
+  input.value='';
+  renderSchedule();
+}
+
+function removeCourseDate(key,date){
+  var sch=getSchedule();
+  if(!sch[key]) return;
+  sch[key]=sch[key].filter(function(d){return d!==date;});
+  save();
+  renderSchedule();
+}
+
+function renderSchedule(){
+  var body=document.getElementById('schedule-body');
+  if(!body) return;
+  var sch=getSchedule();
+  var today=new Date().toISOString().slice(0,10);
+
+  function courseBlock(key,title,color,icon){
+    var dates=(sch[key]||[]).slice().sort();
+    var upcoming=dates.filter(function(d){return d>=today;});
+    var past=dates.filter(function(d){return d<today;});
+    var html='<div style="background:white;border:2px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)">';
+    html+='<div style="background:'+color+';padding:12px 20px;display:flex;align-items:center;gap:12px">';
+    html+='<div style="flex:1"><div style="font-size:15px;font-weight:800;color:white">'+icon+' '+title+'</div>';
+    html+='<div style="font-size:12px;color:rgba(255,255,255,0.8)">'+upcoming.length+' upcoming &middot; '+past.length+' past</div></div></div>';
+    html+='<div style="padding:16px 20px">';
+    html+='<div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">';
+    html+='<input type="date" id="new-date-'+key+'" style="padding:8px 12px;border:2px solid var(--teal-mid);border-radius:var(--r-sm);font-size:13px;font-family:inherit;color-scheme:light" min="'+today+'">';
+    html+='<button class="btn btn-primary btn-sm" onclick="addCourseDate(&apos;'+key+'&apos;)">+ Add date</button>';
+    html+='</div>';
+    if(!dates.length){
+      html+='<div style="padding:12px;background:var(--off);border-radius:var(--r-sm);font-size:13px;color:var(--text3);text-align:center">No dates scheduled yet — add dates above</div>';
+    } else {
+      if(upcoming.length){
+        html+='<div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Upcoming</div>';
+        html+='<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px">';
+        upcoming.forEach(function(d){
+          var dA=daysTo(d);
+          var lbl=dA===0?'Today':dA===1?'Tomorrow':'In '+dA+'d';
+          html+='<div style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:'+color+'18;border:1.5px solid '+color+'44;border-radius:20px">';
+          html+='<span style="font-size:13px;font-weight:700;color:'+color+'">'+fmtD(d)+'</span>';
+          html+='<span style="font-size:11px;color:'+color+';opacity:0.8">'+lbl+'</span>';
+          html+='<button onclick="removeCourseDate(&apos;'+key+'&apos;,&apos;'+d+'&apos;)" style="background:none;border:none;cursor:pointer;color:'+color+';font-size:16px;padding:0;line-height:1;opacity:0.6">&times;</button>';
+          html+='</div>';
+        });
+        html+='</div>';
+      }
+      if(past.length){
+        html+='<div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Past</div>';
+        html+='<div style="display:flex;flex-wrap:wrap;gap:8px">';
+        past.forEach(function(d){
+          html+='<div style="display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--off);border:1px solid var(--border);border-radius:20px">';
+          html+='<span style="font-size:12px;color:var(--text3)">'+fmtD(d)+'</span>';
+          html+='<button onclick="removeCourseDate(&apos;'+key+'&apos;,&apos;'+d+'&apos;)" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:0">&times;</button>';
+          html+='</div>';
+        });
+        html+='</div>';
+      }
+    }
+    html+='</div></div>';
+    return html;
+  }
+
+  var html='<div style="margin-bottom:20px">';
+  html+='<div style="font-size:20px;font-weight:800;color:var(--navy)">📅 Course Schedule</div>';
+  html+='<div style="font-size:13px;color:var(--text3);margin-top:2px">Add training dates here. Coaches will see upcoming dates automatically in WhatsApp reminders.</div></div>';
+  html+=courseBlock('wp','Workplace Communication (2 Days)','#6366f1','🗣');
+  html+=courseBlock('svc','Service Excellence (2 Days)','#16a34a','⭐');
+  html+=courseBlock('tech1','Technical Skills Training 1 (2 Days)','#0891b2','🔧');
+  html+=courseBlock('tech2','Technical Skills Training 2 (2 Days)','#d97706','⚙');
+  body.innerHTML=html;
+}
+
+
+function downloadCGAttendance(date){
+  var coachees=DB.coachees.filter(function(p){return p.cgDate===date&&!p.archived;});
+  var trainerName=getSessionTrainer(coachees,'Elitez Facilitator');
+  downloadTrainingAttendance(date,'cgDate','Career Guidance Programme','8 HOURS (Classroom)',1,trainerName);
+}
+
+function downloadWPAttendance(date){
+  // Find trainer: use the coach assigned to most coachees in this session
+  var coachees=DB.coachees.filter(function(p){return p.wpDate===date&&!p.archived;});
+  var trainerName=getSessionTrainer(coachees,'Elitez Facilitator');
+  downloadTrainingAttendance(date,'wpDate','Workplace Communications','8 HOURS (Classroom)',2,trainerName);
+}
+
+function downloadSvcAttendance(date){
+  var coachees=DB.coachees.filter(function(p){return p.svcDate===date&&!p.archived;});
+  var trainerName=getSessionTrainer(coachees,'Elitez Facilitator');
+  downloadTrainingAttendance(date,'svcDate','Service Excellence','8 HOURS (Classroom)',2,trainerName);
+}
+
+function downloadTrainingAttendance(date,dateField,courseTitle,duration,numDays,trainerName){
+  var coachees=DB.coachees.filter(function(p){return p[dateField]===date&&!p.archived;});
+
+  // Calculate Day 2 date (next calendar day, skipping Sunday)
+  function nextDay(d){
+    var dt=new Date(d+'T00:00');
+    dt.setDate(dt.getDate()+1);
+    // Skip Sunday (0)
+    if(dt.getDay()===0) dt.setDate(dt.getDate()+1);
+    return dt.toISOString().slice(0,10);
+  }
+
+  function fmtLong(d){
+    return new Date(d+'T00:00').toLocaleDateString('en-SG',{day:'numeric',month:'long',year:'numeric'});
+  }
+
+  function buildDayHTML(dayNum, dayDate, coacheeList){
+    var rows='';
+    var totalRows=Math.max(coacheeList.length+5, 12);
+    for(var i=0;i<totalRows;i++){
+      var p=coacheeList[i];
+      var name=p?p.name:'';
+      // NRIC: show last 3 digits + letter (e.g. S1234567A -> 567A)
+      var nric='';
+      if(p&&p.nric&&p.nric.length>=4){
+        nric=p.nric.replace(/\s/g,'').slice(-4);
+      }
+      // Row background for filled rows
+      var rowBg=p?'':'background:#fafafa';
+      rows+='<tr style="'+rowBg+'">'
+        +'<td style="text-align:center;padding:5px 8px;border:1px solid #333;font-size:10pt">'+(p?i+1:'')+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #333;font-size:10pt">'+name+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #333;text-align:center;font-size:10pt">'+nric+'</td>'
+        +'<td style="padding:5px 8px;border:1px solid #333;min-width:80px;height:28px">&nbsp;</td>'
+        +'<td style="padding:5px 8px;border:1px solid #333;min-width:80px;height:28px">&nbsp;</td>'
+        +'</tr>';
+    }
+
+    return '<div style="page-break-after:always;padding:20mm 15mm;font-family:Arial,sans-serif;font-size:11pt">'
+      +'<div style="text-align:center;font-size:14pt;font-weight:bold;margin-bottom:16px;text-transform:uppercase">Classroom Training Attendance Record</div>'
+      +'<table style="width:100%;border-collapse:collapse;margin-bottom:14px">'
+      +'<tr><td style="width:35%;padding:5px 8px;border:1px solid #333;font-weight:bold">Course Title</td>'
+      +'<td style="padding:5px 8px;border:1px solid #333" colspan="2">'+courseTitle+' – Day '+dayNum+'</td></tr>'
+      +'<tr><td style="padding:5px 8px;border:1px solid #333;font-weight:bold">Trainer&#39;s Name</td>'
+      +'<td style="padding:5px 8px;border:1px solid #333" colspan="2">'+trainerName+'</td></tr>'
+      +'<tr><td style="padding:5px 8px;border:1px solid #333;font-weight:bold">Date</td>'
+      +'<td style="padding:5px 8px;border:1px solid #333" colspan="2">'+fmtLong(dayDate)+'</td></tr>'
+      +'<tr><td style="padding:5px 8px;border:1px solid #333;font-weight:bold">Total Training Duration</td>'
+      +'<td style="padding:5px 8px;border:1px solid #333" colspan="2">'+duration+'</td></tr>'
+      +'</table>'
+      +'<div style="margin-bottom:10px"><strong>Notes:</strong></div>'
+      +'<ul style="margin:0 0 14px 20px;line-height:1.8;font-size:10.5pt">'
+      +'<li>Participants are to ensure that all particulars reflected in this Attendance Record is based on their identity documents.</li>'
+      +'<li>Participants are to ensure that they sign the Attendance Record before they leave the class.</li>'
+      +'</ul>'
+      +'<table style="width:100%;border-collapse:collapse">'
+      +'<tr style="background:#e8e8e8"><th style="padding:6px 8px;border:1px solid #333;width:6%">S/N</th>'
+      +'<th style="padding:6px 8px;border:1px solid #333;width:40%">Name Of Attendees</th>'
+      +'<th style="padding:6px 8px;border:1px solid #333;width:18%">NRIC Last 3D + Alphabet</th>'
+      +'<th style="padding:6px 8px;border:1px solid #333;width:18%">AM</th>'
+      +'<th style="padding:6px 8px;border:1px solid #333;width:18%">PM</th></tr>'
+      +'<tr><td colspan="3" style="padding:4px 8px;border:1px solid #333"></td>'
+      +'<td style="padding:4px 8px;border:1px solid #333;font-size:10pt;text-align:center">'+fmtLong(dayDate)+'</td>'
+      +'<td style="padding:4px 8px;border:1px solid #333;font-size:10pt;text-align:center">'+fmtLong(dayDate)+'</td></tr>'
+      +rows
+      +'</table>'
+      +'<div style="margin-top:30px;display:flex;justify-content:space-between;font-size:9pt;color:#666">'
+      +'<span>Training Attendance Record</span><span>© Jan 2024 v1.0 &nbsp;&nbsp; Copyright © 2024 Elitez Pte Ltd. All rights reserved.</span>'
+      +'</div></div>';
+  }
+
+  var day1Date=date;
+  var day2Date=nextDay(date);
+
+  var htmlContent='<!DOCTYPE html><html><head><title>'+courseTitle+' Attendance - '+fmtLong(date)+'</title>'
+    +'<style>@page{size:A4;margin:0}body{margin:0}@media print{.no-print{display:none}}</style>'
+    +'</head><body>';
+
+  htmlContent+=buildDayHTML(1, day1Date, coachees);
+  if(numDays>=2){
+    htmlContent+=buildDayHTML(2, day2Date, coachees);
+  }
+  htmlContent+='</body></html>';
+
+  try{
+    var blob=new Blob([htmlContent],{type:'text/html'});
+    var blobUrl=URL.createObjectURL(blob);
+    var a=document.createElement('a');a.href=blobUrl;a.target='_blank';a.click();
+    setTimeout(function(){URL.revokeObjectURL(blobUrl);},3000);
+  }catch(e2){
+    var w=window.open('','_blank');
+    if(w){w.document.write(htmlContent);w.document.close();w.focus();setTimeout(function(){w.print();},500);}
+  }
+}
+
+
+function getSessionTrainer(coachees, fallback){
+  // Count coaches in this session and pick the most common one
+  var counts={};
+  coachees.forEach(function(p){
+    var coach=DB.coaches.find(function(cc){return cc.id===p.coachId;});
+    if(coach){counts[coach.name]=(counts[coach.name]||0)+1;}
+  });
+  var topCoach=fallback;
+  var topCount=0;
+  Object.keys(counts).forEach(function(name){
+    if(counts[name]>topCount){topCount=counts[name];topCoach=name;}
+  });
+  return topCoach;
+}
+
+
+function downloadAttPDF(pid){
+  var p=DB.coachees.find(function(x){return x.id===pid;});
+  if(!p) return;
+  var coach=(DB.coaches.find(function(cc){return cc.id===p.coachId;})||{name:'',contact:''});
+  var html='<!DOCTYPE html><html><head><title>Coaching Attendance - '+p.name+'</title>'
+    +'<style>@page{size:A4;margin:20mm 15mm}body{font-family:Arial,sans-serif;font-size:11pt;margin:0}'
+    +'table{width:100%;border-collapse:collapse}th,td{border:1px solid #333;padding:7px 10px}'
+    +'th{background:#e8e8e8;text-align:left;font-weight:bold}</style></head><body>'
+    +'<h2 style="text-align:center;text-transform:uppercase;font-size:13pt;margin-bottom:20px">Coaching Session Attendance Record</h2>'
+    +'<table style="margin-bottom:20px">'
+    +'<tr><th style="width:35%">Programme</th><td>Integrated Coaching-to-Placement Programme (AfA-ACES)</td></tr>'
+    +'<tr><th>Coachee Name</th><td>'+p.name+'</td></tr>'
+    +'<tr><th>NRIC</th><td>'+(p.nric||'&nbsp;')+'</td></tr>'
+    +'<tr><th>Mobile</th><td>'+(p.mobile||'&nbsp;')+'</td></tr>'
+    +'<tr><th>SSO</th><td>'+(p.sso||'&nbsp;')+'</td></tr>'
+    +'<tr><th>Career Coach</th><td>'+coach.name+(coach.contact?' &nbsp;|&nbsp; '+coach.contact:'')+'</td></tr>'
+    +'<tr><th>Session Date</th><td>'+(p.coachDate?fmtD(p.coachDate):'&nbsp;')+'</td></tr>'
+    +'<tr><th>Duration</th><td>3 Hours (Individual Coaching Session)</td></tr>'
+    +'</table>'
+    +'<p style="margin:0 0 30px">I confirm that I have attended the above coaching session.</p>'
+    +'<table><tr>'
+    +'<td style="width:50%;height:70px;padding:10px;vertical-align:bottom"><div style="font-size:9pt;color:#555">Coachee Signature &amp; Date</div></td>'
+    +'<td style="width:50%;height:70px;padding:10px;vertical-align:bottom"><div style="font-size:9pt;color:#555">Career Coach Signature &amp; Date</div></td>'
+    +'</tr></table>'
+    +'<p style="margin-top:24px;font-size:9pt;color:#999;text-align:center">AfA-ACES &nbsp;&middot;&nbsp; Career Guidance Programme &nbsp;&middot;&nbsp; Elitez Pte Ltd</p>'
+    +'</body></html>';
+  try{
+    var blob=new Blob([html],{type:'text/html'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;a.target='_blank';a.click();
+    setTimeout(function(){URL.revokeObjectURL(url);},3000);
+  }catch(e){
+    var w=window.open('','_blank');
+    if(w){w.document.write(html);w.document.close();w.focus();setTimeout(function(){w.print();},400);}
+  }
+}
+
+
+
+// ── Coach Prompts ─────────────────────────────────────────────────
+var STAGE_PROMPTS = {
+  'Exploration (14-25)': [
+    'What kind of work or activities do you enjoy most? What makes you feel energised?',
+    'Have you done any part-time work, internships or volunteering? What did you learn?',
+    'What subjects or skills come naturally to you?',
+    'What does a good day at work look like to you?'
+  ],
+  'Establishment (26-45)': [
+    'What has your career journey looked like so far? What worked well?',
+    'What skills from your previous jobs can transfer to a new role?',
+    'What are the main factors you need right now — salary, hours, location?',
+    'What has held you back from progressing? How can we address that?',
+    'What does success look like for you in the next 1–2 years?'
+  ],
+  'Maintenance (26-65)': [
+    'What aspects of work do you still find meaningful and want to continue?',
+    'Are there health or family considerations that affect your working hours?',
+    'What skills or experience do you have that feel underutilised?',
+    'Would you consider a role that uses your experience differently, e.g. mentoring?'
+  ],
+  'Disengagement (50+)': [
+    'What are your priorities now — income, purpose, social connection, flexibility?',
+    'Are you looking for part-time or project-based work rather than full-time?',
+    'How do your family and health needs affect the type of work you can do?',
+    'What would need to be true for you to feel good about your work situation?'
+  ]
+};
+
+var RIASEC_PROMPTS = {
+  R: {label:'Realistic',icon:'🔧',color:'#b45309',prompts:[
+    'What kinds of tasks or tools do you like working with?',
+    'Have you worked in trades, maintenance, or technical roles? What did you enjoy?',
+    'Would you prefer an outdoor or indoor work environment?',
+    'Are you open to roles in logistics, facilities management, or technical services?'
+  ]},
+  I: {label:'Investigative',icon:'🔬',color:'#0e7490',prompts:[
+    'What kinds of problems do you enjoy solving?',
+    'Have you worked in roles requiring data, research, or technical knowledge?',
+    'What subjects or fields do you want to learn more about?',
+    'Are you interested in quality control, data analysis, or healthcare roles?'
+  ]},
+  A: {label:'Artistic',icon:'🎨',color:'#7c3aed',prompts:[
+    'What kind of creative work have you done before?',
+    'Do you prefer unstructured environments where you can express ideas?',
+    'Have you worked in design, communications, events, or hospitality?',
+    'What does creativity in a job look like to you — designing, writing, presenting?'
+  ]},
+  S: {label:'Social',icon:'🤝',color:'#059669',prompts:[
+    'What kind of people do you enjoy helping most?',
+    'Have you worked in customer service, caregiving, or healthcare before?',
+    'Do you prefer working in a team or directly with clients?',
+    'What does meaningful work look like when helping others?'
+  ]},
+  E: {label:'Enterprising',icon:'🚀',color:'#ea6c08',prompts:[
+    'Have you managed people or projects before? What did you learn?',
+    'What drives you — recognition, income, impact, or building something?',
+    'Are you interested in sales, operations, or team leadership roles?',
+    'What kind of targets or goals motivate you?'
+  ]},
+  C: {label:'Conventional',icon:'📋',color:'#3b82f6',prompts:[
+    'What kind of processes or systems have you worked with?',
+    'Have you worked in admin, accounts, or data entry roles?',
+    'Do you prefer clear instructions and well-defined tasks?',
+    'What kind of accuracy or detail work do you find satisfying?'
+  ]}
+};
+
+function updateCoachPrompts(){
+  var emptyEl=document.getElementById('prompt-empty');
+  var stageEl=document.getElementById('prompt-stage');
+  var riasecEl=document.getElementById('prompt-riasec');
+  if(!emptyEl||!stageEl||!riasecEl) return;
+  var hasStage=!!stage;
+  var hasRiasec=riasec&&riasec.length>0;
+  if(!hasStage&&!hasRiasec){
+    emptyEl.style.display='block';stageEl.style.display='none';riasecEl.style.display='none';
+    return;
+  }
+  emptyEl.style.display='none';
+  if(hasStage&&STAGE_PROMPTS[stage]){
+    stageEl.style.display='block';
+    var stageLabel=stage.split('(')[0].trim();
+    var html='<div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Life Stage — '+stageLabel+'</div>';
+    html+='<ul style="margin:0 0 4px 16px;padding:0">';
+    STAGE_PROMPTS[stage].forEach(function(q){html+='<li style="font-size:12px;color:var(--text2);margin-bottom:7px;line-height:1.5">'+q+'</li>';});
+    html+='</ul>';
+    stageEl.innerHTML=html;
+  } else { stageEl.style.display='none'; }
+  if(hasRiasec){
+    riasecEl.style.display='block';
+    var html2='';
+    riasec.forEach(function(code){
+      var d=RIASEC_PROMPTS[code]; if(!d) return;
+      html2+='<div style="margin-bottom:12px">';
+      html2+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:7px">';
+      html2+='<span style="font-size:14px">'+d.icon+'</span>';
+      html2+='<span style="font-size:11px;font-weight:700;color:'+d.color+';text-transform:uppercase;letter-spacing:0.05em">'+d.label+' type</span>';
+      html2+='</div><ul style="margin:0 0 4px 16px;padding:0">';
+      d.prompts.forEach(function(q){html2+='<li style="font-size:12px;color:var(--text2);margin-bottom:7px;line-height:1.5">'+q+'</li>';});
+      html2+='</ul></div>';
+    });
+    riasecEl.innerHTML=html2;
+  } else { riasecEl.style.display='none'; }
+}
+
+</script>
 </body>
 </html>
