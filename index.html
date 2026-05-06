@@ -1258,7 +1258,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v105';
+const DATA_VERSION = 'elitez_2026_v106';
 
 function loadDB(){
   try {
@@ -2757,18 +2757,16 @@ async function generatePDF(){
       doc.text(`Page ${pg} / ${tp}  ·  Elitez Pte Ltd`,pw-mr,ph-8,{align:'right'});
     }
 
-    const pdfBytes=doc.output('arraybuffer');
-    const pdfDoc=await PDFLib.PDFDocument.load(pdfBytes);
-    const enc=await pdfDoc.save({userPassword:'AFA2026!',ownerPassword:'ELITEZowner!',permissions:{printing:'highResolution',modifying:false,copying:false}});
-    const blob=new Blob([enc],{type:'application/pdf'});
+    // Direct PDF save via jsPDF (no encryption library needed)
+    const blob=doc.output('blob');
     const url=URL.createObjectURL(blob);
     const a=document.createElement('a');
     const fn=(i.name||p.name).replace(/[^a-zA-Z0-9 ]/g,'').trim().replace(/\s+/g,'_');
     a.href=url;a.download=`Intake_${fn}_${new Date().toISOString().slice(0,10)}.pdf`;a.click();
     URL.revokeObjectURL(url);
-    toast('🔒 Encrypted PDF downloaded! Password: AFA2026!');
+    toast('✓ PDF downloaded!');
   }catch(err){console.error(err);toast('PDF generation failed: '+err.message,'err');}
-  finally{btn.disabled=false;btn.innerHTML='🔒 Download encrypted PDF';}
+  finally{btn.disabled=false;btn.innerHTML='📄 Download PDF';}
 }
 
 // ════════════════════════════════════════
