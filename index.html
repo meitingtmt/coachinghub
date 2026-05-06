@@ -1258,7 +1258,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v103';
+const DATA_VERSION = 'elitez_2026_v104';
 
 function loadDB(){
   try {
@@ -3003,7 +3003,7 @@ function openWA(pid,type,sub){
   const first=salutation(p.name);
   var venueObj=getVenue(p.sso);var venue=venueObj.address||p.sso+' SSO';var venueMRT=venueObj.mrt||'';
   let msg='',title='';
-  if(type==='cg'){title='Career Guidance Workshop Reminder';msg=`Hi ${first},\n\nThis is ${coach.name} from Elitez. Just a reminder about your *Career Guidance Workshop on ${fmtD(p.cgDate)}*.\n\n📍 *Venue:* ${venue}\n⏰ Please arrive 10 mins early for registration.\n\nFor directions, search "${venue}" on Google Maps, or alight at ${p.sso} MRT station.\n\nPlease confirm your attendance by replying. See you there!\n\nWarm regards,\n${coach.name} | Career Coach | Elitez\n📞 ${coach.contact}`;}
+  if(type==='cg'){title='Career Guidance Workshop Reminder';msg=`Hi ${first},\n\nThis is ${coach.name} from Elitez. Just a reminder about your *Career Guidance Workshop on ${fmtD(p.cgDate)}*.\n\n📍 *Venue:* ${venue}\n⏰ Please arrive 10 mins early for registration.\n\nFor directions, search "${venue}" on Google Maps, or alight at ${venueMRT||p.sso+' MRT'}.\n\nPlease confirm your attendance by replying. See you there!\n\nWarm regards,\n${coach.name} | Career Coach | Elitez\n📞 ${coach.contact}`;}
   else if(type==='coach'){
     if(sub==='schedule'){
       // After CG — asking coachee for their availability for coaching + courses
