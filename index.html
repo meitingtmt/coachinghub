@@ -1258,7 +1258,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v104';
+const DATA_VERSION = 'elitez_2026_v105';
 
 function loadDB(){
   try {
@@ -1566,6 +1566,8 @@ function initApp(){
   updateCounts();
   if(isAdmin || isSeniorSession()) renderOverviewTab();
   initAutoSync();
+  // Scan for any coachees that should be archived based on their notes
+  runArchiveScan();
 }
 
 // ════════════════════════════════════════
@@ -2049,10 +2051,11 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
           an.includes('number not in use')||an.includes('number not active')||an.includes('not in used')||
           an.includes('found a job')||
           an.includes('unable to commit')||an.includes('unable to make it')||
-          an.includes('unable to attend')||
-          an.includes('not interested')||
-          an.includes('opted out')||
-          an.includes('dropped out')||
+          an.includes('unable to attend')||an.includes('not able to attend')||
+          an.includes('not interested')||an.includes('no longer interested')||
+          an.includes('opted out')||an.includes('dropped out')||
+          an.includes('cannot make it')||an.includes('cannot attend')||
+          an.includes('unable to continue')||an.includes('out of programme')||
           (an.includes('3 contact')&&(an.includes('no response')||an.includes('mia')));
         if(shouldArchive){existing.archived=true;changed.push('archived');}
       }
@@ -3060,7 +3063,11 @@ function setF(pid,field,val){
       vl.includes('not interested')||vl.includes('opted out')||vl.includes('dropped out')||
       vl.includes('found a job')||vl.includes('number not in use')||
       vl.includes('number not active')||vl.includes('cannot make it')||
-      vl.includes('cannot attend')||vl.includes('no longer interested');
+      vl.includes('cannot attend')||vl.includes('no longer interested')||
+      vl.includes('out of programme')||vl.includes('exit programme')||
+      vl.includes('dropped from')||vl.includes('unable to continue')||
+      vl.includes('will not be attending')||vl.includes('not able to attend')||
+      vl.includes('not able to make')||vl.includes('cannot continue');
     if(shouldArchive){
       p.archived=true;
       setTimeout(function(){toast('⚠ '+p.name+' auto-archived (withdrawal detected)','err');},100);
@@ -3510,6 +3517,28 @@ function updateCoachPrompts(){
     });
     riasecEl.innerHTML=html2;
   } else { riasecEl.style.display='none'; }
+}
+
+
+function runArchiveScan(){
+  var KEYWORDS=['withdrawn','unable to make it','unable to attend','unable to commit',
+    'not interested','no longer interested','opted out','dropped out','found a job',
+    'number not in use','number not active','not in used','cannot make it','cannot attend',
+    'cannot continue','unable to continue','out of programme','exit programme',
+    'will not be attending','not able to attend','not able to make','dropped from'];
+  var count=0;
+  DB.coachees.forEach(function(p){
+    if(p.archived) return;
+    var n=(p.notes||'').toLowerCase();
+    var hit=KEYWORDS.some(function(kw){return n.includes(kw);});
+    if(hit){p.archived=true;count++;}
+  });
+  if(count>0){
+    save();renderDashboard();updateCounts();
+    toast('📦 '+count+' coachee'+(count>1?'s':'')+' auto-archived based on notes');
+    setTimeout(function(){renderArchive();},300);
+  }
+  return count;
 }
 
 </script>
