@@ -1258,7 +1258,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v106';
+const DATA_VERSION = 'elitez_2026_v107';
 
 function loadDB(){
   try {
@@ -1918,10 +1918,29 @@ function parseSheetDate(raw){
       var yr=String(m[3]||'').length===2?'20'+m[3]:String(m[3]||'2026');
       return yr+'-'+mn+'-'+(m[1]||'01').padStart(2,'0');
     }
+    // DD-MM-YYYY (numeric dashes)
+    m=s.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+    if(m){return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');}
+    // DD/MM/YYYY
     m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
     if(m){
       var yr2=String(m[3]||'').length===2?'20'+m[3]:String(m[3]||'2026');
       return yr2+'-'+(m[2]||'01').padStart(2,'0')+'-'+(m[1]||'01').padStart(2,'0');
+    }
+    // DD MMM YYYY (with spaces)
+    m=s.match(/^(\d{1,2})\s+([A-Za-z]{3,9})\s+(\d{2,4})$/);
+    if(m){
+      var mo2={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+      var mn2=mo2[(m[2]||'').toLowerCase().slice(0,3)]||'01';
+      var yr3=String(m[3]||'').length===2?'20'+m[3]:String(m[3]||'2026');
+      return yr3+'-'+mn2+'-'+(m[1]||'01').padStart(2,'0');
+    }
+    // MMM DD, YYYY (US format)
+    m=s.match(/^([A-Za-z]{3,9})\s+(\d{1,2}),?\s+(\d{4})$/);
+    if(m){
+      var mo3={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+      var mn3=mo3[(m[1]||'').toLowerCase().slice(0,3)]||'01';
+      return m[3]+'-'+mn3+'-'+(m[2]||'01').padStart(2,'0');
     }
     return '';
   }catch(e){return '';}
