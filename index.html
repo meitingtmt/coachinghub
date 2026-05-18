@@ -1259,7 +1259,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v115';
+const DATA_VERSION = 'elitez_2026_v116';
 
 function loadDB(){
   try {
@@ -1959,6 +1959,23 @@ function parseSheetDate(raw){
       var mn3=mo3[(m[1]||'').toLowerCase().slice(0,3)]||'01';
       return m[3]+'-'+mn3+'-'+(m[2]||'01').padStart(2,'0');
     }
+    // Google Sheets Date object string: "Mon May 19 2026 00:00:00 GMT+0800 ..."
+    // Format: DayName MonName DD YYYY HH:MM:SS GMT...
+    m=s.match(/^[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})\s+(\d{4})\s/);
+    if(m){
+      var mo4={jan:'01',feb:'02',mar:'03',apr:'04',may:'05',jun:'06',jul:'07',aug:'08',sep:'09',oct:'10',nov:'11',dec:'12'};
+      var mn4=mo4[(m[1]||'').toLowerCase().slice(0,3)]||'01';
+      return m[3]+'-'+mn4+'-'+(m[2]||'01').padStart(2,'0');
+    }
+    // Also try parsing as JS Date directly
+    try{
+      var dt=new Date(s);
+      if(!isNaN(dt.getTime())&&dt.getFullYear()>2000){
+        var mm=String(dt.getMonth()+1).padStart(2,'0');
+        var dd=String(dt.getDate()).padStart(2,'0');
+        return dt.getFullYear()+'-'+mm+'-'+dd;
+      }
+    }catch(e2){}
     return '';
   }catch(e){return '';}
 }
