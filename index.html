@@ -1259,7 +1259,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v112';
+const DATA_VERSION = 'elitez_2026_v113';
 
 function loadDB(){
   try {
@@ -2063,12 +2063,12 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
       var changed=[];
       ['name','mobile','email','sso','fc','fcContact','fcEmail','dob'].forEach(function(f){
         if(sr[f]&&existing[f]!==sr[f]){existing[f]=sr[f];changed.push(f);}
-      });
+      });// SHEET IS SOURCE OF TRUTH: always overwrite with sheet values
       ['welcomeSent','cgDate','cgHrs','coachDate','coachHrs','wpDate','wpHrs','svcDate','svcHrs'].forEach(function(f){
-        if(sr[f]&&sr[f]!==existing[f]){existing[f]=sr[f];changed.push(f);}
+        if(sr[f]){existing[f]=sr[f];changed.push(f);}
       });
       ['cgDone','coachDone','wpDone','svcDone'].forEach(function(f){
-        if(sr[f]==='Yes'&&existing[f]!=='Yes'){existing[f]='Yes';changed.push(f);}
+        if(sr[f]==='Yes'){existing[f]='Yes';changed.push(f);}
       });
       if(sr.notes&&!existing.notes.includes(sr.notes)){
         existing.notes=(existing.notes?existing.notes+' | ':'')+sr.notes;changed.push('notes');
@@ -2119,7 +2119,10 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
   save();renderDashboard();buildIntakeSel();updateCounts();
   if(isSeniorSession()) renderOverviewTab();
 
+  // Build detailed summary
+  var updatedNames=changes.filter(function(ch){return ch.action==='Updated'||ch.fields.length>0;}).map(function(ch){return ch.name;}).slice(0,5);
   var summary='✓ Sync: '+added+' added, '+updated+' updated, '+skipped+' unchanged'+(filtered?' (+'+filtered+' filtered)':'');
+  if(updatedNames.length>0) summary+='<br><small style="color:var(--teal)">Updated: '+updatedNames.join(', ')+(updated>5?'...':'')+'</small>';
   // If nothing updated but we expected updates, show a warning
   if(added===0&&updated===0&&skipped>0){
     summary+=' — If dates are missing, try Force Full Re-sync';
