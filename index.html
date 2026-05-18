@@ -1259,27 +1259,43 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v114';
+const DATA_VERSION = 'elitez_2026_v115';
 
 function loadDB(){
   try {
     const raw = localStorage.getItem('elitez_hub');
     if(raw){
       const stored = JSON.parse(raw);
-      // Only use stored data if it matches current version AND has coachees
       if(stored && stored.coachees && stored.coachees.length > 0){
-        // Patch any missing fields on each coachee
+        // Patch any missing fields
         stored.coachees = stored.coachees.map(p => Object.assign(
           {nextAction:'',nextActionDate:'',contactAttempts:0,archived:false,mobile2:'',intake:{}}, p
         ));
         // Normalise names to title case
         stored.coachees.forEach(p=>{ if(p.name) p.name=formatName(p.name); });
         if(!stored.settings) stored.settings = JSON.parse(JSON.stringify(DEFAULT.settings));
+        if(!stored.settings.trainingSchedule) stored.settings.trainingSchedule={wp:[],svc:[],tech1:[],tech2:[]};
+        
+        // MERGE: restore DEFAULT dates for coachees that have empty dates in stored
+        // This recovers from accidental Force Full Re-sync data loss
+        var dateFields=['cgDate','cgDone','cgHrs','coachDate','coachDone','coachHrs',
+                        'wpDate','wpDone','wpHrs','svcDate','svcDone','svcHrs','welcomeSent'];
+        stored.coachees.forEach(function(p){
+          var def=DEFAULT.coachees.find(function(d){
+            return d.id===p.id || d.mobile===p.mobile || d.name.toLowerCase()===p.name.toLowerCase();
+          });
+          if(def){
+            dateFields.forEach(function(f){
+              // If stored has empty but DEFAULT has a value, restore it
+              if(!p[f] && def[f]) p[f]=def[f];
+            });
+          }
+        });
+        
         return stored;
       }
     }
   } catch(e){}
-  // No valid stored data — return a fresh copy of DEFAULT
   const fresh = JSON.parse(JSON.stringify(DEFAULT));
   fresh._version = DATA_VERSION;
   return fresh;
