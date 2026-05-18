@@ -1259,7 +1259,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v111';
+const DATA_VERSION = 'elitez_2026_v112';
 
 function loadDB(){
   try {
@@ -2031,9 +2031,9 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
     allCoachData[coachName].push({
       name:name,sso:(row[COL.sso]||'').trim(),mobile:(row[COL.mobile]||'').trim(),
       cgDate:parseProgDate(row[COL.cgDate]),
-      cgDone:(row[COL.cgDone]||'').trim().toUpperCase()==='Y'?'Yes':'',
+      cgDone:(function(){var v=(row[COL.cgDone]||'').trim().toUpperCase();return (v==='Y'||v==='YES'||v==='1'||v==='TRUE'||v==='X'||v==='ATTENDED'||v==='DONE')?'Yes':'';})(),
       coachDate:parseProgDate(row[COL.coachDate]),
-      coachDone:(row[COL.coachDone]||'').trim().toUpperCase()==='Y'?'Yes':'',
+      coachDone:(function(){var v=(row[COL.coachDone]||'').trim().toUpperCase();return (v==='Y'||v==='YES'||v==='1'||v==='TRUE'||v==='X'||v==='ATTENDED'||v==='DONE')?'Yes':'';})(),
       notes:[(row[COL.nonAttend]||'').trim(),(row[COL.phase2withdraw]||'').trim()].filter(Boolean).join(' | ')
     });
 
@@ -2055,8 +2055,8 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
       fcEmail:(row[COL.fcEmail]||'').trim(),welcomeSent:parseSheetDate(row[COL.welcome]),
       cgDate:parseProgDate(row[COL.cgDate]),cgDone:(row[COL.cgDone]||'').trim().toUpperCase()==='Y'?'Yes':'',cgHrs:(row[COL.cgHrs]||'').trim(),
       coachDate:parseProgDate(row[COL.coachDate]),coachDone:(row[COL.coachDone]||'').trim().toUpperCase()==='Y'?'Yes':'',coachHrs:(row[COL.coachHrs]||'').trim(),
-      wpDate:parseProgDate(row[COL.wpDate]),wpDone:(row[COL.wpDone]||'').trim().toUpperCase()==='Y'?'Yes':'',wpHrs:(row[COL.wpHrs]||'').trim(),
-      svcDate:parseProgDate(row[COL.svcDate]),svcDone:(row[COL.svcDone]||'').trim().toUpperCase()==='Y'?'Yes':'',svcHrs:(row[COL.svcHrs]||'').trim(),
+      wpDate:parseProgDate(row[COL.wpDate]),wpDone:(function(){var v=(row[COL.wpDone]||'').trim().toUpperCase();return (v==='Y'||v==='YES'||v==='1'||v==='TRUE'||v==='X'||v==='ATTENDED'||v==='DONE')?'Yes':'';})(),wpHrs:(row[COL.wpHrs]||'').trim(),
+      svcDate:parseProgDate(row[COL.svcDate]),svcDone:(function(){var v=(row[COL.svcDone]||'').trim().toUpperCase();return (v==='Y'||v==='YES'||v==='1'||v==='TRUE'||v==='X'||v==='ATTENDED'||v==='DONE')?'Yes':'';})(),svcHrs:(row[COL.svcHrs]||'').trim(),
       notes:[(row[COL.nonAttend]||'').trim(),(row[COL.phase2withdraw]||'').trim()].filter(Boolean).join(' | ')};
 
     if(existing){
@@ -2559,24 +2559,19 @@ function doChangePw(){
 
 // ── Force re-sync ─────────────────────────────────────────────────
 function forceFullResync(){
-  if(!confirm('This will clear all programme dates and re-pull everything fresh from Google Sheet. Intake form data is kept. Continue?'))return;
-  // Save intake data before clearing
-  var intakeBackup={};
-  DB.coachees.forEach(function(p){
-    if(p.intake&&Object.keys(p.intake).length>0) intakeBackup[p.mobile||p.name]=p.intake;
-  });
-  // Clear ALL dates AND notes (so sync can re-populate from sheet)
-  DB.coachees.forEach(function(p){
+  if(!confirm('This will clear all programme dates and re-pull from Google Sheet. Continue?'))return;
+  // Only clear dates for MY coachees (or all if admin/senior)
+  var myList=myCoachees();
+  myList.forEach(function(p){
     p.cgDate='';p.cgDone='';p.cgHrs='';
     p.coachDate='';p.coachDone='';p.coachHrs='';
     p.wpDate='';p.wpDone='';p.wpHrs='';
     p.svcDate='';p.svcDone='';p.svcHrs='';
-    p.welcomeSent='';p.archived=false;
-    // Keep: name, mobile, id, coachId, notes, intake
+    p.welcomeSent='';
+    // Keep: name, mobile, notes, intake, archived status
   });
-  window._intakeBackup=intakeBackup;
   save();
-  toast('Dates cleared — syncing now...');
+  toast('Dates cleared for '+myList.length+' coachees — syncing now...');
   setTimeout(function(){syncFromAppsScript();},500);
 }
 
