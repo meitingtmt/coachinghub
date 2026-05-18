@@ -1259,7 +1259,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v110';
+const DATA_VERSION = 'elitez_2026_v111';
 
 function loadDB(){
   try {
@@ -2037,7 +2037,9 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
       notes:[(row[COL.nonAttend]||'').trim(),(row[COL.phase2withdraw]||'').trim()].filter(Boolean).join(' | ')
     });
 
-    if(!isAdminSession()&&!isSeniorSession()&&coachName.toLowerCase()!==coachNameFilter){filtered++;continue;}
+    // Only filter by coach for regular coaches (not admin/senior)
+    // Also allow rows where coachName is blank (not yet assigned)
+    if(!isAdminSession()&&!isSeniorSession()&&coachName&&coachName.toLowerCase()!==coachNameFilter){filtered++;continue;}
 
     var mobile=(row[COL.mobile]||'').trim().replace(/\s/g,'');
     var existing=DB.coachees.find(function(p){
@@ -2117,7 +2119,11 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
   save();renderDashboard();buildIntakeSel();updateCounts();
   if(isSeniorSession()) renderOverviewTab();
 
-  var summary='✓ Sync complete: '+added+' added, '+updated+' updated, '+skipped+' unchanged'+(filtered?' ('+filtered+' other coaches)':'');
+  var summary='✓ Sync: '+added+' added, '+updated+' updated, '+skipped+' unchanged'+(filtered?' (+'+filtered+' filtered)':'');
+  // If nothing updated but we expected updates, show a warning
+  if(added===0&&updated===0&&skipped>0){
+    summary+=' — If dates are missing, try Force Full Re-sync';
+  }
   setStatus('<span style="color:var(--green);font-weight:700">'+summary+'</span>');
   setTimeout(function(){var ind=document.getElementById('topbar-sync-indicator');if(ind)ind.style.display='none';},5000);
   toast(summary);
@@ -2553,12 +2559,24 @@ function doChangePw(){
 
 // ── Force re-sync ─────────────────────────────────────────────────
 function forceFullResync(){
-  if(!confirm('This will clear all phase dates and re-pull from Google Sheet. Your intake notes are kept safe. Continue?'))return;
+  if(!confirm('This will clear all programme dates and re-pull everything fresh from Google Sheet. Intake form data is kept. Continue?'))return;
+  // Save intake data before clearing
+  var intakeBackup={};
   DB.coachees.forEach(function(p){
-    p.cgDate='';p.cgDone='';p.cgHrs='';p.coachDate='';p.coachDone='';p.coachHrs='';
-    p.wpDate='';p.wpDone='';p.wpHrs='';p.svcDate='';p.svcDone='';p.svcHrs='';p.welcomeSent='';
+    if(p.intake&&Object.keys(p.intake).length>0) intakeBackup[p.mobile||p.name]=p.intake;
   });
-  save();toast('Phase dates cleared — syncing now...');
+  // Clear ALL dates AND notes (so sync can re-populate from sheet)
+  DB.coachees.forEach(function(p){
+    p.cgDate='';p.cgDone='';p.cgHrs='';
+    p.coachDate='';p.coachDone='';p.coachHrs='';
+    p.wpDate='';p.wpDone='';p.wpHrs='';
+    p.svcDate='';p.svcDone='';p.svcHrs='';
+    p.welcomeSent='';p.archived=false;
+    // Keep: name, mobile, id, coachId, notes, intake
+  });
+  window._intakeBackup=intakeBackup;
+  save();
+  toast('Dates cleared — syncing now...');
   setTimeout(function(){syncFromAppsScript();},500);
 }
 
