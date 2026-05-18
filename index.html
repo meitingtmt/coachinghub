@@ -1259,7 +1259,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v113';
+const DATA_VERSION = 'elitez_2026_v114';
 
 function loadDB(){
   try {
@@ -2025,7 +2025,7 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
     }
     var name=formatName((row[COL.name]||'').trim());
     var coachName=(row[COL.coachName]||'').trim();
-    if(!name||!coachName) continue;
+    if(!name) continue; // only skip if no name
 
     if(!allCoachData[coachName]) allCoachData[coachName]=[];
     allCoachData[coachName].push({
@@ -2046,7 +2046,7 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
       return p.name.toLowerCase()===name.toLowerCase()||
         (mobile&&p.mobile&&p.mobile.replace(/\D/g,'')===mobile.replace(/\D/g,''));
     });
-    var matchedCoach=DB.coaches.find(function(co){return co.name.trim().toLowerCase()===coachName.toLowerCase();});
+    var matchedCoach=coachName?DB.coaches.find(function(co){return co.name.trim().toLowerCase()===coachName.toLowerCase();}):null;
     var assignedCoachId=matchedCoach?matchedCoach.id:(DB.activeCoachId||'c1');
 
     var sr={name:name,dob:parseSheetDate(row[COL.dob]),mobile:mobile,
