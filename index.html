@@ -2015,6 +2015,13 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
   for(var li=0;li<dataLines.length;li++){
     var row=parseCSVLine(dataLines[li]);
     if(row.every(function(f){return !f.trim();})) continue;
+    // Debug first row to verify column mapping
+    if(li===0){
+      console.log('[SYNC] Total cols in first row: '+row.length);
+      for(var di=0;di<Math.min(row.length,28);di++){
+        console.log('[SYNC] col['+di+']: '+row[di]);
+      }
+    }
     var name=formatName((row[COL.name]||'').trim());
     var coachName=(row[COL.coachName]||'').trim();
     if(!name||!coachName) continue;
