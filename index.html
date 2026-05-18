@@ -941,6 +941,7 @@ function doPost(e) {
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <button class="btn btn-primary" onclick="syncFromAppsScript()">🔄 Sync now</button>
         <button class="btn btn-ghost" onclick="saveScriptUrl()">💾 Save URL</button>
+        <button class="btn btn-ghost" onclick="checkColumnMapping()">🔍 Check columns</button>
         <button class="btn btn-ghost" onclick="forceFullResync()" title="Clear all dates and re-pull fresh from sheet — fixes any wrong dates">🔁 Force full re-sync</button>
         <button class="btn" style="background:var(--green);border-color:var(--green);color:white" onclick="pushUpdatesToSheet()">📤 Push my updates</button>
         <div id="sync-status" style="font-size:12px;font-weight:600"></div>
@@ -1258,7 +1259,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v108';
+const DATA_VERSION = 'elitez_2026_v109';
 
 function loadDB(){
   try {
@@ -3563,6 +3564,55 @@ function runArchiveScan(){
     setTimeout(function(){renderArchive();},300);
   }
   return count;
+}
+
+
+function checkColumnMapping(){
+  var url=(DB.settings||{}).sheetsUrl||'';
+  if(!url){toast('Please set Apps Script URL first','err');return;}
+  toast('Fetching column info...');
+  fetch(url)
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var csv=data.csv||'';
+      var lines=csv.split('\n').filter(function(l){return l.trim();});
+      if(lines.length<2){toast('No data returned','err');return;}
+      var header=parseCSVLine(lines[0]);
+      var firstRow=parseCSVLine(lines[1]);
+      var COL_NAMES=['rowNum','name','dob','mobile','email','sso','fc','fcContact','fcEmail',
+        'coachName','coachContact','coachEmail','welcome','cgDone','cgDate','cgHrs',
+        'coachDone','coachDate','coachHrs','nonAttend','phase2withdraw',
+        'wpDone','wpDate','wpHrs','svcDone','svcDate','svcHrs'];
+      var html='<div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--navy)">Column Mapping Check</div>';
+      html+='<div style="font-size:11px;color:var(--text3);margin-bottom:10px">Sheet has '+header.length+' columns. First data row shown below.</div>';
+      html+='<table style="width:100%;border-collapse:collapse;font-size:12px">';
+      html+='<tr style="background:var(--off)"><th style="padding:5px 8px;text-align:left;border:1px solid var(--border)">Col#</th><th style="padding:5px 8px;text-align:left;border:1px solid var(--border)">Sheet Header</th><th style="padding:5px 8px;text-align:left;border:1px solid var(--border)">First Data Value</th><th style="padding:5px 8px;text-align:left;border:1px solid var(--border)">App Expects</th></tr>';
+      for(var i=0;i<Math.max(header.length,27);i++){
+        var hdr=header[i]||'';
+        var val=firstRow[i]||'';
+        var expects=COL_NAMES[i]||'(not mapped)';
+        var mismatch=i<27&&hdr&&!hdr.toLowerCase().includes(expects.toLowerCase().replace(/[_]/g,' '));
+        html+='<tr style="'+(mismatch?'background:#fef3c7':'')+'">';
+        html+='<td style="padding:5px 8px;border:1px solid var(--border);color:var(--text3)">'+(i)+'</td>';
+        html+='<td style="padding:5px 8px;border:1px solid var(--border);font-weight:600">'+hdr+'</td>';
+        html+='<td style="padding:5px 8px;border:1px solid var(--border);color:var(--teal)">'+val.slice(0,40)+'</td>';
+        html+='<td style="padding:5px 8px;border:1px solid var(--border);color:var(--text3)">'+expects+'</td>';
+        html+='</tr>';
+      }
+      html+='</table>';
+      // Show in a modal
+      var m=document.getElementById('info-modal');
+      if(m){
+        var mb=document.getElementById('info-modal-body');
+        if(mb) mb.innerHTML=html;
+        m.classList.add('open');
+      } else {
+        // Fallback: create a new window
+        var w=window.open('','_blank','width=700,height=500');
+        if(w){w.document.write('<html><body style="font-family:sans-serif;padding:20px">'+html+'</body></html>');w.document.close();}
+      }
+    })
+    .catch(function(e){toast('Error: '+e.message,'err');});
 }
 
 </script>
