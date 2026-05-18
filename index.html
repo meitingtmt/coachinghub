@@ -1259,7 +1259,7 @@ const DEFAULT = {
 
 // ── Load data, always fall back to DEFAULT if storage is empty/corrupt ──
 // Data version — bump this any time DEFAULT data changes to force a fresh load
-const DATA_VERSION = 'elitez_2026_v109';
+const DATA_VERSION = 'elitez_2026_v110';
 
 function loadDB(){
   try {
@@ -2001,7 +2001,7 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
   var allLines=csv.split('\n').filter(function(l){return l.trim();});
   if(!allLines||allLines.length<3) throw new Error('Sheet has fewer than 3 rows — check tab is named "Wave 1"');
 
-  var dataLines=allLines.slice(2);
+  var dataLines=allLines.slice(1); // skip only the header row
   var coachNameFilter=(getCoach().name||'').trim().toLowerCase();
   var added=0,updated=0,skipped=0,filtered=0;
   var changes=[];
@@ -2037,7 +2037,7 @@ function processSyncCSV(csv, statusEl, previewEl, setStatus){
       notes:[(row[COL.nonAttend]||'').trim(),(row[COL.phase2withdraw]||'').trim()].filter(Boolean).join(' | ')
     });
 
-    if(!isAdminSession()&&coachName.toLowerCase()!==coachNameFilter){filtered++;continue;}
+    if(!isAdminSession()&&!isSeniorSession()&&coachName.toLowerCase()!==coachNameFilter){filtered++;continue;}
 
     var mobile=(row[COL.mobile]||'').trim().replace(/\s/g,'');
     var existing=DB.coachees.find(function(p){
